@@ -23,6 +23,7 @@ body {
 a {
   color: var(--color-links);
   text-decoration: none;
+  font-size: 20px;
 }
 
 a:hover {
@@ -82,7 +83,7 @@ section {
 }
 
 .scroll-top i {
-  font-size: 24px;
+  font-size: 20px;
   color: #fff;
   line-height: 0;
 }
@@ -139,17 +140,10 @@ section {
 }
 
 .header .logo img {
-  max-height: 40px;
+  max-height: 100px;
   margin-right: 6px;
+  width:300px;
 }
-
-.header .logo h1 {
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--color-default);
-  font-family: var(--font-primary);
-}
-
 .search-form-wrap {
   position: absolute;
   right: 0;
@@ -274,62 +268,39 @@ section {
   font-family: var(--font-secondary);
 }
 
-.trending {
-  border: 1px solid rgba(var(--color-black-rgb), 0.1);
-}
-
-.trending>h3 {
-  color: var(--color-black);
-  padding: 20px;
+.aside-links li {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(var(--color-black-rgb), 0.1);
 }
 
-.trending .trending-post {
-  padding: 0;
-  margin: 0;
-}
-
-.trending .trending-post li {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+.aside-links li a {
   display: block;
-}
-
-.trending .trending-post li a {
-  display: block;
-  padding: 20px;
-  border-bottom: 1px solid rgba(var(--color-black-rgb), 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.trending .trending-post li a .number {
-  position: absolute;
-  z-index: -1;
-  font-size: 5rem;
-  left: -10px;
-  top: -20px;
-  font-weight: 700;
-  color: rgba(var(--color-black-rgb), 0.05);
-}
-
-.trending .trending-post li a h3 {
-  font-size: 18px;
-  color: rgba(var(--color-black-rgb), 0.9);
-}
-
-.trending .trending-post li a .author {
   color: rgba(var(--color-black-rgb), 0.7);
-  font-weight: 500;
 }
 
-.trending .trending-post li a:hover h3 {
+.aside-links li a:hover,
+.aside-links li a:focus {
   color: rgba(var(--color-black-rgb), 1);
 }
 
-.trending .trending-post li:last-child a {
-  border-bottom: none;
+.aside-tags li {
+  display: inline-block;
+}
+
+.aside-tags li a {
+  display: inline-block;
+  color: rgba(var(--color-black-rgb), 0.7);
+  padding: 7px 10px;
+  border: 1px solid rgba(var(--color-black-rgb), 0.1);
+  margin-bottom: 3px;
+  transition: 0.3s all ease;
+}
+
+.aside-tags li a:hover,
+.aside-tags li a:focus {
+  color: rgba(var(--color-black-rgb), 1);
+  border: 1px solid rgba(var(--color-black-rgb), 0.5);
 }
 
 .post-entry-2 {
@@ -603,9 +574,10 @@ section {
   background: rgba(var(--color-black-rgb), 0.1);
 }
 
+<!---수정 부분--->
 /* custom tab nav on sidebar */
 .aside-block {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .aside-block .custom-tab-nav .nav-item {

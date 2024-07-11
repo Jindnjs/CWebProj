@@ -23,4 +23,8 @@ public class IndexController {
 	public String index2() {
 		return "index";
 	}
+	@GetMapping("/nav_exam")
+	   public String signup() {
+	      return "nav_exam";
+	}
 }
