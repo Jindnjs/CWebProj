@@ -8,6 +8,6 @@ public class NavController {
 
 	@GetMapping("/nav/test")
 	public String navtest() {
-		return "2";
+		return "nav/nav";
 	}
 }
