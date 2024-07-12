@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
 	@GetMapping("/")
+	public String test() {
+		return "test";
+	}
+	
+	@GetMapping("/main")
 	public String index() {
 		return "index";
 	}
@@ -18,6 +23,7 @@ public class IndexController {
 	public String index2() {
 		return "index";
 	}
+
 	@GetMapping("/sidebar")
 	public String sidebar() {
 		return "sidebar_test";

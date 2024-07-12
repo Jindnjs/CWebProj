@@ -1,45 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
+<html layout:decorate="~{layout_main}">
+<div layout:fragment="content_main">
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>데모 페이지</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-
-    <!-- Template Main CSS Files -->
-    <link href="assets/css/variables.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: ZenBlog
-  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https:///bootstrapmade.com/license/
-  ======================================================== -->
-
-</head>
-
-<body>
     <header id="header" class="header sticky-top">
 
         <div class="topbar d-flex align-items-center">
@@ -47,8 +8,13 @@
                 <div class="contact-info d-flex align-items-center">
                 </div>
                 <div class="social-links d-none d-md-flex align-items-center">
-                    <a href="#" class="">로그인</a>
-                    <a href="#" class="">회원가입</a>
+                  
+                  	<a href="/autho">권한 체크 페이지</a>
+                    <a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
+               
+                    <a sec:authorize="isAnonymous()" th:href="@{/signup}">회원가입</a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/profile}">프로필</a>
                 </div>
             </div>
         </div><!-- End Top Bar -->
@@ -56,8 +22,14 @@
         <div class="branding d-flex align-items-center shadow p-3 mb-5 bg-body rounded">
 
             <div class="container position-relative d-flex align-items-center justify-content-between">
-                <a href="/">
-                    <!-- Uncomment the line below if you also wish to use an image logo -->
+                 <!-- =======================================================
+                ************************************************************
+                    
+                로고 이미지 클릭하면 인덱스 페이지로 이동
+                
+                ************************************************************
+                ======================================================== -->
+                <a href="/index">
                     <img src="images/7.png" alt="마이애미 아름다운 장로 교회" height="60px">
                 </a>
 
@@ -162,16 +134,19 @@
         <!-- Services Section -->
         <section id="services" class="services section">
             <div class="container">
-                <!-- =======================================================
-      교회 소식란
-      ======================================================== -->
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6">
                         <div class="service-item  position-relative">
                             <div class="textbar">
-
+                            <!-- =======================================================
+                            ************************************************************
+                            
+                            교회소식란
+                            
+                            ************************************************************
+                            ======================================================== -->
                             </div>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="/nav_exam" class="stretched-link"></a>
                             <h3><strong>교회 소식</strong></h3>
                             </a>
                             <!-- 교회 소식 리스트 -->
@@ -182,7 +157,14 @@
                             </ul>
                         </div>
                     </div><!-- End Service Item -->
-
+                    
+                    <!-- =======================================================
+                    ************************************************************
+                            
+                    금주의 말씀
+                            
+                    ************************************************************
+                    ======================================================== -->
                     <div class="col-lg-4 col-md-6">
                         <div class="service-item position-relative">
                             <a href="#" class="stretched-link">
@@ -190,7 +172,15 @@
                             </a>
                         </div>
                     </div><!-- End Service Item -->
-
+                    
+                    
+                    <!-- =======================================================
+                    ************************************************************
+                    
+                    갤러리
+                    
+                    ************************************************************
+                    ======================================================== -->
                     <div class="col-lg-4 col-md-6">
                         <div class="service-item position-relative">
                             <a href="#" class="stretched-link">
@@ -204,8 +194,14 @@
                             </ul>
                         </div>
                     </div><!-- End Service Item -->
-
-
+                    
+                    <!-- =======================================================
+                    ************************************************************
+                            
+                    예배 안내
+                            
+                    ************************************************************
+                    ======================================================== -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <a href="#" class="stretched-link">
@@ -214,7 +210,14 @@
                             <a href="#" class="stretched-link"></a>
                         </div>
                     </div><!-- End Service Item -->
-
+                    
+                    <!-- =======================================================
+                    ************************************************************
+                    
+                    교육란 - 클릭시 게시판 교육
+                    
+                    ************************************************************
+                    ======================================================== -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <a href="#" class="stretched-link">
@@ -224,7 +227,14 @@
                             <a href="#" class="stretched-link"></a>
                         </div>
                     </div><!-- End Service Item -->
-
+                    
+                    <!-- =======================================================
+                    ************************************************************
+                    
+                    클릭 시 게시판 - 지도 표시 예정
+                    
+                    ************************************************************
+                    ======================================================== -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <a href="#" class="stretched-link">
@@ -239,7 +249,15 @@
 
 
     </main><!-- End #main -->
-
+    
+    
+     <!-- =======================================================
+     ************************************************************
+                    
+     푸터 영역 - 추후 넣고 싶은 링크로 수정 (유튜브, 인스타그램등 소셜 미디어 링크)
+                    
+     ************************************************************
+     ======================================================== -->
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
 
@@ -283,16 +301,5 @@
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-</body>
-
+</div>
 </html>

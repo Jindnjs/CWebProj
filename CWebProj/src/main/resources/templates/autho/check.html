@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
+	<p>
+		<a href="/admin">admin</a>
+	<p>
+		<a href="/user">user</a>
+	<p>
+	 	<a href="/signout">로그아웃</a>
+</body>
+</html>
