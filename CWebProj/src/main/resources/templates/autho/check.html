@@ -5,14 +5,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<span th:text="${#authentication.name}"></span>
+	
+	<h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
 	<p>
 		<a href="/admin">admin</a>
 	<p>
 		<a href="/user">user</a>
 	<p>
-		<a href="/board">게시판</a>
-	<p>
-		<a href="/usercontrol">회원관리</a> <a href="/signout">로그아웃</a>
+	 	<a href="/signout">로그아웃</a>
 </body>
 </html>
