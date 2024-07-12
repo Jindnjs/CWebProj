@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-	@GetMapping("/")
+	@GetMapping("/test")
 	public String test() {
 		return "test";
 	}
 	
-	@GetMapping("/main")
+	@GetMapping("/")
 	public String index() {
 		return "index";
 	}
