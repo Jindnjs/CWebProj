@@ -1,4 +1,4 @@
-package com.example.CWebProj.autho;
+package com.example.CWebProj.Autho;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,13 +16,6 @@ public class AuthoController {
 	public String admin() {
 		
 		return "autho/admin";
-	}
-	
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
-	@GetMapping("/manager")
-	public String manager() {
-		
-		return "autho/manager";
 	}
 	
 	@PreAuthorize("isAuthenticated()")

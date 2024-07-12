@@ -13,7 +13,8 @@
                     <a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
                
-                    <a href="signup" class="">회원가입</a>
+                    <a sec:authorize="isAnonymous()" th:href="@{/signup}">회원가입</a>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/profile}">프로필</a>
                 </div>
             </div>
         </div><!-- End Top Bar -->

@@ -21,10 +21,10 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-				.formLogin((formLogin) -> formLogin.loginPage("/signin").defaultSuccessUrl("/"))
+				.formLogin((formLogin) -> formLogin.loginPage("/signin").defaultSuccessUrl("/main"))
 				
 				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-						.logoutSuccessUrl("/").invalidateHttpSession(true));
+						.logoutSuccessUrl("/main").invalidateHttpSession(true));
 			
 		return http.build();
 	}
