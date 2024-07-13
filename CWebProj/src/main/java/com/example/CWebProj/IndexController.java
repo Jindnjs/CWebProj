@@ -28,4 +28,8 @@ public class IndexController {
 	public String sidebar() {
 		return "sidebar_test";
 	}
+	@GetMapping("/board")
+	public String board() {
+		return "board_sample";
+	}
 }

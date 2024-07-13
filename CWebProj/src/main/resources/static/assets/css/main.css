@@ -1265,7 +1265,7 @@ h6 {
 }
 
 .header .topbar {
-  background-color: var(--accent-color);
+  background-color: #02007c;
   height: 40px;
   padding: 0;
   font-size: 14px;
