@@ -54,7 +54,7 @@
 	      border-right: 1px solid #dee2e6;
 	      border-top: 1px solid #dee2e6;
 	      border-bottom: 1px solid #dee2e6;
-	      width:230px
+	      width:230px;
 	    }
 	    .sidebar .sidebar-header {
 	      padding: 15px;
@@ -87,6 +87,16 @@
   	************************************************************
   	======================================================== -->
   	<style>
+  	 .table {
+        border-collapse: separate;
+        border-spacing: 0;     
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+        background-color: white;
+        border-radius: 7px; 
+        overflow: hidden;
+        overflow: auto;
+    }
+  	
         .table thead th {
             background-color: #e9ecef;
         }
@@ -95,6 +105,8 @@
             font-size: 0.875rem; /* 글꼴 크기를 줄입니다 */   
             color: black;
         }
+        
+        
         
     </style>
 
@@ -111,6 +123,44 @@
 	        color: black;
 	        font-size: 14px; /* 원하는 크기로 조정 */
 	    }
+	</style>
+	
+	
+	<!-- =======================================================
+    ************************************************************
+                    
+    화면 작아졌을 때 css 
+                
+    ************************************************************
+    ======================================================== -->
+	<style>
+	@media (max-width: 1000px) {
+        .container-fluid {
+            flex-direction: column;
+            
+        }
+        .branding img {
+   			 max-width: 300px; /* 원하는 크기로 조정 */
+    		 height: auto;
+  		}
+
+        .sidebar {
+            margin-left: 0;
+            width: 100%;
+            height: auto;
+            border: none;
+        }
+
+        .main-content {
+            order: 1; /* 사이드바 위로 이동 */
+            padding: 10px;
+            width: 100%;
+        }
+
+        .breadcrumb {
+            margin-top: 20px;
+        }
+    }
 	</style>
 </head>
 
@@ -198,9 +248,9 @@
 				    </nav>
 				    
 
-				    <div class="col-md-8 ">
+				    <div class="col-md-8 main-content">
 				      <!-- 메인 콘텐츠 -->
-					<div class="container mt-7">
+					<div class="container mt-5">
 					    <h2 class="mb-3">자유게시판</h2>
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
@@ -241,14 +291,14 @@
 					        </thead>
 					        <tbody>
 						        <tr >
-						            <td style="background-color: #adb5bd;">공지1</td>
-						            <td style="background-color: #adb5bd;">
+						            <td style="background-color: #DCDCDC;">공지1</td>
+						            <td style="background-color: #DCDCDC;">
 						            	<a href="#">자유 게시판 사용에 대한 공지 사항</a>
 						            	<span>(12334)</span>
 						            </td>
-						            <td style="background-color: #adb5bd;">2024-07-13</td>
-						            <td style="background-color: #adb5bd;">운영자</td>
-						            <td style="background-color: #adb5bd;">15625</td>
+						            <td style="background-color: #DCDCDC;">2024-07-13</td>
+						            <td style="background-color: #DCDCDC;">운영자</td>
+						            <td style="background-color: #DCDCDC;">15625</td>
 						        </tr>
 						        <tr>
 						            <td>315</td>
