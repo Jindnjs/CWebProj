@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<form action="/banner/update" method="post" enctype="multipart/form-data">
+    <div id="fileInputs" th:each="banner, loop : ${banners}">
+        <div class="file-input-container" th:data-id="${banner.id}">
+            <input type="hidden" th:value="${banner.id}" name="id">
+            <p>
+                <input type="file" name="image" th:value="${banner.image}">
+                <button type="button" class="removeButton">x</button>
+            </p>
+        </div>
+    </div>
+    <p><button type="button" id="addButton">+</button></p>
+    <p><input type="submit" value="등록"></p>
+</form>
+
+<script>
+$(document).ready(function() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    $('#addButton').click(function(e) {
+        e.preventDefault();
+        addNewBanner(token, header);
+    });
+
+    function addNewBanner(token, header) {
+        $.ajax({
+            url: '/banner/create',
+            method: 'POST',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(response) {
+                var newElement = `
+                <div class="file-input-container" data-id="${response.id}">
+                    <input type="hidden" value="${response.id}" name="id">
+                    <p>
+                        <input type="file" name="image">
+                        <button type="button" class="removeButton">x</button>
+                    </p>
+                </div>`;
+                $('#fileInputs').append(newElement);
+                attachRemoveHandler();
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    function attachRemoveHandler() {
+        $('.removeButton').off('click').on('click', function(e) {
+            e.preventDefault();
+            const container = $(this).closest('.file-input-container');
+            const bannerId = container.data('id');
+            deleteBanner(bannerId, container, token, header);
+        });
+    }
+
+    function deleteBanner(bannerId, container, token, header) {
+        $.ajax({
+            url: '/banner/delete',
+            method: 'GET',
+            data: { id: bannerId },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(response) {
+                container.remove();
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
+    attachRemoveHandler();
+});
+</script>
+
+</body>
+</html>
