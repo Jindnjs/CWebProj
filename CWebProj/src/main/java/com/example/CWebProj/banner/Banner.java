@@ -9,11 +9,11 @@ import lombok.Data;
 @Entity
 @Data
 public class Banner {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	private Integer num;
-	
-	private String image;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
+    private String image;
+    
+    
 }

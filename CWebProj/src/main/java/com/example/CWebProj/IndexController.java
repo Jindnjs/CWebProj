@@ -1,10 +1,21 @@
 package com.example.CWebProj;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.example.CWebProj.banner.BannerService;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	BannerService bannerService;
+	
+	@Value("${cloud.aws.s3.endpoint}")
+	private String downpath;
 
 	@GetMapping("/test")
 	public String test() {
@@ -12,7 +23,9 @@ public class IndexController {
 	}
 	
 	@GetMapping("/")
-	public String index() {
+	public String index(Model model) {
+		model.addAttribute("banners", bannerService.readlist());
+        model.addAttribute("downpath", "https://" + downpath);
 		return "index";
 	}
 	@GetMapping("/index")
