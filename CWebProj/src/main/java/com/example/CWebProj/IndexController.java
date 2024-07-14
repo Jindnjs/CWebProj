@@ -28,6 +28,7 @@ public class IndexController {
         model.addAttribute("downpath", "https://" + downpath);
 		return "index";
 	}
+	
 	@GetMapping("/index")
 	public String index1() {
 		return "index";

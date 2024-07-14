@@ -76,9 +76,14 @@
 
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" th:each="banner : ${banners}">
+                                    
                                     <a class="img-bg d-flex align-items-end" th:style="'background-image: url(' + ${downpath} + '/' + ${banner.image} + ')'">
-
                                     </a>
+                                    <!-- 
+                                    
+                                    <img class="img-bg d-flex align-items-end" th:src="|${downpath}/${banner.image}|" />
+                                     -->
+                                    
                                 </div>
                             </div>
 
