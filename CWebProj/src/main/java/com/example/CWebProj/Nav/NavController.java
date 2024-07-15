@@ -16,10 +16,6 @@ public class NavController {
 
 	private final NavService navService;
 	
-	@GetMapping("/test")
-	public String navtest() {
-		return "test";
-	}
 	@GetMapping("/nav/test")
 	public String readNav(Model model) {
 		
