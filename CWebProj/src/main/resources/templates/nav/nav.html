@@ -18,52 +18,58 @@
 </head>
 <body>
 
-<!-- <li th:each="entry : ${groupedMenuCategories}" class="nav-item dropdown">
-          <a th:text="${entry.value[0].menu}" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-          <ul class="dropdown-menu">
-            <li><a th:each="category : ${entry.value}" th:text="${category.categoty}" class="dropdown-item" href="#"></a></li>
-          </ul>
- -->
-	<ul class="nav nav-tabs" id="menu" role="tablist">
-		
-		<li class="nav-item" role="presentation" draggable="true">
- 			<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="메뉴이" aria-selected="true">Home</button>
-		</li>
-		<li class="nav-item" role="presentation" draggable="true">
- 			<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-		</li>
-		<li class="nav-item" role="presentation" draggable="true">
- 			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-		</li>
-		<li class="nav-item" role="presentation" draggable="true">
- 			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-		</li>
-	</ul>
-	<div class="d-flex flex-row-reverse"><button class="nav-item btn btn-outline-success" type="submit">메뉴 추가</button></div>
+<ul class="nav nav-tabs" id="menu" role="tablist">
+	<li class="nav-item" role="presentation" draggable="true"  th:each="groupMenu, iterStat : ${groupedMenuCategories}">
+		<button class="nav-link" th:classappend="${iterStat.index == 0} ? 'active'" 
+            th:id="${groupMenu.value[0].menuName + '-tab'}"
+            th:data-bs-target="'#' + ${groupMenu.value[0].menuName + '-tab-pane'}"
+            th:aria-controls="${groupMenu.value[0].menuName + '-tab-pane'}"
+            th:text="${groupMenu.value[0].menuName}"
+            data-bs-toggle="tab"
+            type="button"
+            role="tab"
+            th:aria-selected="${iterStat.index == 0}">
+   		 </button>
+	</li>
+</ul>
+<div class="d-flex flex-row-reverse"><button class="nav-item btn btn-outline-success" type="submit">메뉴 추가</button></div>
 
-
-  <div class="tab-content" id="category">
-    <div class="tab-pane fade show active" id="메뉴이" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <ol class="list-group list-group-numbered" id="home-list">
+<div class="tab-content" id="category">
+	<div  th:each="groupMenu, iterStat : ${groupedMenuCategories}" class="tab-pane fade" th:classappend="${iterStat.index == 0} ? 'show active'" 
+	     th:id="${groupMenu.value[0].menuName + '-tab-pane'}" 
+	     role="tabpanel" 
+	     th:aria-labelledby="${groupMenu.value[0].menuName + '-tab'}" 
+	     tabindex="0">
+	    <ol class="list-group list-group-numbered" th:id="${groupMenu.value[0].menuName + '-list'}">
+	        <li class="list-group-item" draggable="true" 
+	        	th:each="category : ${groupMenu.value}"
+	        	th:text="${category.categoryName}"></li>
+	    </ol>
+	    <button class="btn btn-outline-success end" type="submit">카테고리 추가</button>
+	</div>
+</div>	
+  <!-- <div class="tab-content" id="category">
+    <div class="tab-pane fade show active" id="메뉴1-tab-pane" role="tabpanel" aria-labelledby="메뉴1-tab" tabindex="0">
+      <ol class="list-group list-group-numbered" id="메뉴1-list">
         <li class="list-group-item" draggable="true">111</li>
         <li class="list-group-item" draggable="true">222</li>
         <li class="list-group-item" draggable="true">333</li>
       </ol>
       <button class="btn btn-outline-success end" type="submit">카테고리 추가</button>
     </div>
-    <div class="tab-pane fade" id="22" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-      <ol class="list-group list-group-numbered" id="profile-list">
+    <div class="tab-pane fade" id="메뉴2-tab-pane" role="tabpanel" aria-labelledby="메뉴2-tab" tabindex="0">
+      <ol class="list-group list-group-numbered" id="메뉴2-list">
         <li class="list-group-item" draggable="true">aaa</li>
         <li class="list-group-item" draggable="true">bbb</li>
       </ol>
     </div>
-    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-      <ol class="list-group list-group-numbered" id="contact-list">
+    <div class="tab-pane fade" id="메뉴3-tab-pane" role="tabpanel" aria-labelledby="메뉴3-tab" tabindex="0">
+      <ol class="list-group list-group-numbered" id="메뉴3-list">
         <li class="list-group-item" draggable="true">ㄱㄱㄱ</li>
         <li class="list-group-item" draggable="true">ㄴㄴㄴ</li>
       </ol>
     </div>
-  </div>
+  </div> -->
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
