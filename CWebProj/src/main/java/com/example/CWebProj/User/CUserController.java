@@ -1,4 +1,4 @@
-package com.example.CWebProj.user;
+package com.example.CWebProj.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

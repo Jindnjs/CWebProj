@@ -1,4 +1,4 @@
-package com.example.CWebProj.banner;
+package com.example.CWebProj.Banner;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

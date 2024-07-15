@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.CWebProj.banner.BannerService;
+import com.example.CWebProj.Banner.BannerService;
 
 @Controller
 public class IndexController {
