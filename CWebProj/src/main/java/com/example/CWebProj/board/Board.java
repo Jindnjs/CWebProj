@@ -1,5 +1,6 @@
 package com.example.CWebProj.board;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.CWebProj.comment.Comment;
@@ -27,6 +28,8 @@ public class Board {
 	private String title;
 	
 	private String content;
+	
+	private LocalDateTime createDate;
 	
 	private String image1;
     
