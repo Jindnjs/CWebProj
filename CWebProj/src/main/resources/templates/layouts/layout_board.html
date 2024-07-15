@@ -155,7 +155,7 @@
 
 	
 	<!-- 헤더&네비게이션 메뉴 -->
- 	<div th:replace="fragment/header::header"></div>
+ 	<div th:replace="~{fragment/header::header}"></div>
  	
  	
  	
@@ -166,7 +166,7 @@
 				<div class="row">
 					<!-- 사이드바 -->
 					 <div class="col-md-2 sidebar">
-					<div th:replace="fragment/sidebar::sidebar"></div>
+					<div th:replace="~{fragment/sidebar::sidebar}"></div>
 					</div>
 					
 					<div class="col-md-8 main-content">
@@ -180,7 +180,7 @@
 		</section>
 	</main>
 	<!-- footer메뉴 -->
-   	<div th:replace="fragment/footer::footer"></div>
+   	<div th:replace="~{fragment/footer::footer}"></div>
    	
    	
 	<!-- Vendor JS Files -->
