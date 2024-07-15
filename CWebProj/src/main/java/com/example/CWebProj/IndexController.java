@@ -17,36 +17,17 @@ import com.example.CWebProj.Nav.NavService;
 @Controller
 public class IndexController {
 	
-	@Autowired
-	BannerService bannerService;
-	
-	@Autowired
-	NavService navService;
-	
-	@Value("${cloud.aws.s3.endpoint}")
-	private String downpath;
-
 	@GetMapping("/")
-	public String index(Model model) {
-		model.addAttribute("banners", bannerService.readlist());
-        model.addAttribute("downpath", "https://" + downpath);
-        List<MenuCateg> menuCategories = navService.getAllMenuCategories();
-        Map<Integer, List<MenuCateg>> groupedMenuCategories = menuCategories.stream()
-                .collect(Collectors.groupingBy(MenuCateg::getMenuRate));
-        model.addAttribute("groupedMenuCategories", groupedMenuCategories);
+	public String index() {
 		return "index";
 	}
 	
 	@GetMapping("/index")
-	public String index1(Model model) {
-		model.addAttribute("banners", bannerService.readlist());
-        model.addAttribute("downpath", "https://" + downpath);
+	public String index1() {
 		return "index";
 	}
 	@GetMapping("/index.html")
-	public String index2(Model model) {
-		model.addAttribute("banners", bannerService.readlist());
-        model.addAttribute("downpath", "https://" + downpath);
+	public String index2() {
 		return "index";
 	}
 }
