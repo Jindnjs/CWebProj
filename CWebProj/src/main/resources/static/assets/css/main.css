@@ -1283,12 +1283,13 @@ h6 {
   color: var(--contrast-color);
 }
 
-@media (max-width: 575px) {
 
-  .header .topbar .contact-info i a,
-  .header .topbar .contact-info i span {
-    font-size: 13px;
-  }
+
+@media (max-width: 1000px) {
+ 	.header .topbar .social-links a {
+    	font-size: 6px; 
+    	margin: 0 1spx; 
+	}
 }
 
 .header .topbar .contact-info i a {
@@ -1306,6 +1307,7 @@ h6 {
   line-height: 0;
   transition: 0.3s;
   margin-left: 20px;
+  font-size: 15px;
 }
 
 .header .topbar .social-links a:hover {
