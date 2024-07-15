@@ -33,8 +33,6 @@ public class BannerController {
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable("id") Integer id, @RequestParam("image") MultipartFile file) throws IOException {
-        System.out.println("Received Banner ID: " + id); // 로그 출력
-        System.out.println("Received File: " + file.getOriginalFilename()); // 로그 출력
         Banner banner = bannerService.read(id);
         bannerService.update(banner, file);
         return "redirect:/banner";
