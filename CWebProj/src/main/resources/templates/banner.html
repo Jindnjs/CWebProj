@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>번호</th>
+            <th>배너 이미지</th>
+            <th>변경 버튼</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="banner, loop : ${banners}">
+            <td th:text="${loop.count}"></td>
+            <td th:text="${banner.image}"></td>
+            <td>
+                <button onclick="showForm(this)" th:data-id="${banner.id}">변경</button>
+                <form th:id="'form-' + ${banner.id}" th:action="@{|/banner/update/${banner.id}|}" method="post" enctype="multipart/form-data" style="display:none;">
+                    <input type="hidden" name="id" th:value="${banner.id}">
+                    <input type="file" name="image">
+                    <button type="submit">업데이트</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    function showForm(button) {
+        var bannerId = button.getAttribute('data-id');
+        var form = document.getElementById('form-' + bannerId);
+        form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+    }
+</script>
+</body>
+</html>
