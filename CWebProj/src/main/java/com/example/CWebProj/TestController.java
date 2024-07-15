@@ -22,4 +22,8 @@ public class TestController {
 	public String create() {
 		return "create_form_sample";
 	}
+	@GetMapping("/sidd")
+	public String sidd() {
+		return "sidd";
+	}
 }
