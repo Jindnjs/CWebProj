@@ -27,5 +27,6 @@ public class CUser {
 
 	@Column(unique = true)
 	private String cemail; // 이메일
+	private String cname; //사람 이름
 	private LocalDateTime cdate; // 날짜
 }
