@@ -31,5 +31,21 @@ public class CUserController {
 	public String signout() {
 		return "user/signin";
 	}
+	
+	@GetMapping("/profile")
+	public String profile() {
+		return "user/profile";
+	}
+	
+	
+	@GetMapping("/findid")
+	public String findid() {
+		return "user/findid";
+	}
+	
+	@GetMapping("/findpw")
+	public String findpw() {
+		return "user/findpw";
+	}
 
 }
