@@ -17,10 +17,7 @@ public class IndexController {
 	@Value("${cloud.aws.s3.endpoint}")
 	private String downpath;
 
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
+	
 	
 	@GetMapping("/")
 	public String index(Model model) {
@@ -30,27 +27,15 @@ public class IndexController {
 	}
 	
 	@GetMapping("/index")
-	public String index1() {
+	public String index1(Model model) {
+		model.addAttribute("banners", bannerService.readlist());
+        model.addAttribute("downpath", "https://" + downpath);
 		return "index";
 	}
 	@GetMapping("/index.html")
-	public String index2() {
+	public String index2(Model model) {
+		model.addAttribute("banners", bannerService.readlist());
+        model.addAttribute("downpath", "https://" + downpath);
 		return "index";
-	}
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
-	@GetMapping("/sidebar")
-	public String sidebar() {
-		return "sidebar_test";
-	}
-	@GetMapping("/board")
-	public String board() {
-		return "board_sample";
-	}
-	@GetMapping("/create")
-	public String create() {
-		return "create_form_sample";
 	}
 }
