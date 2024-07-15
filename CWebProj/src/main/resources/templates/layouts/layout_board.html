@@ -78,13 +78,27 @@
 	<!-- 헤더&네비게이션 메뉴 -->
  	<div th:replace="fragment/header::header"></div>
  	
- 	<!-- 사이드바 -->
- 	<div th:replace="fragment/sidebar::sidebar"></div>
+ 	
  	
 	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-	<main id="main">
-	<th:block layout:fragment="content_main"></th:block>
-	<!-- 기본 템플릿 안에 삽입될 내용 End -->
+	<main >
+		<section>
+			<div class="container-fluid ">
+				<div class="row">
+					<!-- 사이드바 -->
+					 <div class="col-md-2 sidebar">
+					<div th:replace="fragment/sidebar::sidebar"></div>
+					</div>
+					
+					<div class="col-md-8 main-content">
+						<div class="container mt-5">
+							<th:block layout:fragment="content_main"></th:block>
+							<!-- 기본 템플릿 안에 삽입될 내용 End -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 	<!-- footer메뉴 -->
    	<div th:replace="fragment/footer::footer"></div>
