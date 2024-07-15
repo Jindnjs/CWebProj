@@ -28,4 +28,8 @@ public class IndexController {
 	public String sidebar() {
 		return "sidebar_test";
 	}
+	@GetMapping("/list_album")
+	public String list_album() {
+		return "list_album";
+	}
 }
