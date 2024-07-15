@@ -1,4 +1,4 @@
-package com.example.CWebProj.user;
+package com.example.CWebProj.User;
 
 import java.util.Optional;
 

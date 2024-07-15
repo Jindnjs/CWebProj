@@ -1,4 +1,4 @@
-package com.example.CWebProj.banner;
+package com.example.CWebProj.Banner;
 
 import java.io.File;
 import java.io.FileOutputStream;
