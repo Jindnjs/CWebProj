@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Draggable Tabs and Items</title>
+  <title>메뉴 수정 페이지</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .dragging {
@@ -17,42 +17,50 @@
   </style>
 </head>
 <body>
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation" draggable="true">
-      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
-    </li>
-    <li class="nav-item" role="presentation" draggable="true">
-      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-    </li>
-    <li class="nav-item" role="presentation" draggable="true">
-      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-    </li>
-    <li class="d-flex flex-row-reverse">
-      <button class="nav-item btn btn-outline-success" type="submit">메뉴 추가</button>
-    </li>
-  </ul>
 
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+<!-- <li th:each="entry : ${groupedMenuCategories}" class="nav-item dropdown">
+          <a th:text="${entry.value[0].menu}" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+          <ul class="dropdown-menu">
+            <li><a th:each="category : ${entry.value}" th:text="${category.categoty}" class="dropdown-item" href="#"></a></li>
+          </ul>
+ -->
+	<ul class="nav nav-tabs" id="menu" role="tablist">
+		
+		<li class="nav-item" role="presentation" draggable="true">
+ 			<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="메뉴이" aria-selected="true">Home</button>
+		</li>
+		<li class="nav-item" role="presentation" draggable="true">
+ 			<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+		</li>
+		<li class="nav-item" role="presentation" draggable="true">
+ 			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+		</li>
+		<li class="nav-item" role="presentation" draggable="true">
+ 			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+		</li>
+	</ul>
+	<div class="d-flex flex-row-reverse"><button class="nav-item btn btn-outline-success" type="submit">메뉴 추가</button></div>
+
+
+  <div class="tab-content" id="category">
+    <div class="tab-pane fade show active" id="메뉴이" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
       <ol class="list-group list-group-numbered" id="home-list">
-        <li class="list-group-item" draggable="true">A list item</li>
-        <li class="list-group-item" draggable="true">A list item</li>
-        <li class="list-group-item" draggable="true">A list item</li>
-        <li class="list-group-item" draggable="true">
-          <button class="btn btn-outline-success end" type="submit">카테고리 추가</button>
-        </li>
+        <li class="list-group-item" draggable="true">111</li>
+        <li class="list-group-item" draggable="true">222</li>
+        <li class="list-group-item" draggable="true">333</li>
       </ol>
+      <button class="btn btn-outline-success end" type="submit">카테고리 추가</button>
     </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <div class="tab-pane fade" id="22" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <ol class="list-group list-group-numbered" id="profile-list">
-        <li class="list-group-item" draggable="true">Profile item 1</li>
-        <li class="list-group-item" draggable="true">Profile item 2</li>
+        <li class="list-group-item" draggable="true">aaa</li>
+        <li class="list-group-item" draggable="true">bbb</li>
       </ol>
     </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
       <ol class="list-group list-group-numbered" id="contact-list">
-        <li class="list-group-item" draggable="true">Contact item 1</li>
-        <li class="list-group-item" draggable="true">Contact item 2</li>
+        <li class="list-group-item" draggable="true">ㄱㄱㄱ</li>
+        <li class="list-group-item" draggable="true">ㄴㄴㄴ</li>
       </ol>
     </div>
   </div>
@@ -62,7 +70,7 @@
 	  const tabs = document.querySelectorAll('.nav-item[draggable="true"]');
 	  const tabLists = document.querySelectorAll('.list-group-item[draggable="true"]');
 	  let draggedItem = null;
-
+	  
 	  function handleDragStart(e) {
 	    draggedItem = this;
 	    setTimeout(() => {
