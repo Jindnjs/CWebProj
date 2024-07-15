@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+# Ignore S3Config and S3Service
+src/main/java/com/example/CWebProj/AwsBucket/S3Config.java
+src/main/java/com/example/CWebProj/AwsBucket/S3Service.java
+
