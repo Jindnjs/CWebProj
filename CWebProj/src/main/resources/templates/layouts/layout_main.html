@@ -3,7 +3,6 @@
 <head>
 	
 	<title>데모 페이지</title>
-	<link rel="icon" type="images/png" href="/images/8.png">
 	
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
@@ -12,8 +11,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="/assets/img/favicon.png" rel="icon">
-    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/images/8.png" rel="icon">
+    <link href="/images/8.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,10 +40,18 @@
 </head>
 <body>
 
+
+	<!-- 헤더&네비게이션 메뉴 -->
+ 	<div th:replace="fragment/header::header"></div>
+ 	
 	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
 	<th:block layout:fragment="content_main"></th:block>
 	<!-- 기본 템플릿 안에 삽입될 내용 End -->
-
+	
+	<!-- footer메뉴 -->
+   	<div th:replace="fragment/footer::footer"></div>
+   	
+   	
 	<!-- Vendor JS Files -->
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>

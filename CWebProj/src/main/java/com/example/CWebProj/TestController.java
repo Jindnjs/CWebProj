@@ -22,4 +22,12 @@ public class TestController {
 	public String create() {
 		return "create_form_sample";
 	}
+	@GetMapping("/sidd")
+	public String sidd() {
+		return "lay_board)sample";
+	}
+	@GetMapping("/cccc")
+	public String cccc() {
+		return "lay_create_form";
+	}
 }
