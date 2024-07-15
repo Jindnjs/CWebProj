@@ -34,7 +34,14 @@
                 <a href="/index">
                     <img src="images/7.png" alt="마이애미 아름다운 장로 교회" height="60px">
                 </a>
-
+                
+                <!-- =======================================================
+                ************************************************************
+                            
+                네비바 
+                            
+                ************************************************************
+                ======================================================== -->
                 <nav id="navmenu" class="navmenu">
                     <ul>
                         <li class="dropdown"><a href="#"><span>교회 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -67,23 +74,26 @@
     </header>
 
     <main id="main">
+    	
+    	<!-- =======================================================
+        ************************************************************
+                            
+        이미지 슬라이더
+                            
+        ************************************************************
+        ======================================================== -->
         <!-- ======= Hero Slider Section ======= -->
         <section id="hero-slider" class="hero-slider">
             <div class="container-md">
                 <div class="row">
                     <div class="col-12">
                         <div class="swiper sliderFeaturedPosts">
-
                             <div class="swiper-wrapper">
+
                                 <div class="swiper-slide" th:each="banner : ${banners}">
                                     
-                                    <a class="img-bg d-flex align-items-end" th:style="'background-image: url(' + ${downpath} + '/' + ${banner.image} + ')'">
-                                    </a>
-                                    <!-- 
-                                    
-                                    <img class="img-bg d-flex align-items-end" th:src="|${downpath}/${banner.image}|" />
-                                     -->
-                                    
+                                    <a class="img-bg d-flex align-items-end" th:style="'background-image: url(' + ${downpath} + '/' + ${banner.image} + ')'"></a>
+
                                 </div>
                             </div>
 

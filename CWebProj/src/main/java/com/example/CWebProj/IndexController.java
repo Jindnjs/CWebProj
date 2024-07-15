@@ -37,9 +37,14 @@ public class IndexController {
 	public String index2() {
 		return "index";
 	}
-
+	
 	@GetMapping("/sidebar")
 	public String sidebar() {
 		return "sidebar_test";
 	}
+	@GetMapping("/board")
+	public String board() {
+		return "board_sample";
+	}
+	
 }

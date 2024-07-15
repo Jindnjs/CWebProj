@@ -1265,7 +1265,7 @@ h6 {
 }
 
 .header .topbar {
-  background-color: var(--accent-color);
+  background-color: rgb(0, 71, 171);
   height: 40px;
   padding: 0;
   font-size: 14px;
@@ -1315,6 +1315,12 @@ h6 {
 .header .branding {
   min-height: 60px;
   padding: 10px 0;
+}
+
+/* 모바일 화면 밑 화면 작아졌을 때 로고 크기 조절*/
+.branding img {
+   max-width: 300px; /* 네비바 교회 로고 화면 작아졌을 때 크기 조절 */
+   height: auto;
 }
 
 .header .logo {
@@ -2192,6 +2198,13 @@ section,
 
 
 @media (min-width: 1365px) {
+  .services .service-item{
+  	margin-left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  
+  }
   .services .service-item:hover {
     transform: translateY(-10px);
     border-color: var(--accent-color);
