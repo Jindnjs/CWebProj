@@ -1,0 +1,109 @@
+<html layout:decorate="~{layouts/layout_board}">
+<div layout:fragment="content_main">
+
+<div class="col-md-8 main-content">
+				      <!-- 메인 콘텐츠 -->
+					<div class="container mt-5">
+					    <h2 class="mb-3">자유게시판</h2>
+					    <div class="container mt-3">
+					    	<div class="row justify-content-end">
+					        	<div class="col-auto">
+					        		<!-- =======================================================
+				                    ************************************************************
+				                    
+				                    브레드크럼-현재 위치
+				                    
+				                    ************************************************************
+				                    ======================================================== -->
+					            	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+						                <ol class="breadcrumb">
+						                    <li class="breadcrumb-item active">Home</li>
+						                    <li class="breadcrumb-item active" aria-current="page">커뮤니티</li>
+						                    <li class="breadcrumb-item active" aria-current="page">자유게시판</li>
+						                </ol>
+					            	</nav>
+					        	</div>
+					    	</div>
+						</div>
+						<!-- =======================================================
+				        ************************************************************
+				                    
+				        게시판-공지글은 class로 스타일이 지정이 안돼 inline으로 스타일 지정
+				                    
+				        ************************************************************
+				        ======================================================== -->					
+					    <table class="table ">
+					        <thead>
+					        <tr>
+					            <th>번호</th>
+					            <th>제목</th>
+					            <th>등록일</th>
+					            <th>작성자</th>
+					            <th>조회</th>
+					        </tr>
+					        </thead>
+					        <tbody>
+						        <tr >
+						            <td style="background-color: #DCDCDC;">공지1</td>
+						            <td style="background-color: #DCDCDC;">
+						            	<a href="#">자유 게시판 사용에 대한 공지 사항</a>
+						            	<span>(12334)</span>
+						            </td>
+						            <td style="background-color: #DCDCDC;">2024-07-13</td>
+						            <td style="background-color: #DCDCDC;">운영자</td>
+						            <td style="background-color: #DCDCDC;">15625</td>
+						        </tr>
+						        <tr>
+						            <td>315</td>
+						            <td>
+						            	<a href="#">11111</a>
+						            	<span>(5)</span>
+						            	</td>
+						            <td>2024-07-13</td>
+						            <td>심규성</td>
+						            <td>690</td>
+						        </tr>
+						        <tr>
+						            <td>314</td>
+						            <td>
+						            	<a href="#">자유게시판</a>
+						            	<span>(3)</span>
+						            </td>
+						            <td>2024-07-13</td>
+						            <td>심규성</td>
+						            <td>2116</td>
+						        </tr>
+						       
+					        </tbody>
+					    </table>
+					    	<!-- =======================================================
+				            ************************************************************
+				                    
+				            페이징 기능
+				                    
+				            ************************************************************
+				            ======================================================== -->
+					        <div aria-label="Page navigation">
+					            <ul class="pagination justify-content-center">
+					                <li class="page-item">
+					                    <a class="page-link" href="#" aria-label="Previous">
+					                        <span aria-hidden="true">&laquo;</span>
+					                    </a>
+					                </li>
+					                <li class="page-item"><a class="page-link" href="#">1</a></li>
+					                <li class="page-item"><a class="page-link" href="#">2</a></li>
+					                <li class="page-item"><a class="page-link" href="#">3</a></li>
+					                <li class="page-item">
+					                    <a class="page-link" href="#" aria-label="Next">
+					                        <span aria-hidden="true">&raquo;</span>
+					                    </a>
+					                </li>
+					            </ul>
+					        </div>
+					</div>
+
+
+			  </div>
+
+</div>
+</html>

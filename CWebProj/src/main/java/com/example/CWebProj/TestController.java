@@ -24,6 +24,10 @@ public class TestController {
 	}
 	@GetMapping("/sidd")
 	public String sidd() {
-		return "sidd";
+		return "lay_board)sample";
+	}
+	@GetMapping("/cccc")
+	public String cccc() {
+		return "lay_create_form";
 	}
 }

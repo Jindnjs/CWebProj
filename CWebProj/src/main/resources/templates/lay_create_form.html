@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout_board}">
+<div layout:fragment="content_main">
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<form>
+							<div class="mb-4">
+								<input type="text" name="subject" id="subject" class="form-control" placeholder="제목">
+
+								
+							</div>
+							<div class="mb-4">
+								<input type="text" name="subject" id="subject" class="form-control" placeholder="작성자">
+							</div>
+							<div class="mb-4">
+								
+								<textarea name="content" id="summernote" rows="10" ></textarea>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+							<a  class="btn btn-primary me-2">취소</a>
+							<input type="submit" value="저장하기" class="btn btn-primary">
+							</div>
+						</form>		
+
+
+
+<script>
+      $('#summernote').summernote({
+        placeholder: '내용',
+        tabsize: 2,
+        height: 550,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view']
+        ],
+        callbacks: {
+            onImageUpload: function(image) {
+               
+                   var file = image[0];
+                   var reader = new FileReader();
+                  reader.onloadend = function() {
+                      var image = $('<img>').attr('src',  reader.result);
+                         image.attr('width','50%');
+                      $('#summernote').summernote("insertNode", image[0]);
+                  }
+                 reader.readAsDataURL(file);
+              
+            }
+        }
+      });
+    </script>
+</div>
+</html>
