@@ -17,8 +17,6 @@ public class IndexController {
 	@Value("${cloud.aws.s3.endpoint}")
 	private String downpath;
 
-	
-	
 	@GetMapping("/")
 	public String index(Model model) {
 		model.addAttribute("banners", bannerService.readlist());

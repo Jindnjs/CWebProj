@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
+@Data
 @Entity
 public class MenuCateg {
 
@@ -18,5 +20,7 @@ public class MenuCateg {
 	
 	private Integer menuRate;
 	private Integer categoryRate;
+	
+	private String boardLink;
 	
 }
