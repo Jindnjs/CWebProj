@@ -37,7 +37,10 @@ public class IndexController {
 	public String index2() {
 		return "index";
 	}
-	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
 	@GetMapping("/sidebar")
 	public String sidebar() {
 		return "sidebar_test";
@@ -46,5 +49,8 @@ public class IndexController {
 	public String board() {
 		return "board_sample";
 	}
-	
+	@GetMapping("/create")
+	public String create() {
+		return "create_form_sample";
+	}
 }

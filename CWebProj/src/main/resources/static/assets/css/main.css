@@ -2197,13 +2197,12 @@ section,
 }
 
 
-@media (min-width: 1365px) {
+@media (min-width: 500px) {
   .services .service-item{
   	margin-left: 0;
     width: 100%;
-    height: 100%;
-    border: none;
-  
+    min-height: 300px;
+    margin: 10px;
   }
   .services .service-item:hover {
     transform: translateY(-10px);
