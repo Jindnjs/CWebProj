@@ -2,20 +2,16 @@
 <html>
 <div th:fragment="sidebar">
 
-
-	   
-   		<!-- 사이드 바 -->
-	    <nav>
-	      <div class="sidebar-header">교회 안내</div>
-	      <div class="list-group">
-	        <a href="#" class="list-group-item list-group-item-action">교회 소개</a>
-	        <a href="#" class="list-group-item list-group-item-action">예배 안내</a>
-	        <a href="#" class="list-group-item list-group-item-action">찾아오는 길</a>
-	      </div>
-	    </nav>
-		    
-		    
-	  
+<!-- 사이드 바 -->
+<nav>
+	<div th:text="${sidebar[0].menuName}" class="sidebar-header"></div>
+	<div class="list-group">
+	  	<a th:each="category : ${sidebar}"
+	  	   th:href="${category.boardLink + '/' + category.id}" 
+	  	   th:text="${category.categoryName}" 
+	  	   class="list-group-item list-group-item-action"></a>
+	</div>
+</nav>
 
 </div>
 </html>

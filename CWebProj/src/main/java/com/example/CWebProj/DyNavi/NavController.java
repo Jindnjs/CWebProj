@@ -1,4 +1,4 @@
-package com.example.CWebProj.Nav;
+package com.example.CWebProj.DyNavi;
 
 import java.util.List;
 import java.util.Map;
