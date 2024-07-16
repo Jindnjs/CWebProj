@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.CWebProj.Banner.BannerService;
-import com.example.CWebProj.Nav.MenuCateg;
-import com.example.CWebProj.Nav.NavService;
+import com.example.CWebProj.DyNavi.MenuCateg;
+import com.example.CWebProj.DyNavi.NavService;
 
 import lombok.RequiredArgsConstructor;
 

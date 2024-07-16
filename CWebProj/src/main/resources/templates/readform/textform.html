@@ -2,7 +2,7 @@
 <div layout:fragment="content_main">
 <link href="/assets/css/board_style.css" rel="stylesheet">
 
-<h2 class="mb-3">자유게시판</h2>
+<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
 					        	<div class="col-auto">
@@ -97,7 +97,8 @@
 					                    </a>
 					                </li>
 					            </ul>
-					        </div>
-
+					        </div>  
+<button th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}"></button>
+href = "/form2/create/9"
 </div>
 </html>

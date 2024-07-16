@@ -1,4 +1,4 @@
-package com.example.CWebProj.Nav;
+package com.example.CWebProj.DyNavi;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
