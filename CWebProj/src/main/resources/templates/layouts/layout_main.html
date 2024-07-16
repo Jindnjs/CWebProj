@@ -42,14 +42,14 @@
 
 
 	<!-- 헤더&네비게이션 메뉴 -->
- 	<div th:replace="fragment/header::header"></div>
+ 	<div th:replace="~{fragment/header::header}"></div>
  	
 	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
 	<th:block layout:fragment="content_main"></th:block>
 	<!-- 기본 템플릿 안에 삽입될 내용 End -->
 	
 	<!-- footer메뉴 -->
-   	<div th:replace="fragment/footer::footer"></div>
+   	<div th:replace="~{fragment/footer::footer}"></div>
    	
    	
 	<!-- Vendor JS Files -->

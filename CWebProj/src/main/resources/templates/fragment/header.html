@@ -33,7 +33,7 @@
                 
                 ************************************************************
                 ======================================================== -->
-                <a href="/index">
+                <a href="/">
                     <img src="images/7.png" alt="마이애미 아름다운 장로 교회" height="60px">
                 </a>
                 
@@ -45,6 +45,20 @@
                 ************************************************************
                 ======================================================== -->
                 <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li th:each="groupMenu, iterStat : ${groupedMenuCategories}" class="dropdown">
+	                        <a href="#"><span th:text="${groupMenu.value[0].menuName}"></span> 
+	                        	<i class="bi bi-chevron-down toggle-dropdown"></i>
+	                        </a>
+                            <ul>
+                                <li th:each="category : ${groupMenu.value}"><a href="#" 
+	        	th:text="${category.categoryName}"></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+                <!-- <nav id="navmenu" class="navmenu">
                     <ul>
                         <li class="dropdown"><a href="#"><span>교회 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
@@ -70,7 +84,7 @@
                         </li>
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-                </nav>
+                </nav> -->
             </div>
         </div>
     </header>

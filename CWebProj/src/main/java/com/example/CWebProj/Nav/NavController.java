@@ -20,11 +20,8 @@ public class NavController {
 	public String readNav(Model model) {
 		
 		List<MenuCateg> menuCategories = navService.getAllMenuCategories();
-		System.out.println(menuCategories.get(0).getMenuName());
-        // 메뉴 이름을 기준으로 그룹화하여 Map으로 변환
         Map<Integer, List<MenuCateg>> groupedMenuCategories = menuCategories.stream()
                 .collect(Collectors.groupingBy(MenuCateg::getMenuRate));
-
         model.addAttribute("groupedMenuCategories", groupedMenuCategories);
 
 		return "/nav/nav";
