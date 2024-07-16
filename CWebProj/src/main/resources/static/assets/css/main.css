@@ -3046,6 +3046,111 @@ section,
 }
 
 /*--------------------------------------------------------------
+# Blog Posts Section
+--------------------------------------------------------------*/
+
+article {
+  background-color: var(--surface-color);
+  padding: 30px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.post-img {
+  max-height: 240px;
+  margin: -30px -30px 15px -30px;
+  overflow: hidden;
+}
+
+.post-category {
+  font-size: 18px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+}
+
+.title a {
+  color: var(--heading-color);
+  transition: 0.3s;
+}
+
+.title a:hover {
+  color: var(--accent-color);
+}
+
+.post-author-img {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.post-author {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.post-date {
+  font-size: 18px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  margin-bottom: 0;
+}
+
+.post-meta{
+	display:flex;
+	align-items:flex-end;
+}
+
+
+/*--------------------------------------------------------------
+# Blog Pagination Section
+--------------------------------------------------------------*/
+.blog-pagination {
+  padding-top: 0;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+}
+
+.blog-pagination ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.blog-pagination li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.blog-pagination li a {
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-pagination li a.active,
+.blog-pagination li a:hover {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.blog-pagination li a.active a,
+.blog-pagination li a:hover a {
+  color: var(--contrast-color);
+}
+
+.btn_write{
+	text-align:right;
+}
+
+/*--------------------------------------------------------------
 # 푸터의 글씨 크기 조절
 --------------------------------------------------------------*/
 .footer .credits {

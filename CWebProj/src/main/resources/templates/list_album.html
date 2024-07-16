@@ -37,46 +37,49 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 
-<style>
-    .sidebar {
-      margin-left: 100px;
-      height: 100vh;
-      padding: 20px;
-      background-color: #f8f9fa;
-      border-left: 1px solid #dee2e6;
-      border-right: 1px solid #dee2e6;
-      border-top: 1px solid #dee2e6;
-      border-bottom: 1px solid #dee2e6;
-      width:230px
-    }
-    .sidebar .sidebar-header {
-      padding: 15px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      background-color: #6c757d;
-      color: white;
-      text-align: center;
-    }
-    .sidebar .list-group-item {
-      border: 1px solid #dee2e6;
-      border-width: 0 1px 1px 1px;
-      padding: 13px 15px;
-      background-color: white; /* 배경색 흰색으로 */
-    }
-    
-  
-    /* 마우스 올렸을 때 색 변경 */
-    .sidebar .list-group-item:hover {
-      background-color: #e9ecef;
-    }
-  </style>
+    <style>
+        .sidebar {
+            margin-left: 100px;
+            height: 100vh;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+            width: 230px
+        }
+
+        .sidebar .sidebar-header {
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background-color: #6c757d;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar .list-group-item {
+            border: 1px solid #dee2e6;
+            border-width: 0 1px 1px 1px;
+            padding: 13px 15px;
+            background-color: white;
+            /* 배경색 흰색으로 */
+        }
+
+
+        /* 마우스 올렸을 때 색 변경 */
+        .sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+    </style>
 
 
 </head>
 
 <body>
     <!-- 심규성 -->
-    <header id="header" class="header sticky-top" >
+    <header id="header" class="header sticky-top">
         <!---------------------------------------------------->
         <!----------------- 로그인 회원가입 탑 바 ----------------->
         <!-----------------                  ----------------->
@@ -90,11 +93,11 @@
                     <a href="/signup" class="">회원가입</a>
                 </div>
             </div>
-        </div><!-- End Top Bar -->       
+        </div><!-- End Top Bar -->
         <!----------------- 로그인 회원가입 탑 바 ----------------->
 
 
-        
+
         <!---------------------------------------------------->
         <!----------------- 네비 바 및 교회 로고  ----------------->
         <!-----------------    음영 효과 적용    ----------------->
@@ -109,11 +112,11 @@
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li class="dropdown"><a href="#"><span>교회 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <li class="dropdown"><a href="#"><span>커뮤니티</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
-                                <li><a href="#">교회 소개</a></li>
-                                <li><a href="#">예배 안내</a></li>
-                                <li><a href="#">찾아오는 길</a></li>
+                                <li><a href="#">교회소식</a></li>
+                                <li><a href="#">자유게시판</a></li>
+                                <li><a href="#">교회앨범</a></li>
                             </ul>
                         </li>
                         <li class="dropdown"><a href="#"><span>주보/칼럼</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -133,48 +136,294 @@
                         </li>
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-                </nav>         
+                </nav>
             </div>
         </div>
     </header>
     <!-----------------   네비바 및 교회 로고   ----------------->
-    
-    
-    
+
+
+
     <!-------------------- 사이드 바 v1 -------------------->
-	<main id="main">
-		<section>
-		   <div class="container-fluid ">
-			   <div class="row">
-			   
-			   		<!-- 사이드 바 -->
-				    <nav class="col-md-2 sidebar">
-				      <div class="sidebar-header">교회 안내</div>
-				      <div class="list-group">
-				        <a href="#" class="list-group-item list-group-item-action">교회 소개</a>
-				        <a href="#" class="list-group-item list-group-item-action">예배 안내</a>
-				        <a href="#" class="list-group-item list-group-item-action">찾아오는 길</a>
-				      </div>
-				    </nav>
-				    
-				    
-				    <div class="col-md-7 ">
-				      <!-- 메인 콘텐츠 -->
-				      <h1>교회 갤러리</h1>
-				      <p>아름다운한인장로교회 갤러리 페이지 입니다.</p>
-				    </div>
-			  </div>
-		  </div>
-		</section>
-	</main>
-	<!-------------------- 사이드 바 v1 -------------------->
-	
-	<div th:each="notice : ${notices}">
-            <img th:src="|${downpath}/${notice.image1}|" height="100px">
-            [[${notice.title}]]
-            <br>
-        </div>
-    
+    <main id="main">
+        <section>
+            <div class="container-fluid ">
+                <div class="row">
+                    <!-- 사이드 바 -->
+                    <nav class="col-md-2 sidebar">
+                        <div class="sidebar-header">커뮤니티</div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">교회소식</a>
+                            <a href="#" class="list-group-item list-group-item-action">자유게시판</a>
+                            <a href="#" class="list-group-item list-group-item-action" style="background-color: #e9ecef">교회앨범</a>
+                        </div>
+                    </nav>
+
+
+                    <div class="col-md-7 ">
+                        <!-- 메인 콘텐츠 -->
+                        <h1>교회 앨범</h1>
+                        <div class="btn_write">
+                            <p><input type="file" name="file">
+                            <input type="submit" value="등록">
+                            <input type="submit" value="글쓰기">
+                        </div>
+
+                        <!-- Blog Posts Section -->
+                        <setion>
+                            <div class="container">
+                                <div class="row gy-4">
+
+                                    <div class="col-lg-4">
+                                        <article>
+                                            <!-- img src에 이미지 데이터 불러오기 -->
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 1</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-end">
+                                                <img src="assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 2</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 3</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-3.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 4</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-4.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 5</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-5.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 6</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-6.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 7</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 8</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+
+                                    <div class="col-lg-4">
+                                        <article>
+
+                                            <div class="post-img">
+                                                <img src="/images/1.jpg" alt="" class="img-fluid">
+                                            </div>
+
+                                            <h2 class="title">
+                                                <a href="blog-details.html">이미지 9</a>
+                                            </h2>
+
+                                            <div class="d-flex align-items-end">
+                                                <img src="assets/img/blog/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
+                                                <div class="post-meta">
+                                                    <p class="post-author">작성자</p>
+                                                    <p class="post-date">
+                                                        <time datetime="2022-01-01">날짜</time>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </article>
+                                    </div><!-- End post list item -->
+                                </div>
+                            </div>
+
+                        </section><!-- /Blog Posts Section -->
+
+                        <!-- Blog Pagination Section -->
+                        <section id="blog-pagination" class="blog-pagination section">
+
+                            <div class="container">
+                                <div class="d-flex justify-content-center">
+                                    <ul>
+                                        <li><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                                        <li><a href="#"  class="active">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li>...</li>
+                                        <li><a href="#">10</a></li>
+                                        <li><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                           </section>
+                        <!-- /Blog Pagination Section -->
+                    </div>
+                </div>
+            </div>
+    </main>
+    <!-------------------- 사이드 바 v1 -------------------->
+
+
+    <div th:each="notice : ${notices}">
+        <img th:src="|${downpath}/${notice.image1}|" height="100px">
+        [[${notice.title}]]
+        <br>
+    </div>
+
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
 
@@ -228,6 +477,19 @@
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
 
+
+    <!-- Vendor JS Files -->
+    <script src="assets_i/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets_i/vendor/php-email-form/validate.js"></script>
+    <script src="assets_i/vendor/aos/aos.js"></script>
+    <script src="assets_i/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets_i/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets_i/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets_i/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets_i/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
