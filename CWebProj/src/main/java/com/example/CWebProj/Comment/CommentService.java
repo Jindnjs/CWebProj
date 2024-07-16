@@ -17,6 +17,8 @@ public class CommentService {
 	@Autowired
 	private BoardService boardService;
 	
+	
+	
 	public void create(String content, Integer id) {
 		Comment comment = new Comment();
 		comment.setContent(content);
@@ -29,5 +31,13 @@ public class CommentService {
 	public Comment getComment(Integer id) {
 		Optional<Comment> op = commentRepository.findById(id);
 		return op.get();
+	}
+	
+	public void update(Comment comment) {
+		commentRepository.save(comment);
+	}
+
+	public void delete(Integer commentid) {
+		commentRepository.deleteById(commentid);
 	}
 }

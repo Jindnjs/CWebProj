@@ -1,13 +1,14 @@
 package com.example.CWebProj.Board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/board")
 @Controller
@@ -16,21 +17,32 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@GetMapping("/")
-	public String index() {
-		return "/board/list";
+	@Autowired
+	private BoardRepository boardRepository;
+	
+	
+	
+	@GetMapping("/list")
+	public String list(Model model) {
+		List<Board> boards = boardRepository.findAll();
+		model.addAttribute("boards", boards);
+		
+		return "jihwanboardlist";
 	}
 	
-	@GetMapping("/create_form")
+	@GetMapping("/create")
 	public String create() {
-		return "create_form";
+		return "jihwanboardcreate";
 	}
 	
-	@PostMapping("/create_form")
-	public String create(@ModelAttribute Board board,
-						 @RequestParam("file") MultipartFile file1) {
-		boardService.create(board, file1);
+	@PostMapping("/create")
+	public String create(@ModelAttribute Board board) {
+		boardService.create(board);
 		return "redirect:/board/list";
 	}
 	
+	@GetMapping("/detail/{id}")
+	public String bdetail() {
+		return "boarddetail";
+	}
 }

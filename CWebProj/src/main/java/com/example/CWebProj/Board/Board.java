@@ -12,14 +12,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Board {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -27,9 +25,17 @@ public class Board {
 	@Column(length=200)
 	private String title;
 	
+	private String author;
+	
 	private String content;
 	
 	private LocalDateTime createDate;
+	
+	private Integer viewcount;
+	
+	private boolean notice;
+	
+	private Integer menuId;
 	
 	private String image1;
     
