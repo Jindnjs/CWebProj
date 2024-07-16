@@ -10,24 +10,12 @@ public class TestController {
 	public String test() {
 		return "test";
 	}
-	@GetMapping("/sidebar")
-	public String sidebar() {
-		return "sidebar_test";
-	}
-	@GetMapping("/board")
-	public String board() {
-		return "board_sample";
-	}
-	@GetMapping("/create")
-	public String create() {
-		return "create_form_sample";
-	}
 	@GetMapping("/sidd")
 	public String sidd() {
-		return "lay_board)sample";
+		return "/readform/textform";
 	}
 	@GetMapping("/cccc")
 	public String cccc() {
-		return "lay_create_form";
+		return "/createform/lay_create_form";
 	}
 }
