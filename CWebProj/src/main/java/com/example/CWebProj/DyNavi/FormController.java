@@ -73,16 +73,15 @@ public class FormController {
 		
 		return "createform/img_create_form";
 	}
-	@PostMapping("/form3/create")
-	public String form3create(@PathVariable("menuId") Integer menuId,
+	@PostMapping(value = "/form3/create/{id}")
+	public String form3create(@PathVariable("id") Integer menuId,
 			@RequestParam("title") String title,
-			@RequestParam("multipartFiles") List<MultipartFile> multipartFiles) throws IOException {
+			@RequestParam("multipartFiles") MultipartFile multipartFile) throws IOException {
 		System.out.println("asdf");
 		Board board = new Board();
 		board.setMenuId(menuId);
 		board.setTitle(title);
-		
-		boardService.create(board, multipartFiles);
+		boardService.create(board, multipartFile);
 		
 		return "redirect:/form3/"+menuId;
 	}

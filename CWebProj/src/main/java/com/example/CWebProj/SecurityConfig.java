@@ -17,18 +17,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
+	
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+				
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-				.formLogin((formLogin) -> formLogin.loginPage("/signin").defaultSuccessUrl("/"))
 				.csrf(csrf -> csrf
-		                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-		            )
+	            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+	            )
+				.formLogin((formLogin) -> formLogin.loginPage("/signin").defaultSuccessUrl("/"))
+				
 				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
 						.logoutSuccessUrl("/").invalidateHttpSession(true));
-			
+				
 		return http.build();
 	}
 

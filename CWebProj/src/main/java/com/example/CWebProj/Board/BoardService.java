@@ -1,7 +1,6 @@
 package com.example.CWebProj.Board;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -19,17 +18,14 @@ public class BoardService {
 
 	private final S3Service s3Service;
 
-	public void create(Board board, List<MultipartFile> multipartFiles) throws IOException {
+	public void create(Board board, MultipartFile multipartFile) throws IOException {
 		
-		for (MultipartFile multipartFile : multipartFiles) {
+		if(!multipartFile.isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid + "_" + multipartFile.getOriginalFilename();
-			
-			String imgurl = s3Service.uploadFile(multipartFile, fileName);
-			
-			board.getImageLinks().add(imgurl);
+			s3Service.uploadFile(multipartFile, fileName); 
+			board.setImageLink(fileName);
 		}
 		boardRepository.save(board);
-	}
 
-}
+	}}

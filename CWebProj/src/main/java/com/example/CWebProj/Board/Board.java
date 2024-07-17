@@ -46,11 +46,7 @@ public class Board {
    private Integer menuId;
    
    //썸네일
-   //private String imageLink;
-   
-   //앨범사진 리스트
-   @ElementCollection
-   private List<String> imageLinks;
+   private String imageLink;
    
     //댓글
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
