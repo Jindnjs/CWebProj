@@ -49,7 +49,7 @@
       border-right: 1px solid #dee2e6;
       border-top: 1px solid #dee2e6;
       border-bottom: 1px solid #dee2e6;
-      width:230px
+      width:230px;
     }
     .sidebar .sidebar-header {
       padding: 15px;
@@ -63,19 +63,18 @@
       border: 1px solid #dee2e6;
       border-width: 0 1px 1px 1px;
       padding: 13px 15px;
-      background-color: white; /* 배경색 흰색으로 */
     }
     
-  
     /* 마우스 올렸을 때 색 변경 */
     .sidebar .list-group-item:hover {
       background-color: #e9ecef;
     }
+    .active-category {
+    background-color: #dee2e6; 
+    font-weight: bold;
+	}
   </style>
   
-  
-	
-	
 	<!-- =======================================================
     ************************************************************
                     
@@ -114,15 +113,14 @@
 	<!-- 헤더&네비게이션 메뉴 -->
  	<div th:replace="~{fragment/header::header}"></div>
  	
- 	
- 	
+
 	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
 	<main >
 		<section>
 			<div class="container-fluid ">
 				<div class="row">
 					<!-- 사이드바 -->
-					 <div class="col-md-2 sidebar">
+					 <div class="col-md-2 sidebar"> 
 					<div th:replace="~{fragment/sidebar::sidebar}"></div>
 					</div>
 					

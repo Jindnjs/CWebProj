@@ -31,7 +31,6 @@ public class FormController {
 	public String form2(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("MenuCate", navService.getMenu(id));
 		model.addAttribute("sidebar", navService.getSidebar(id));
-		
 //		model.addAllAttributes("llist 
 		return "readform/textform";
 	}
