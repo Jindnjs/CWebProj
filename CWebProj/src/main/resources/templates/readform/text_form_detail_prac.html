@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div th:text="${board.title}"></div>
+	<div th:text="${board.content}"></div>
+
+	<form action="@{|/comment/create/${board.id}|}" method="post">
+		<textarea name="content" id="content" row="10"></textarea>
+		<input type="submit" value="답변">
+	</form>
+
+</body>
+</html>

@@ -52,5 +52,5 @@ public class Board {
     private List<Comment> commentList;
     
     //댓글 수
+    private Integer reply;
 }
-//test

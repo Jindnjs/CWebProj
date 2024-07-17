@@ -1,8 +1,12 @@
 package com.example.CWebProj.Board;
 
-import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
-import com.example.CWebProj.AwsBucket.S3Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +16,22 @@ public class BoardService {
 
 	private final BoardRepository boardRepository;
 
-	private final S3Service s3Service;
-
+	public void boardcreate(Board board){
+		board.setCreateDate(LocalDateTime.now());
+		board.setViewcount(0);
+		board.setNotice(false);
+		this.boardRepository.save(board);
+	}
+	
+	public Page<Board> getBoardlist(int page){
+        
+		Pageable pageable = PageRequest.of(page, 12);
+		return this.boardRepository.findAll(pageable);
+	}
+	
+	public Board getBoard(Integer id) {
+		Optional<Board> board = boardRepository.findById(id);
+		return board.get();
+	}
+	
 }
