@@ -6,13 +6,41 @@
 </head>
 <body>
 
+	
+	<!-- 
+	<a th:href="@{|/board/delete/${question.id}|}" class="btn btn-danger">삭제</a>
+	<a th:href="@{|/board/update/${question.id}|}" class="btn btn-primary">수정</a>
+	
+	<h5 th:text="|${#lists.size(board.commentList)}개의 답변이 있습니다.|"></h5>
+	
+	<ul>
+        <li th:each="answer : ${board.commentList}" th:text="${comment.content}"></li>
+	</ul>
+	 -->
 	<div th:text="${board.title}"></div>
 	<div th:text="${board.content}"></div>
-
+	
+	<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+	<div>
+    	<ul>
+        	<li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+    	</ul>
+	</div>
 	<form action="@{|/comment/create/${board.id}|}" method="post">
+		
+		
 		<textarea name="content" id="content" row="10"></textarea>
 		<input type="submit" value="답변">
 	</form>
+
+	<!-- 
+	<div class="my-3">
+		<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
+	    	sec:authorize="isAuthenticated()"
+		    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+		    th:text="수정"></a>
+	</div>
+	-->
 
 </body>
 </html>

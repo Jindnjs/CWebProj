@@ -1,4 +1,4 @@
-	package com.example.CWebProj.Comment;
+package com.example.CWebProj.Comment;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

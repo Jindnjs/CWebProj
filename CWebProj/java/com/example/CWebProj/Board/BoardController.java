@@ -19,11 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 
 	private final BoardService boardService;
-	
 	@Value("${cloud.aws.s3.endpoint}")
 	private String downpath;
-	
-	
 	
 	@GetMapping("/create")
 	public String boardcreate() {
@@ -35,8 +32,6 @@ public class BoardController {
 		boardService.boardcreate(board);
 		return "redirect:/board/list";
 	}
-	
-	
 	
 	@GetMapping("/list")
 	public String boardlist(Model model, @RequestParam(value="page", defaultValue="0") int page) {
@@ -54,15 +49,4 @@ public class BoardController {
 	}
 	
 	
-	
-	@GetMapping("/update/{id}")
-	public String boardupdate(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("board", boardService.getBoard(id));
-		return "createform/board_update_prac";
-	}
-	
-	@PostMapping("/update/")
-	public String boardupdate(@ModelAttribute Board board) {
-		return "";
-	}
 }
