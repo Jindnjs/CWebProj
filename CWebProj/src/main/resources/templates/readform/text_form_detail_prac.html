@@ -20,10 +20,10 @@
 	<div th:text="${board.title}"></div>
 	<div th:text="${board.content}"></div>
 	
-	<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+	<h5 th:text="|${#lists.size(board.commentList)}개의 답변이 있습니다.|"></h5>
 	<div>
     	<ul>
-        	<li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+        	<li th:each="comment : ${board.commentList}" th:text="${comment.content}"></li>
     	</ul>
 	</div>
 	<form action="@{|/comment/create/${board.id}|}" method="post">
