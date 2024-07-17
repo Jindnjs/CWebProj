@@ -54,3 +54,4 @@ public class Board {
     //댓글 수
     private Integer reply;
 }
+// 확인용 택스트
