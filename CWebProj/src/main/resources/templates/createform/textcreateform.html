@@ -6,13 +6,15 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<form>
+<form method="post">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
 							<div class="mb-4">
-								<input type="text" name="subject" id="subject" class="form-control" placeholder="제목">
+								<input type="text" name="title" id="title" class="form-control" placeholder="제목">
 								
 							</div>
 							<div class="mb-4">
-								<input type="text" name="subject" id="subject" class="form-control" placeholder="작성자">
+								<input type="text" name="author" id="author" class="form-control" placeholder="작성자">
 							</div>
 							<div class="mb-4">
 								
