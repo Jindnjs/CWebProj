@@ -18,6 +18,13 @@ public class AuthoController {
 		return "autho/admin";
 	}
 	
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
+	@GetMapping("/manager")
+	public String manager() {
+		
+		return "autho/manager";
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/user")
 	public String user() {
