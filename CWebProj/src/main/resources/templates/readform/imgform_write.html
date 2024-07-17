@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout_board}">
+<div layout:fragment="content_main">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+    </head>
+
+    <body>
+        <form>
+            <div class="mb-4">
+                <input type="text" name="subject" id="subject" class="form-control" placeholder="제목">
+
+
+            </div>
+            <div class="mb-4">
+                <input type="text" name="subject" id="subject" class="form-control" placeholder="작성자">
+            </div>
+            <div class="mb-4">
+
+                <textarea name="content" id="summernote" rows="10"></textarea>
+            </div>
+            <div class="d-flex justify-content-end mb-4">
+                <a class="btn btn-primary me-2">취소</a>
+                <input type="submit" value="저장하기" class="btn btn-primary">
+            </div>
+        </form>
+        
+        <form action="/create" method="post" enctype="multipart/form-data">
+<p>제목: <input type="text" name="title">
+<p>내용: <input type="text" name="content">
+<p><input type="file" name="file">
+<p><input type="submit" name="등록">
+</form>
+
+    </body>
+
+</html>
