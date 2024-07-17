@@ -20,13 +20,14 @@ public class CUser {
 	private Integer cid;
 
 	@Column(unique = true)
-	private String username; // for SpringSecurity Policy 아이디
-	private String password; // for SpringSecurity Policy 비밀번호
-	private boolean enabled; // for SpringSecurity Policy
-	private String role; // for SpringSecurity Policy 권한
+	private String username; // 아이디
+	private String password; // 비밀번호
+	private boolean enabled; //
+	private String role; // 권한
 
 	@Column(unique = true)
 	private String cemail; // 이메일
 	private String cname; //이름
 	private LocalDateTime cdate; // 날짜
+	
 }

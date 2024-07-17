@@ -12,5 +12,5 @@ import jakarta.transaction.Transactional;
 public interface CUserRepository extends JpaRepository<CUser, Integer> {
 	Optional<CUser> findByusername(String username); // login check
 
-	CUser findByCemail(String cemail);
+	Optional<CUser> findByCemail(String cemail);
 }
