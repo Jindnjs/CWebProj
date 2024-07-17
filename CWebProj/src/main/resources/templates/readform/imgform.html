@@ -2,6 +2,6 @@
 <div layout:fragment="content_main">
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 앨범
-
+<a th:href="@{|${MenuCate.boardLink}/create/${MenuCate.id}|}">앨범 올리기</a>
 </div>
 </html>

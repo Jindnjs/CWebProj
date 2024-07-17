@@ -7,6 +7,7 @@ import com.example.CWebProj.Comment.Comment;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,7 +46,11 @@ public class Board {
    private Integer menuId;
    
    //썸네일
-   private String imageLink;
+   //private String imageLink;
+   
+   //앨범사진 리스트
+   @ElementCollection
+   private List<String> imageLinks;
    
     //댓글
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
