@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.col-lg-4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
+  
+  .img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+  
