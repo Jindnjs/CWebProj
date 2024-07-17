@@ -17,23 +17,33 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-				.formLogin((formLogin) -> formLogin.loginPage("/signin").defaultSuccessUrl("/"))
-				
-				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-						.logoutSuccessUrl("/").invalidateHttpSession(true));
-			
-		return http.build();
-	}
+	  @Bean
+	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	        http
+	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+	            	.requestMatchers(new AntPathRequestMatcher("/autho/user")).authenticated()
+	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
+	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
+	                
+	            .formLogin((formLogin) -> formLogin
+	            		.loginPage("/signin")
+	            		.defaultSuccessUrl("/"))
+								
+	            .logout((logout) -> logout
+	            		.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+	            		.logoutSuccessUrl("/")
+	                .invalidateHttpSession(true));
+	        
+	        return http.build();
+	    }
 
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
+	
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
