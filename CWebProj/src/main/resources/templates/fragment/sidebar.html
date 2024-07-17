@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <div th:fragment="sidebar">
 
 <!-- 사이드 바 -->
 <nav>
 	<div th:text="${sidebar[0].menuName}" class="sidebar-header"></div>
-	<div class="list-group">
-	  	<a th:each="category : ${sidebar}"
+	<div th:each="category : ${sidebar}">
+	  	<a 
 	  	   th:href="${category.boardLink + '/' + category.id}" 
 	  	   th:text="${category.categoryName}" 
+	  	   th:classappend="${category.id eq id} ? 'active-category' : ''"
 	  	   class="list-group-item list-group-item-action"></a>
 	</div>
 </nav>

@@ -17,8 +17,10 @@ public class TestController {
 	public String test() {
 		return "test";
 	}
-	@GetMapping("/sidd")
-	public String sidd() {
+	@GetMapping("/sidd/9")
+	public String sidd(Model model) {
+		model.addAttribute("MenuCate", navService.getMenu(9));
+		model.addAttribute("sidebar", navService.getSidebar(9));
 		return "readform/textform";
 	}
 	@GetMapping("/cccc/9")
