@@ -1,0 +1,13 @@
+<html layout:decorate="~{layouts/layout_board}">
+<div layout:fragment="content_main">
+
+ <div class="container">
+<h3>제목 : <div th:text="${board.title}"></div></h3><br>
+작성자 : <div th:text="${board.author}"></div><br>
+작성일시 : <div  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></div><br>
+내용 : <div th:text="${board.content}"></div><br>
+아이디 : <div th:text="${sidebar}"></div><br>
+<a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-primary">삭제</a>
+</div>
+</div>
+</html>

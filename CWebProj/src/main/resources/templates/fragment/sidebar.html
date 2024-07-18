@@ -10,7 +10,7 @@
 	  	<a 
 	  	   th:href="${category.boardLink + '/' + category.id}" 
 	  	   th:text="${category.categoryName}" 
-	  	   th:classappend="${category.id eq id} ? 'active-category' : ''"
+	  	   th:classappend="${category.id eq menuId} ? 'active-category' : ''"
 	  	   class="list-group-item list-group-item-action"></a>
 	</div>
 </nav>

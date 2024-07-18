@@ -1,7 +1,9 @@
 package com.example.CWebProj.DyNavi;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.io.IOException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +27,10 @@ public class FormController {
 	private final BoardService boardService;
 	
 	//form1
-	@GetMapping(value = "/form1/{id}")
-	public String form1(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("MenuCate", navService.getMenu(id));
-		model.addAttribute("sidebar", navService.getSidebar(id));
+	@GetMapping(value = "/form1/{menuId}")
+	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		
 //		model.addAllAttributes("llist 
 		return "readform/bodyform";
@@ -38,23 +40,54 @@ public class FormController {
 	
 	//form2
 	
-	@GetMapping(value = "/form2/{id}")
-	public String form2(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("MenuCate", navService.getMenu(id));
-		model.addAttribute("sidebar", navService.getSidebar(id));
-//		model.addAllAttributes("llist 
+	
+	@GetMapping(value = "/form2/{menuId}")
+	public String form2(Model model, @PathVariable("menuId") Integer menuId) {
+		List<Board> boards=this.boardService.getAllboard();
+		List<Board> filterboards=boards.stream().filter(board->board.getMenuId()==menuId).collect(Collectors.toList());
+		Collections.reverse(filterboards);
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("boardList", filterboards);
+		//model.addAttribute("id", id);
+
 		return "readform/textform";
+		}
+		@GetMapping(value = "/form2/create/{menuId}")
+		public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
+			model.addAttribute("MenuCate", navService.getMenu(menuId));
+			model.addAttribute("sidebar", navService.getSidebar(menuId));
+			return"createform/textcreateform";
+		}
+	@PostMapping(value = "/form2/create/{menuId}")
+	public String form2create(@PathVariable("menuId") Integer menuId,@ModelAttribute Board board) {
+		this.boardService.boardcreate(menuId, board);
+		return "redirect:/form2/"+menuId;
 	}
-//	@GetMapping(value = "/form2/create/{id}")
-//	public String form2create(Model model, @PathVariable("id") Integer id) {
-//		model.addAttribute("MenuCate", navService.getMenu(id));
-//		retrun "crateform";
-//	}
-//	href = 
-//	
-//	@PostMapping()
-	
-	
+	@GetMapping(value = "/form2/{menuId}/detail/{boardId}")
+	public String form2detail(Model model, @PathVariable("menuId") Integer menuId,@PathVariable("boardId") Integer boardId){
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("board", this.boardService.getboard(boardId));
+		return "readform/detail_test";
+	}
+	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
+	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		this.boardService.deleteboard(boardId);
+		return "redirect:/form2/"+menuId;
+	}
+	@GetMapping(value = "/form2/{menuId}/update/{boardId}")
+	public String updateboard(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("board", this.boardService.getboard(boardId));
+		return "createform/update_test";
+	}
+	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
+	public String updateboard(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		this.boardService.boardcreate(menuId, board);
+		return "redirect:/form2/"+menuId;
+	}
 	
 	
 	//form3

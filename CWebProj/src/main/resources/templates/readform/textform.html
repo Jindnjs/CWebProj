@@ -1,6 +1,6 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
-<link href="/assets/css/board_style.css" rel="stylesheet">
+
 
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 					    <div class="container mt-3">
@@ -41,46 +41,27 @@
 					        </tr>
 					        </thead>
 					        <tbody>
-						        <tr >
-						            <td style="background-color: #DCDCDC;">공지1</td>
-						            <td style="background-color: #DCDCDC;">
-						            	<a href="#">자유 게시판 사용에 대한 공지 사항</a>
-						            	<span>(12334)</span>
-						            </td>
-						            <td style="background-color: #DCDCDC;">2024-07-13</td>
-						            <td style="background-color: #DCDCDC;">운영자</td>
-						            <td style="background-color: #DCDCDC;">15625</td>
-						        </tr>
-						        <tr>
-						            <td>315</td>
-						            <td>
-						            	<a href="#">11111</a>
+						         <tr th:each="board : ${boardList}" th:if="${board.notice}">						    
+						            <td Style="background-color:#DCDCDC">공지</td>
+						            <td Style="background-color:#DCDCDC">
+						            	<a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}"></a>  
 						            	<span>(5)</span>
 						            	</td>
-						            <td>2024-07-13</td>
-						            <td>심규성</td>
-						            <td>690</td>
+						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
+						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
-						        <tr>
-						            <td>314</td>
-						            <td>
-						            	<a href="#">자유게시판</a>
-						            	<span>(3)</span>
-						            </td>
-						            <td>2024-07-13</td>
-						            <td>심규성</td>
-						            <td>2116</td>
+						        <tr th:each="board : ${boardList}" th:if="${!board.notice}" class="normal-row" style="cursor: pointer;">						    
+						            <td  class="number"></td>
+						           		<td>
+						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
+						            	<span>(5)</span>
+						            	</td>
+						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+						            <td  th:text="${board.author}"></td>
+						            <td  th:text="${board.viewcount}"></td>
 						        </tr>
-						        <tr>
-						            <td>314</td>
-						            <td>
-						            	<a href="#">자유게시판</a>
-						            	<span>(3)</span>
-						            </td>
-						            <td>2024-07-13</td>
-						            <td>심규성</td>
-						            <td>2116</td>
-						        </tr>
+						       
 						       
 					        </tbody>
 					    </table>
@@ -108,7 +89,24 @@
 					                </li>
 					            </ul>
 					        </div>  
-<button th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}"></button>
-href = "/form2/create/9"
+<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var normalRows = document.querySelectorAll('tr.normal-row');
+            var totalCount = normalRows.length;
+            normalRows.forEach(function(row, index) {
+                row.querySelector('.number').textContent = totalCount - index;
+            });
+        });
+    </script>
+    
+    <script th:inline="javascript">
+    function redirectToDetail(boardId, menuCateId) {
+        var url = '/board/detail/' + boardId + '?MenuCateid=' + menuCateId;
+        window.location.href = url;
+    }
+</script>
+
 </div>
 </html>
