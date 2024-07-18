@@ -22,14 +22,15 @@ public class SecurityConfig {
 	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	        http
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-              .csrf(csrf -> csrf
-	            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-	            )
+	            		
 	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()            
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/user")).authenticated()
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
 	              .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
 	                
+		            .csrf(csrf -> csrf
+		                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		                )
 	              .formLogin((formLogin) -> formLogin
                     .loginPage("/signin")
                     .defaultSuccessUrl("/"))
