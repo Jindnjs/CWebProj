@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class Board {
    private String author;
    
    //글 내용
+   @Column(columnDefinition = "longtext")
    private String content;
    
    //업로드 날짜
