@@ -1,43 +1,38 @@
 <html layout:decorate="~{layouts/layout_board}">
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Blog - Impact Bootstrap Template</title>
-<meta content="" name="description">
-<meta content="" name="keywords">
-
-<!-- Favicons -->
-<link href="/assets_i/img/favicon.png" rel="icon">
-<link href="/assets_i/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<!-- Vendor CSS Files -->
-<link href="/assets_i/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="/assets_i/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="/assets_i/vendor/aos/aos.css" rel="stylesheet">
-<link href="/assets_i/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="/assets_i/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-<!-- =======================================================
-  * Template Name: Impact
-  * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-
-<!-- Main CSS File -->
-<link href="/assets_i/css/main.css" rel="stylesheet">
 <div layout:fragment="content_main">
+    <link href="/assets_i/css/img_board_style.css" rel="stylesheet">
     <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 
     <!-- Blog Posts Section -->
     <section id="blog-posts" class="blog-posts section">
         <div class="container">
+            <div class="d-flex justify-content-end mb-4">
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">사진올리기</button>
+            </div>
+            <div class="modal fade" id="scrollingLong2" tabindex="-1" aria-labelledby="scrollingLongModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollingLongModalLabel2">사진 올리기</h5>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class="mb-0">
+                                    제목 <input class="form-control form-control-sm" id="sizingInputSm" type="text" />
+                                </div>
+                                <label class="form-label" for="customFileSm">파일 선택</label>
+                                <input class="form-control form-control-sm" id="customFileSm" type="file" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button">작성</button>
+                            <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row gy-4">
-            
                 <div class="col-lg-4">
                     <article>
                         <div class="post-img">
@@ -163,7 +158,7 @@
 
                     </article>
                 </div><!-- End post list item -->
-                
+
                 <div class="col-lg-4">
                     <article>
                         <div class="post-img">
@@ -184,7 +179,7 @@
 
                     </article>
                 </div><!-- End post list item -->
-                
+
                 <div class="col-lg-4">
                     <article>
                         <div class="post-img">
@@ -205,7 +200,7 @@
 
                     </article>
                 </div><!-- End post list item -->
-                
+
                 <div class="col-lg-4">
                     <article>
                         <div class="post-img">
