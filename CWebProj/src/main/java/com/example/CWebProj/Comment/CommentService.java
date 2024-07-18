@@ -1,9 +1,11 @@
 package com.example.CWebProj.Comment;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,13 @@ public class CommentService {
 	
 	private final BoardService boardService;
 	
-	
+	public void create(Board board,String content) {
+		Comment comment=new Comment();
+		comment.setBoard(board);
+		comment.setContent(content);
+		comment.setDate(LocalDateTime.now());
+		this.commentRepository.save(comment);
+	}
 	
 	
 	

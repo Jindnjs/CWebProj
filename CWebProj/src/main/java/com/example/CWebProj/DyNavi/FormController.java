@@ -85,8 +85,8 @@ public class FormController {
 	}
 	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
-		this.boardService.boardcreate(menuId, board);
-		return "redirect:/form2/"+menuId;
+		this.boardService.updateboard(board);
+		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
 	
 	
