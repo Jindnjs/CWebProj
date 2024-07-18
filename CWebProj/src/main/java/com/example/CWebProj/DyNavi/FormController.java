@@ -113,17 +113,6 @@ public class FormController {
 			@PathVariable("boardId") Integer boardId) {
         return boardService.read(menuId, boardId);
     }
-//	@GetMapping(value = "/form3/{menuId}/detail/{boarId}")
-//	public String form3detail(Model model, @PathVariable("menuId") Integer menuId,
-//			@PathVariable("boardId") Integer boardId) {
-//		Board board = boardService.read(menuId, boardId);
-//		model.addAttribute("sidebar", navService.getSidebar(menuId));
-//		
-//		model.addAttribute("board", board);
-//		
-//		return "readform/img_detail_form";
-//	}
-	
 	@PostMapping(value = "/form3/{menuId}/create")
 	@ResponseBody
 	public String form3create(Model model, @PathVariable("menuId") Integer menuId,
@@ -142,35 +131,6 @@ public class FormController {
 	    boardService.create(board, multipartFile);
 	    return "success";
 	}
-	
-//	@GetMapping(value = "/form3/create/{menuId}")
-//	public String form3create(Model model, @PathVariable("menuId") Integer menuId) {
-//		model.addAttribute("MenuCate",navService.getMenu(menuId));
-//		model.addAttribute("sidebar", navService.getSidebar(menuId));
-//		
-//		return "createform/imgcreateform";
-//	}
-//	@PostMapping(value = "/form3/create/{menuId}")
-//	public String form3create(@PathVariable("menuId") Integer menuId,
-//			@RequestParam("title") String title,
-//			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
-//		Board board = new Board();
-//		board.setMenuId(menuId);
-//		board.setTitle(title);
-//		boardService.create(board, multipartFile);
-//		
-//		return "redirect:/form3/"+menuId;
-//	}
-//	@GetMapping(value = "/form3/{menuId}/update/{boardId}")
-//	public String form3update(Model model, @PathVariable("menuId") Integer menuId,
-//			@PathVariable("boardId") Integer boardId) {
-//		model.addAttribute("MenuCate", navService.getMenu(menuId));
-//		model.addAttribute("sidebar", navService.getSidebar(menuId));
-//		model.addAttribute("board", this.boardService.getBoard(boardId));
-//		
-//		return "updateform/imgupdateform";
-//	}
-	
 	@GetMapping(value = "/form3/{menuId}/update/{boardId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> form3update(@PathVariable("menuId") Integer menuId,
@@ -182,8 +142,6 @@ public class FormController {
 	    
 	    return ResponseEntity.ok(response);
 	}
-
-	
 	@PostMapping(value = "/form3/{menuId}/update/{boardId}")
     @ResponseBody
     public String form3update(@RequestParam("boardId") Integer boardId, 
@@ -194,16 +152,6 @@ public class FormController {
         boardService.update(boardId, board, multipartFile);
         return "success";
     }
-
-	
-//	@PostMapping(value = "/form3/{menuId}/update/{boardId}")
-//	public String form3update(@ModelAttribute Board board,
-//	                          @PathVariable("menuId") Integer menuId,
-//	                          @PathVariable("boardId") Integer boardId,
-//	                          @RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
-//	    boardService.update(boardId, board, multipartFile);
-//	    return "redirect:/form3/" + menuId + "/detail/" + boardId;
-//	}
 	@GetMapping(value = "/form3/{menuId}/delete/{boardId}")
 	@ResponseBody
 	public ResponseEntity<String> form3delete(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {

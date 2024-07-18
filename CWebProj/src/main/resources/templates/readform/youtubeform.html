@@ -1,7 +1,126 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
-<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
-유튜브
+<link href="/assets/css/youtubeform.css" rel="stylesheet">
+    <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">영상 올리기</button>
+    </div>
+    <div class="modal fade" id="scrollingLong2" tabindex="-1" aria-labelledbㅁy="scrollingLongModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollingLongModalLabel2">영상 올리기</h5>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class="mb-0">
+                                    제목 <input class="form-control form-control-sm" id="sizingInputSm" type="text" />
+                                </div>
+                                <div class="mb-0">
+                                    영상 링크 첨부 <input class="form-control form-control-sm" id="sizingInputSm" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button">올리기</button>
+                            <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">예배 영상</th>
+                    <th scope="col">설명</th>
+                    <th scope="col">날짜</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                    <td>영상 1</td>
+                    <td>내용 1</td>
+                    <td>날짜 1</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="p-0">
+                        <div class="collapse" id="collapseExample1">
+                            <div class="card card-body">
+                                <iframe width="760" height="500" src="https://www.youtube.com/embed/Aq_gsctWHtQ?si=fTsObeWADFrZfn2w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                    <td>영상 2</td>
+                    <td>내용 2</td>
+                    <td>날짜 2</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="p-0">
+                        <div class="collapse" id="collapseExample2">
+                            <div class="card card-body">
+                                <iframe width="760" height="500" src="https://www.youtube.com/embed/13EWqjMqkiY?si=6pLaMx3LnZH5VN_P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
+                    <td>영상 3</td>
+                    <td>내용 3</td>
+                    <td>날짜 3</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="p-0">
+                        <div class="collapse" id="collapseExample3">
+                            <div class="card card-body">
+                                상세 내용 3. 여기에 원하는 내용을 추가할 수 있습니다.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr data-bs-toggle="collapse" data-bs-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
+                    <td>영상 4</td>
+                    <td>내용 4</td>
+                    <td>날짜 4</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="p-0">
+                        <div class="collapse" id="collapseExample4">
+                            <div class="card card-body">
+                                상세 내용 4. 여기에 원하는 내용을 추가할 수 있습니다.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr data-bs-toggle="collapse" data-bs-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5">
+                    <td>영상 5</td>
+                    <td>내용 5</td>
+                    <td>날짜 5</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="p-0">
+                        <div class="collapse" id="collapseExample5">
+                            <div class="card card-body">
+                                상세 내용 5. 여기에 원하는 내용을 추가할 수 있습니다.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </html>
