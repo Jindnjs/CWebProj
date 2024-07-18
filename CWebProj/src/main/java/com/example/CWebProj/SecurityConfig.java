@@ -22,25 +22,27 @@ public class SecurityConfig {
 	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	        http
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+	            		
+	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()            
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/user")).authenticated()
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
-	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
+	              .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
 	                
-	            .formLogin((formLogin) -> formLogin
-	            		.loginPage("/signin")
-	            		.defaultSuccessUrl("/"))
+		            .csrf(csrf -> csrf
+		                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		                )
+	              .formLogin((formLogin) -> formLogin
+                    .loginPage("/signin")
+                    .defaultSuccessUrl("/"))
 								
-	            .logout((logout) -> logout
-	            		.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-	            		.logoutSuccessUrl("/")
-	                .invalidateHttpSession(true))
-	            .csrf(csrf -> csrf
-	                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-	                );
+	              .logout((logout) -> logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true));
 	        
 	        return http.build();
 	    }
+
 
 	@Bean
 	PasswordEncoder passwordEncoder() {

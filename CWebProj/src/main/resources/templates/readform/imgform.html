@@ -2,6 +2,53 @@
 <div layout:fragment="content_main">
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 앨범
+<a th:href="@{|${MenuCate.boardLink}/create/${MenuCate.id}|}">앨범 올리기</a>
+<hr>
+<table>
+     	<thead>
+         	<tr>
+ 				<th>번호</th>
+ 				<th>앨범</th>
+            	<th>제목</th>
+            	<th>작성자</th>
+            	<th>작성일</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+     		<tr th:each="board, loop : ${paging}">
+     		<td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+				<td><img th:src="|${downpath}/${board.imageLink}|" width="300px"></td>
+            	<td>
+					<a th:href="@{|/form3/detail/${board.id}|}" th:text="${board.title}"></a>
+				</td>
+				<td th:text="${board.author}"></td>
+            	<td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH-mm')}"></td>
+            	
+        	</tr>
+    	</tbody>
+	</table>
+	
+	<div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?page=${paging.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+            th:if="${page >= paging.number-3 and page <= paging.number+3}"
+                th:classappend="${page == paging.number} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
 </div>
 </html>

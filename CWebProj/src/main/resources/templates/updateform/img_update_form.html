@@ -1,0 +1,29 @@
+<html layout:decorate="~{layouts/layout_board}">
+<div layout:fragment="content_main">
+    업데이트
+    <hr>
+    <form th:action="@{|/form3/update/${board.id}|}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" th:value="${board.id}" name="id">
+        <input type="hidden" th:value="${board.createDate}" name="createDate">
+        
+        <p>제목: <input th:value="${board.title}" name="title"></p>
+        <p><img id="preview" th:src="|${downpath}/${board.imageLink}|" width="300px"></p>
+        <p>첨부파일: <input type="file" name="multipartFile" onchange="previewImage(event)"></p>
+        
+        <p><input type="submit" value="작성"></p>
+    </form>
+    
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
+            reader.onload = function() {
+                const imgElement = document.getElementById("preview");
+                imgElement.src = reader.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+</div>
+</html>
