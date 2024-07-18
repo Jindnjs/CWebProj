@@ -51,5 +51,9 @@ public class BoardService {
 	public Board getboard(Integer id) {
 		return this.boardRepository.findById(id).get();
 	}
+	
+	public void deleteboard(Integer id) {
+		this.boardRepository.deleteById(id);
+	}
 
 }
