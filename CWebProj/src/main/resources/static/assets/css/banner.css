@@ -1,35 +1,29 @@
 @charset "UTF-8";
 
-/* Table 전체의 최대 너비를 설정 */
 .table {
-    max-width: 800px;
-    margin: auto; /* 테이블을 가운데 정렬 */
+    max-width: 900px;
+    margin: auto;
     text-align: center;
 }
 
-/* 테이블 헤더 셀의 패딩과 폰트 크기 조정 */
 .table thead th {
     padding: 8px 12px;
     font-size: 14px;
 }
-
-/* 테이블 바디 셀의 패딩과 폰트 크기 조정 */
 .table tbody td {
     padding: 8px 12px;
     font-size: 14px;
 }
-
-/* 폼 내부의 요소 스타일 조정 */
+.banner_change{
+	max-width:100px;
+}
 form input[type="file"] {
     font-size: 12px;
 }
-
 form button {
     font-size: 12px;
     padding: 5px 10px;
 }
-
-/* 버튼의 스타일 조정 */
 button {
     font-size: 12px;
     padding: 5px 10px;
