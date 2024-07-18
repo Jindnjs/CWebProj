@@ -64,8 +64,8 @@ public class BoardService {
 		this.boardRepository.deleteById(id);
 	}
 	
-	public void updateboard() {
-		
+	public void updateboard(Board board) {
+		this.boardRepository.save(board);
 	}
 
 	public Page<Board> getBoards(int page) {

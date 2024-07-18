@@ -44,7 +44,7 @@
 						         <tr th:each="board : ${boardList}" th:if="${board.notice}">						    
 						            <td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC">
-						            	<a th:href="@{|/board/detail/${board.id}|}" th:text="${board.title}"></a>  
+						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span>(5)</span>
 						            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
@@ -53,7 +53,7 @@
 						        </tr>
 						        <tr th:each="board : ${boardList}" th:if="${!board.notice}" class="normal-row" style="cursor: pointer;">						    
 						            <td  class="number"></td>
-						           		<td>
+						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span>(5)</span>
 						            	</td>
@@ -91,7 +91,7 @@
 					        </div>  
 <a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 
-<script>
+	<script>
         document.addEventListener("DOMContentLoaded", function() {
             var normalRows = document.querySelectorAll('tr.normal-row');
             var totalCount = normalRows.length;
@@ -101,12 +101,12 @@
         });
     </script>
     
-    <script th:inline="javascript">
-    function redirectToDetail(boardId, menuCateId) {
-        var url = '/board/detail/' + boardId + '?MenuCateid=' + menuCateId;
-        window.location.href = url;
-    }
-</script>
+      <script th:inline="javascript">
+        function redirectToDetail(boardId, menuCateId) {
+            var url = '/form2/' + menuCateId + '/detail/' + boardId;
+            window.location.href = url;
+        }
+    </script>
 
 </div>
 </html>

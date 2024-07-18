@@ -7,9 +7,16 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <style>
 	.error {
-    border-color: red !important;
-    border-width: 2px !important; /* 선을 더 굵게 설정 */
-  }
+	    border-color: red;
+	    border-width: 2px; 
+	 }
+	 .valid {
+	    border-color: green;
+	    border-width: 2px; 
+	 }
+	 .form-label{
+	 	display: none
+	 }
 </style>
 
 	<form method="post" onsubmit="return validateForm()">
@@ -20,7 +27,7 @@
 				<input type="text" name="author" id="author" class="form-control" placeholder="작성자">
 			</div>
 			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end">
-	             <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" type="button" class="btn btn-warning">수정</a>
+	             
 			</div>
 			<div class="mb-4">
 				<textarea name="content" id="summernote" rows="10" ></textarea>
@@ -63,45 +70,54 @@
       });
       
       function validateForm() {
-          var isValid = true;
+			var isValid = true;
 
-          if (!$('#title').val().trim()) {
-              $('#title').addClass('error');
-              $('#title').addClass('is-invalid');
-              $('#title').attr('placeholder', '제목을 입력하세요');
-              isValid = false;
-          } else {
-              $('#title').removeClass('error');
-              $('#title').removeClass('is-invalid');
-              $('#title').attr('placeholder', '제목');
-          }
+			if (!$('#title').val().trim()) {
+				$('#title').addClass('error is-invalid');
+				$('#title').attr('placeholder', '제목을 입력하세요');
+				isValid = false;
+			} else {
+				$('#title').removeClass('error is-invalid');
+				$('#title').attr('placeholder', '제목');
+			}
 
-          if (!$('#author').val().trim()) {
-              $('#author').addClass('error');
-              $('#author').addClass('is-invalid');
-              $('#author').attr('placeholder', '작성자를 입력하세요');
-              isValid = false;
-          } else {
-              $('#author').removeClass('error');
-              $('#author').removeClass('is-invalid');
-              $('#author').attr('placeholder', '작성자');
-          }
+			if (!$('#author').val().trim()) {
+				$('#author').addClass('error is-invalid');
+				$('#author').attr('placeholder', '작성자를 입력하세요');
+				isValid = false;
+			} else {
+				$('#author').removeClass('error is-invalid');
+				$('#author').attr('placeholder', '작성자');
+			}
 
-          if (!$('#summernote').val().trim()) {         
-              $('.note-placeholder').text('내용을 입력하세요');
-              isValid = false;
-          } else {
-              $('.note-placeholder').text('내용');
-          }
+			if (!$('#summernote').val().trim()) {         
+				$('.note-placeholder').text('내용을 입력하세요');
+				isValid = false;
+			} else {
+				$('.note-placeholder').text('내용');
+			}
+			
+			if (!isValid) {
+                window.scrollTo(0, 0);
+            }
 
-          return isValid;
-      }
+			return isValid;
+		}
 
-      $('#postForm').on('submit', function (event) {
-          if (!validateForm()) {
-              event.preventDefault();
-          }
-      });
+		// 입력 시 유효성 검사 및 스타일 변경
+		$('#title, #author').on('input', function() {
+			if ($(this).val().trim()) {
+				$(this).removeClass('error is-invalid').addClass('valid is-valid');
+			} else {
+				$(this).removeClass('valid').addClass('error is-invalid');
+			}
+		});
+
+		$('#postForm').on('submit', function(event) {
+			if (!validateForm()) {
+				event.preventDefault();
+			}
+		});
     </script>
 </div>
 </html>
