@@ -5,15 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class CUserService implements UserDetailsService {
@@ -33,6 +45,8 @@ public class CUserService implements UserDetailsService {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if ("ROLE_USER".equals(cuser.getRole())) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		} else if ("ROLE_MANAGER".equals(cuser.getRole())) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
 		} else {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
@@ -44,11 +58,55 @@ public class CUserService implements UserDetailsService {
 	public void create(CUser cuser) {
 
 		cuser.setEnabled(true);
-		cuser.setRole("ROLE_USER"); // ROLE_ADMIN, ROLE_USER
+		cuser.setRole("ROLE_USER");
 		cuser.setCdate(LocalDateTime.now());
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		cuser.setPassword(passwordEncoder.encode(cuser.getPassword()));
 		cuserRepository.save(cuser);
+
+	}
+
+	
+	public String createRandomPassword() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 6; i++) {
+			sb.append((int) (Math.random() * 10));
+		}
+
+		return sb.toString();
+	}
+
+
+
+
+	// 구글로그인처리
+	@Autowired
+	private HttpServletRequest req;
+
+	public int logincheck(String username) {
+
+		Optional<CUser> tcuser = cuserRepository.findByusername(username);
+		CUser cuser = tcuser.get();
+
+		if (cuser != null) {
+
+			List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+			list.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+			SecurityContext sc = SecurityContextHolder.getContext();
+
+			sc.setAuthentication(new UsernamePasswordAuthenticationToken(cuser.getUsername(), null, list));
+
+			HttpSession session = req.getSession(true);
+
+			session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+
+			return 1;
+
+		} else {
+
+			return 0;
+		}
 
 	}
 

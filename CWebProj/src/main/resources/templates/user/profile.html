@@ -5,6 +5,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-프로필
+
+name : <a th:text="${#authentication.name}"></a><br>
+
+check: <a th:text="${#authentication.authenticated}"></a><br>
+
+
+<div sec:authorize="isAuthenticated()">[ Logged in ]</div><br>
+admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div><br>
+manager <div sec:authorize="hasRole('ROLE_MANAGER')">[ yes ]</div><br>
+user <div sec:authorize="hasRole('ROLE_USER')">[ yes ]</div><br>
+
+<a href="/">메인으로 가기</a>
 </body>
 </html>
