@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -21,19 +22,22 @@ public class SecurityConfig {
 	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	        http
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+              .csrf(csrf -> csrf
+	            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+	            )
+	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()            
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/user")).authenticated()
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
-	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
+	              .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
 	                
-	            .formLogin((formLogin) -> formLogin
-	            		.loginPage("/signin")
-	            		.defaultSuccessUrl("/"))
+	              .formLogin((formLogin) -> formLogin
+                    .loginPage("/signin")
+                    .defaultSuccessUrl("/"))
 								
-	            .logout((logout) -> logout
-	            		.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
-	            		.logoutSuccessUrl("/")
-	                .invalidateHttpSession(true));
+	              .logout((logout) -> logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true));
 	        
 	        return http.build();
 	    }
