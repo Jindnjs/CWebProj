@@ -67,9 +67,32 @@
             <ul class="comment-list">
                 <li th:each="comment : ${board.commentList}" class="comment-item">
                     <span th:text="${comment.content}"></span>
+                    <a th:href="@{'/comment'+ '/' + ${menuId} + '/delete/' + ${boardId} + '/' + ${comment.id}}" class="btn btn-danger">삭제</a>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" th:data-bs-content="${comment.content}" th:data-bs-id="${comment.id}">수정</button>
                     
                 </li>
             </ul>
+
+
+
+<!-- 모달 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form th:action="@{|/comment/update/${MenuCate.id}|}" method="post">
+            <input type="hidden" class="cid" id="recipient-name-id" name="commentId">
+          <div class="mb-3">
+            <label for="content" class="col-form-label">댓글	:</label>
+            <input class="form-control" id="recipient-name-content" name="commentContent"></input>
+          </div>
+          <input type="submit" value="저장">
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
             
             <!-- 댓글 입력 폼 -->
             <div class="mt-4">
@@ -83,8 +106,31 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
- 
+            
+            
+            
+</div>
+        
+<script>
+
+
+const exampleModal = document.getElementById('exampleModal')
+if (exampleModal) {
+  exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient = button.getAttribute('data-bs-id')
+    const ccc = button.getAttribute('data-bs-content')
+    // If necessary, you could initiate an Ajax request here
+
+    const modalBodyInput = document.getElementById('recipient-name-id')
+    const modalBodyText = document.getElementById('recipient-name-content')
+    modalBodyInput.value = recipient
+    modalBodyText.value = ccc
+  })
+}
+</script> 
+        
 </div>
 </html>

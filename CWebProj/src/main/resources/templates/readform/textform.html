@@ -44,9 +44,9 @@
 						         <tr th:each="board : ${boardList}" th:if="${board.notice}">						    
 						            <td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC">
-						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
+						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>
 						            	<span>(5)</span>
-						            	</td>
+					            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
