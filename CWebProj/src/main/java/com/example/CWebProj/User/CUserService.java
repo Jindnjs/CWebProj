@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +17,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
+
+import com.example.CWebProj.AwsBucket.S3Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,12 +30,19 @@ public class CUserService implements UserDetailsService {
 
 	@Autowired
 	private CUserRepository cuserRepository;
+	
+	@Autowired
+	private S3Service s3Service;
+	
+	@Autowired
+	private JavaMailSender mailsender;
+
 
 	// 로그인처리
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Optional<CUser> tcuser = cuserRepository.findByusername(username);
+		Optional<CUser> tcuser = cuserRepository.findByUsername(username);
 		if (tcuser.isEmpty()) {
 			throw new UsernameNotFoundException("회원가입 되어 있지 않습니다.");
 		}
@@ -65,27 +70,45 @@ public class CUserService implements UserDetailsService {
 		cuserRepository.save(cuser);
 
 	}
-
 	
-	public String createRandomPassword() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 6; i++) {
-			sb.append((int) (Math.random() * 10));
+	//유저 데이터 저장
+	public void userdata(String username) {
+        CUser cuser = new CUser();
+        cuser.setUsername(username);
+        this.cuserRepository.save(cuser);
+    }
+	
+	
+	//비번 잊었을때
+	public CUser findpw(String username) {
+
+		Optional<CUser> cuser = this.cuserRepository.findByUsername(username);
+
+		if (cuser.isPresent()) {
+			return cuser.get();
+		}else {
+			throw new DataNotFoundException("존재하지 않는 이메일입니다.");
 		}
-
-		return sb.toString();
 	}
+	
 
-
-
-
+	//비번 리셋
+	
+	
+	//비번 자동생성
+	private boolean isStrongPassword(String password) {
+		String pattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		return password.matches(pattern);
+	}
+	
+	
 	// 구글로그인처리
 	@Autowired
 	private HttpServletRequest req;
 
 	public int logincheck(String username) {
 
-		Optional<CUser> tcuser = cuserRepository.findByusername(username);
+		Optional<CUser> tcuser = cuserRepository.findByUsername(username);
 		CUser cuser = tcuser.get();
 
 		if (cuser != null) {
