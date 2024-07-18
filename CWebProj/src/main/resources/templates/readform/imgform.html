@@ -88,6 +88,7 @@
                 document.getElementById('viewTitle').innerText = data.title;
                 document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                 document.getElementById('viewAuthor').innerText = data.author;
+                document.getElementById('viewCount').innerText = '조회' + data.viewcount;
                 document.getElementById('viewImage').src = downpath + '/' + data.imageLink;
                 new bootstrap.Modal(document.getElementById('viewModal')).show();
             })
@@ -169,6 +170,7 @@
                         <h5 id="viewTitle"></h5>
                         <h6 id="viewDate"></h6>
                         <h6 id="viewAuthor"></h6>
+                        <h6 id="viewCount"></h6>
                         <img id="viewImage" src="" alt="image" class="img-fluid">
                     </div>
                 </div>
@@ -255,6 +257,7 @@
                         <div class="post-meta">
                             <p class="post-author">[[${board.author}]]</p>
                             <p class="post-date">[[${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}]]</p>
+                            <p class="post-viewcount">조회: [[${board.viewcount}]]</p>
                         </div>
                     </div>
                     <div class="btn_update">
@@ -271,7 +274,6 @@
     <!-- end of Blog Posts Section -->
     
 
-    <!-- Blog Pagination Section -->
     <!-- Blog Pagination Section -->
 <div th:if="${!paging.isEmpty()}">
     <ul class="pagination justify-content-center">

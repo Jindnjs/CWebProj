@@ -109,10 +109,14 @@ public class BoardService {
 	        throw new IllegalArgumentException("Invalid board ID: " + id);
 	    }
 	}
-
-
 	
 	public void delete(Integer id) {
 		boardRepository.deleteById(id);
 	}
+	
+	public void incrementViewCount(Integer boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
+        board.setViewcount(board.getViewcount() + 1);
+        boardRepository.save(board);
+    }
 }
