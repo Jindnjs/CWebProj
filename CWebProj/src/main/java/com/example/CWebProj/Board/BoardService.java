@@ -55,5 +55,9 @@ public class BoardService {
 	public void deleteboard(Integer id) {
 		this.boardRepository.deleteById(id);
 	}
+	
+	public void updateboard() {
+		
+	}
 
 }

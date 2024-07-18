@@ -1,7 +1,6 @@
 package com.example.CWebProj.DyNavi;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
@@ -74,6 +72,18 @@ public class FormController {
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
 	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		this.boardService.deleteboard(boardId);
+		return "redirect:/form2/"+menuId;
+	}
+	@GetMapping(value = "/form2/{menuId}/update/{boardId}")
+	public String updateboard(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("board", this.boardService.getboard(boardId));
+		return "createform/update_test";
+	}
+	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
+	public String updateboard(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		this.boardService.boardcreate(menuId, board);
 		return "redirect:/form2/"+menuId;
 	}
 	
