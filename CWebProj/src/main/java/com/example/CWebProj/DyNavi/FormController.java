@@ -1,10 +1,15 @@
 package com.example.CWebProj.DyNavi;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Board.Board;
@@ -91,68 +97,125 @@ public class FormController {
 	
 	
 	//form3
-	
-	@GetMapping(value = "/form3/{id}")
-	public String form3(Model model, @PathVariable("id") Integer id, @RequestParam(value="page", defaultValue = "0") int page) {
-		model.addAttribute("MenuCate", navService.getMenu(id));
-		model.addAttribute("sidebar", navService.getSidebar(id));
+	@GetMapping(value = "/form3/{menuId}")
+	public String form3(Model model, @PathVariable("menuId") Integer menuId, @RequestParam(value="page", defaultValue = "0") int page) {
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		
-		Page<Board> paging = boardService.getBoards(page);
+		Page<Board> paging = boardService.getBoards(page, menuId);
         model.addAttribute("paging", paging);
 		
 		return "readform/imgform";
 	}
-	@GetMapping(value = "/form3/detail/{id}")
-	public String form3detail(Model model, @PathVariable("id") Integer id) {
-		Board board = boardService.boarddetail(id);
-		model.addAttribute("sidebar", navService.getSidebar(board.getMenuId()));
-		
-		model.addAttribute("board", board);
-		
-		return "readform/img_detail_form";
-	}
-	@GetMapping(value = "/form3/create/{id}")
-	public String form3create(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("MenuCate",navService.getMenu(id));
-		model.addAttribute("sidebar", navService.getSidebar(id));
-		
-		return "createform/img_create_form";
-	}
-	@PostMapping(value = "/form3/create/{id}")
-	public String form3create(@PathVariable("id") Integer menuId,
-			@RequestParam("title") String title,
-			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
-		Board board = new Board();
-		board.setMenuId(menuId);
-		board.setTitle(title);
-		boardService.create(board, multipartFile);
-		
-		return "redirect:/form3/"+menuId;
-	}
-	@GetMapping(value = "/form3/update/{id}")
-	public String form3update(Model model, @PathVariable("id") Integer id) {
-		Board board = boardService.boarddetail(id);
-		model.addAttribute("sidebar", navService.getSidebar(board.getMenuId()));
-		
-		model.addAttribute("board", board);
-		
-		return "updateform/img_update_form";
-	}
-	@PostMapping(value = "/form3/update/{id}")
-	public String form3update(@PathVariable("id") Integer id, 
-	                          @ModelAttribute Board board, 
+	@GetMapping(value = "/form3/{menuId}/detail/{boardId}")
+    @ResponseBody
+    public Board getBoard(Model model, @PathVariable("menuId") Integer menuId,
+			@PathVariable("boardId") Integer boardId) {
+        return boardService.read(menuId, boardId);
+    }
+//	@GetMapping(value = "/form3/{menuId}/detail/{boarId}")
+//	public String form3detail(Model model, @PathVariable("menuId") Integer menuId,
+//			@PathVariable("boardId") Integer boardId) {
+//		Board board = boardService.read(menuId, boardId);
+//		model.addAttribute("sidebar", navService.getSidebar(menuId));
+//		
+//		model.addAttribute("board", board);
+//		
+//		return "readform/img_detail_form";
+//	}
+	
+	@PostMapping(value = "/form3/{menuId}/create")
+	@ResponseBody
+	public String form3create(Model model, @PathVariable("menuId") Integer menuId,
+	                          @RequestParam("title") String title,
 	                          @RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
-	    boardService.update(id, board, multipartFile);
-	    return "redirect:/form3/detail/" + id;
+	    if (multipartFile.isEmpty()) {
+	        return "이미지를 선택해주세요.";
+	    }
+	    if(title.equals("")) {
+	    	return "제목을 지어주세요.";
+	    }
+	    
+	    Board board = new Board();
+	    board.setMenuId(menuId);
+	    board.setTitle(title);
+	    boardService.create(board, multipartFile);
+	    return "success";
+	}
+	
+//	@GetMapping(value = "/form3/create/{menuId}")
+//	public String form3create(Model model, @PathVariable("menuId") Integer menuId) {
+//		model.addAttribute("MenuCate",navService.getMenu(menuId));
+//		model.addAttribute("sidebar", navService.getSidebar(menuId));
+//		
+//		return "createform/imgcreateform";
+//	}
+//	@PostMapping(value = "/form3/create/{menuId}")
+//	public String form3create(@PathVariable("menuId") Integer menuId,
+//			@RequestParam("title") String title,
+//			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+//		Board board = new Board();
+//		board.setMenuId(menuId);
+//		board.setTitle(title);
+//		boardService.create(board, multipartFile);
+//		
+//		return "redirect:/form3/"+menuId;
+//	}
+//	@GetMapping(value = "/form3/{menuId}/update/{boardId}")
+//	public String form3update(Model model, @PathVariable("menuId") Integer menuId,
+//			@PathVariable("boardId") Integer boardId) {
+//		model.addAttribute("MenuCate", navService.getMenu(menuId));
+//		model.addAttribute("sidebar", navService.getSidebar(menuId));
+//		model.addAttribute("board", this.boardService.getBoard(boardId));
+//		
+//		return "updateform/imgupdateform";
+//	}
+	
+	@GetMapping(value = "/form3/{menuId}/update/{boardId}")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> form3update(@PathVariable("menuId") Integer menuId,
+	                                                      @PathVariable("boardId") Integer boardId) {
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("menu", navService.getMenu(menuId));
+	    response.put("sidebar", navService.getSidebar(menuId));
+	    response.put("board", boardService.getBoard(boardId));
+	    
+	    return ResponseEntity.ok(response);
 	}
 
-	@GetMapping(value = "/form3/delete/{id}")
-	public String form3delete(@PathVariable("id") Integer id) {
-		Integer menuId = boardService.boarddetail(id).getMenuId();
-		boardService.delete(id);
-		
-		return "redirect:/form3/" + menuId;
+	
+	@PostMapping(value = "/form3/{menuId}/update/{boardId}")
+    @ResponseBody
+    public String form3update(@RequestParam("boardId") Integer boardId, 
+    		@RequestParam("title") String title, 
+    		@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+        Board board = boardService.getBoard(boardId);
+        board.setTitle(title);
+        boardService.update(boardId, board, multipartFile);
+        return "success";
+    }
+
+	
+//	@PostMapping(value = "/form3/{menuId}/update/{boardId}")
+//	public String form3update(@ModelAttribute Board board,
+//	                          @PathVariable("menuId") Integer menuId,
+//	                          @PathVariable("boardId") Integer boardId,
+//	                          @RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+//	    boardService.update(boardId, board, multipartFile);
+//	    return "redirect:/form3/" + menuId + "/detail/" + boardId;
+//	}
+	@GetMapping(value = "/form3/{menuId}/delete/{boardId}")
+	@ResponseBody
+	public ResponseEntity<String> form3delete(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+	    try {
+	        boardService.delete(boardId);
+	        return ResponseEntity.ok("success");
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 서버 로그에 예외 출력
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the board.");
+	    }
 	}
+
 	
 	
 	
