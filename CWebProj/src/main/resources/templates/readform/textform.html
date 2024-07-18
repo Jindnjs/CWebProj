@@ -45,7 +45,7 @@
 						            <td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>
-						            	<span class="text small ms-2" th:text="${#lists.size(board.commentList)}"></span>
+						            	<span class="text small ms-2" th:text="|(${#lists.size(board.commentList)})|"></span>
 					            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
@@ -55,7 +55,7 @@
 						            <td  class="number"></td>
 						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
-						            	<span class="text small ms-2" th:text="${#lists.size(board.commentList)}"></span>
+						            	<span class="text small ms-2" th:text="|(${#lists.size(board.commentList)})|"></span>
 						            	</td>
 						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td  th:text="${board.author}"></td>
@@ -88,7 +88,8 @@
 					                    </a>
 					                </li>
 					            </ul>
-					        </div>  
+					        </div>
+ 
 <a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 
 	<script>
