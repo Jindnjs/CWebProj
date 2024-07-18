@@ -19,14 +19,12 @@ public class CommentService {
 	private final BoardService boardService;
 	
 	public void create(Board board,String content) {
-		Comment comment=new Comment();
+		Comment comment = new Comment();
 		comment.setBoard(board);
 		comment.setContent(content);
 		comment.setDate(LocalDateTime.now());
 		this.commentRepository.save(comment);
 	}
-	
-	
 	
 	public Comment getComment(Integer id) {
 		Optional<Comment> op = commentRepository.findById(id);
