@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.table {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.table thead th {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+.table tbody td {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+.banner_change{
+	max-width:100px;
+}
+form input[type="file"] {
+    font-size: 12px;
+}
+form button {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+button {
+    font-size: 12px;
+    padding: 5px 10px;
+}

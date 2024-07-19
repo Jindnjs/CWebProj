@@ -1,7 +1,120 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
-<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
-유튜브
 
+<script>
+    function submitCreateForm(menuId) {
+        const form = document.getElementById('createForm');
+        const formData = new FormData(form);
+
+        const youtubeLink = document.getElementById('createYoutubeLink').value;
+        if (youtubeLink.startsWith("https://youtu.be/")) {
+            formData.set('youtubeLink', youtubeLink.replace("https://youtu.be/", ""));
+        }
+
+        fetch('/form4/' + menuId + '/create', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.text())
+        .then(result => {
+            if (result === "success") {
+                window.location.reload();
+            } else {
+                alert(result); // 서버에서 받은 메시지를 알림창으로 표시
+            }
+        }).catch(error => {
+            console.error('Form submission error:', error);
+        });
+    }
+</script>
+
+<link href="/assets/css/youtubeform.css" rel="stylesheet">
+<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
+
+<div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">영상 올리기</button>
 </div>
+
+<!-- create modal -->
+<div class="modal fade" id="scrollingLong2" tabindex="-1" aria-labelledby="scrollingLongModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scrollingLongModalLabel2">영상 올리기</h5>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+            </div>
+            <div class="modal-body">
+                <form id="createForm" enctype="multipart/form-data" th:onsubmit="event.preventDefault(); submitCreateForm([[${MenuCate.id}]]);">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div class="mb-3">
+                        <div class="mb-0">
+                            <label for="createTitle" class="form-label">제목</label>
+                            <input class="form-control form-control-sm" id="createTitle" name="title" type="text" placeholder="제목을 입력하세요" />
+                        </div>
+                        <div class="mb-0">
+                            <label for="createYoutubeLink" class="form-label">영상 링크 첨부</label>
+                            <input class="form-control form-control-sm" id="createYoutubeLink" name="youtubeLink" type="text" placeholder="https://youtu.be/ 링크를 입력하세요" />
+                        </div>
+                        <div class="mb-0">
+                            <label for="createContent" class="form-label">내용</label>
+                            <input class="form-control form-control-sm" id="createContent" name="content" type="text" placeholder="내용을 입력하세요" />
+                        </div>
+                    </div>
+                    <input type="hidden" id="createMenuId" name="menuId" th:value="${MenuCate.id}">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" th:onclick="submitCreateForm([[${MenuCate.id}]])">올리기</button>
+                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of create modal -->
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">예배 영상</th>
+                <th scope="col">설명</th>
+                <th scope="col">날짜</th>
+            </tr>
+        </thead>
+        <tbody th:each="board, loop : ${page.content}">
+            <tr data-bs-toggle="collapse" th:data-bs-target="'#collapseExample' + ${board.id}" aria-expanded="false" th:aria-controls="'collapseExample' + ${board.id}">
+                <td th:text="${board.title}"></td>
+                <td th:text="${board.content}"></td>
+                <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="p-0">
+                    <div th:id="'collapseExample' + ${board.id}" class="collapse">
+                        <div class="card card-body">
+                            <iframe width="760" height="500" th:src="'https://www.youtube.com/embed/' + ${board.youtubeLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Blog Pagination Section -->
+<div th:if="${!page.isEmpty()}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${!page.hasPrevious()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${page.number-1}|}"><span>이전</span></a>
+        </li>
+        <li th:each="pageNum: ${#numbers.sequence(1, page.totalPages)}" th:if="${pageNum >= page.number + 1 - 3 and pageNum <= page.number + 1 + 3}" th:classappend="${pageNum == page.number + 1} ? 'active'" class="page-item">
+            <a th:text="${pageNum}" class="page-link" th:href="@{|?page=${pageNum-1}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!page.hasNext()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${page.number+1}|}"><span>다음</span></a>
+        </li>
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>

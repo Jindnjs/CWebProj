@@ -68,15 +68,13 @@ public class BoardService {
 		this.boardRepository.save(board);
 	}
 
-	public Page<Board> getBoards(int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page, 9, Sort.by(sorts));
-        return boardRepository.findAll(pageable);
+	public Page<Board> getBoards(int page, Integer menuId) {
+		Pageable pageable = PageRequest.of(page, 9, Sort.by("createDate").descending());
+        return boardRepository.findByMenuId(menuId, pageable);
     }
 	
-	public Board boarddetail(Integer id) {
-		Optional<Board> o = boardRepository.findById(id);
+	public Board read(Integer menuId, Integer boardId) {
+		Optional<Board> o = boardRepository.findByMenuIdAndId(menuId, boardId);
 		return o.get();
 	}
 	
@@ -111,10 +109,14 @@ public class BoardService {
 	        throw new IllegalArgumentException("Invalid board ID: " + id);
 	    }
 	}
-
-
 	
 	public void delete(Integer id) {
 		boardRepository.deleteById(id);
 	}
+	
+	public void incrementViewCount(Integer boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
+        board.setViewcount(board.getViewcount() + 1);
+        boardRepository.save(board);
+    }
 }
