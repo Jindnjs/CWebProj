@@ -41,22 +41,30 @@
 					        </tr>
 					        </thead>
 					        <tbody>
-						         <tr th:each="board : ${boardList}" th:if="${board.notice}">						    
-						            <td Style="background-color:#DCDCDC">공지</td>
+					        
+		        				<!-- Notice board -->
+						    	<tr th:each="board : ${boardList}" th:if="${board.notice}">						    
+					            	<td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>
-						            	<span class="text small ms-2" th:text="|(${#lists.size(board.commentList)})|"></span>
+						            	<span class="text small ms-2"
+						            		th:if="${#lists.size(board.commentList) != 0}"
+						            		th:text="|(${#lists.size(board.commentList)})|"></span>
 					            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
+						        
+						        <!-- General board -->
 						        <tr th:each="board : ${boardList}" th:if="${!board.notice}" class="normal-row" style="cursor: pointer;">						    
 						            <td  class="number"></td>
-						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
+					           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
-						            	<span class="text small ms-2" th:text="|(${#lists.size(board.commentList)})|"></span>
-						            	</td>
+						            	<span class="text small ms-2"
+						            		th:if="${#lists.size(board.commentList) != 0}"
+						            		th:text="|(${#lists.size(board.commentList)})|"></span>
+					            	</td>
 						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td  th:text="${board.author}"></td>
 						            <td  th:text="${board.viewcount}"></td>
@@ -64,7 +72,8 @@
 						       
 						       
 					        </tbody>
-					    </table>
+				    	</table>
+				    	
 					    	<!-- =======================================================
 				            ************************************************************
 				                    
@@ -72,6 +81,7 @@
 				                    
 				            ************************************************************
 				            ======================================================== -->
+					        
 					        <div aria-label="Page navigation">
 					            <ul class="pagination justify-content-center">
 					                <li class="page-item">

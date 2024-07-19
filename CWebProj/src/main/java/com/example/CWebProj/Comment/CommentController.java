@@ -35,10 +35,7 @@ public class CommentController {
 		return "redirect:" + menucateg.getBoardLink() + "/" + menuId + "/detail/" + boardId;
 	}
 
-	@GetMapping("/{menuId}/update/{boardId}/{commentId}")
-	public String updateComment(@PathVariable("commentId") Integer commentId) {
-		return "";
-	}
+	// -
 	
 	@PostMapping("/update/{menuId}")
 	public String updateComment(@PathVariable("menuId") Integer menuId,
@@ -59,6 +56,5 @@ public class CommentController {
 		this.commentService.delete(commentId);
 		return "redirect:" + menucateg.getBoardLink() + "/" + menuId + "/detail/" + boardId;
 	}
-	
 	
 }
