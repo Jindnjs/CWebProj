@@ -90,14 +90,16 @@
 				$('#title').attr('placeholder', '제목');
 			}
 
-			if (!$('#author').val().trim()) {
-				$('#author').addClass('error is-invalid');
-				$('#author').attr('placeholder', '작성자를 입력하세요');
-				isValid = false;
-			} else {
-				$('#author').removeClass('error is-invalid');
-				$('#author').attr('placeholder', '작성자');
-			}
+			if ($('#author').length > 0) { // #author가 존재하는 경우에만 검사
+		        if (!$('#author').val().trim()) {
+		            $('#author').addClass('error is-invalid');
+		            $('#author').attr('placeholder', '작성자를 입력하세요');
+		            isValid = false;
+		        } else {
+		            $('#author').removeClass('error is-invalid');
+		            $('#author').attr('placeholder', '작성자');
+		        }
+		    }
 
 			if (!$('#summernote').val().trim()) {         
 				$('.note-placeholder').text('내용을 입력하세요');
