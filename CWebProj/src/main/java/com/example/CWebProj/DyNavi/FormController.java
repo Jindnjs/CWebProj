@@ -1,12 +1,9 @@
 package com.example.CWebProj.DyNavi;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.User.CUser;
+import com.example.CWebProj.User.CUserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +31,7 @@ public class FormController {
 	
 	private final NavService navService;
 	private final BoardService boardService;
+	private final CUserService cuserService;
 	
 	//form1
 	@GetMapping(value = "/form1/{menuId}")
@@ -65,6 +65,7 @@ public class FormController {
 		public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
 			model.addAttribute("MenuCate", navService.getMenu(menuId));
 			model.addAttribute("sidebar", navService.getSidebar(menuId));
+			model.addAttribute("currentCUser", cuserService.authen());
 			return"createform/textcreateform";
 		}
 	@PostMapping(value = "/form2/create/{menuId}")

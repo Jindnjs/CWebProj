@@ -3,6 +3,7 @@ package com.example.CWebProj.User;
 import java.time.LocalDateTime;
 
 import com.example.CWebProj.Board.Board;
+import com.example.CWebProj.Comment.Comment;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -35,6 +36,5 @@ public class CUser {
 	private String cname; //이름-작성자
 	private LocalDateTime cdate; // 날짜
 	
-
-
+	
 }

@@ -14,8 +14,8 @@
 					            	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						                <ol class="breadcrumb">
 						                    <li class="breadcrumb-item active">Home</li>
-						                    <li class="breadcrumb-item active" aria-current="page">커뮤니티</li>
-						                    <li class="breadcrumb-item active" aria-current="page">자유게시판</li>
+						                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.menuName}"></span></li>
+						                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.categoryName}"></li>
 						                </ol>
 					            	</nav>
 					        	</div>
@@ -39,24 +39,29 @@
 					        </tr>
 					        </thead>
 					        <tbody>
-						         <tr th:each="board : ${notices}" th:if="${board.notice}" >						    
+						         <tr th:each="board : ${notices}" th:if="${board.notice}">						    
 						            <td Style="background-color:#DCDCDC">공지</td>
-						            <td Style="background-color:#DCDCDC">
+						            <td Style="background-color:#DCDCDC" >
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
 						            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
+						            <td Style="background-color:#DCDCDC">
+						            	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
-						        <tr th:each="board,loop : ${paging}" th:if="${!board.notice}" class="normal-row" style="cursor: pointer;">						    
+						        <tr th:each="board,loop : ${paging}" th:if="${!board.notice}" class="normal-row" >						    
 						            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
 						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
 						            	</td>
 						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td  th:text="${board.author}"></td>
+						            <td>
+						             	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
+            						</td>
 						            <td  th:text="${board.viewcount}"></td>
 						        </tr>     
 					        </tbody>
