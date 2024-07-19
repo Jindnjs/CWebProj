@@ -1,29 +1,28 @@
 package com.example.CWebProj.User;
 
 import java.net.URI;
-import java.security.Principal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import com.example.CWebProj.Mail.SendMailService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class CUserController {
 
-	@Autowired
-	private CUserService cuserService;
+	private final CUserService cuserService;
 	
+	private final SendMailService mailService;
 	@GetMapping("/signup")
 	public String signup() {
 		return "user/signup";
@@ -56,26 +55,35 @@ public class CUserController {
 		return "user/findid";
 	}
 
-	@GetMapping("/findpw")
+	@GetMapping("/resetpw")
 	public String findpw() {
-		return "user/findpw";
+		return "user/resetpw2";
 	}
 
+//	@PostMapping("/findpw")
+//	public String findpw(Model model, @RequestParam("username") String username,
+//	                     @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {
+//	    CUser cuser = this.cuserService.findpw(username);
+//
+//	    if (bindingResult.hasErrors()) {
+//	        model.addAttribute("cuser", cuser);
+//	        return "user/resetpw";
+//	    }
+//	    return "redirect:/signin"; 
+//	}
+	//UUID 생성 및 이메일 전송
 	@PostMapping("/findpw")
-	public String findpw(Model model, @RequestParam("username") String username,
-	                     @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {
-	    CUser cuser = this.cuserService.findpw(username);
-
-	    if (bindingResult.hasErrors()) {
-	        model.addAttribute("cuser", cuser);
-	        return "user/resetpw";
-	    }
-	    return "redirect:/signin"; 
+	public String sendResetPassword(
+		@RequestParam("email") String email) {		
+		System.out.println("서버로 넘어온 이메일 = " + email);
+		mailService.sendResetPasswordEmail(email);
+		return "index";
 	}
 	
-	@GetMapping("/resetpw")
+	
+	@GetMapping("/findpw")
 	public String resetpw() {
-		return "user/resetpw";
+		return "user/findpw";
 	}
 	
 	//구글 로그인

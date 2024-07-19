@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +24,17 @@ import com.example.CWebProj.AwsBucket.S3Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Service
 public class CUserService implements UserDetailsService {
 
-	@Autowired
-	private CUserRepository cuserRepository;
+	private final CUserRepository cuserRepository;
 	
-	@Autowired
-	private S3Service s3Service;
+	private final S3Service s3Service;
 	
-	@Autowired
-	private JavaMailSender mailsender;
-
-
+	private final PasswordEncoder passwordEncoder;
 	// 로그인처리
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -71,6 +68,26 @@ public class CUserService implements UserDetailsService {
 
 	}
 	
+//	//비번 재설정용
+//	@Transactional
+//	public void resetPassword(String uuid, String newPassword) {
+//		//redis에 uuid가 있는지 확인, 없으면 error
+//		if (email == null) {
+//			System.out.println("redis에 이메일이 없습니다.");
+//			return;
+//		}
+//
+//		//redis에서 uuid로 email을 찾아온다.
+//		CUser cuser = cuserRepository.findByUsername(email).get();
+//
+//		//비밀번호 재설정
+//		cuser.setPassword(passwordEncoder.encode((newPassword)));
+//
+//		//비밀번호 업데이트 후 redis에서 uuid를 지운다.
+//		redisService.deleteValues(uuid);
+//	}
+	
+	
 	//유저 데이터 저장
 	public void userdata(String username) {
         CUser cuser = new CUser();
@@ -78,29 +95,14 @@ public class CUserService implements UserDetailsService {
         this.cuserRepository.save(cuser);
     }
 	
-	
-	//비번 잊었을때
-	public CUser findpw(String username) {
-
-		Optional<CUser> cuser = this.cuserRepository.findByUsername(username);
-
-		if (cuser.isPresent()) {
-			return cuser.get();
-		}else {
-			throw new DataNotFoundException("존재하지 않는 이메일입니다.");
-		}
+	public boolean checkEmail(String Email) {
+		Optional<CUser> oc = cuserRepository.findByUsername(Email);
+		if(oc.isPresent())
+			return true;
+		else
+			return false;
+		
 	}
-	
-
-	//비번 리셋
-	
-	
-	//비번 자동생성
-	private boolean isStrongPassword(String password) {
-		String pattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-		return password.matches(pattern);
-	}
-	
 	
 	// 구글로그인처리
 	@Autowired
