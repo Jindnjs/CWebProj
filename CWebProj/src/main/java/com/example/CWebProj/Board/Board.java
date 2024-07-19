@@ -39,7 +39,7 @@ public class Board {
    private LocalDateTime createDate;
    
    //조회수
-   private Integer viewcount;
+   private Integer viewcount = 0;
    
    //공지여부
    private boolean notice;
@@ -49,10 +49,14 @@ public class Board {
    
    //썸네일
    private String imageLink;
+
+   //유튜브 링크
+   private String youtubeLink;
    
     //댓글
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
     private List<Comment> commentList;
+    
     
     //댓글 수
 }

@@ -1,11 +1,3 @@
-/**
-* Template Name: ZenBlog
-* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-* Updated: Mar 17 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https:///bootstrapmade.com/license/
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
 
@@ -19,10 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  
-
-  
-
   /**
    * Scroll top button
    */
@@ -33,34 +21,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('load', togglescrollTop);
     document.addEventListener('scroll', togglescrollTop);
-    scrollTop.addEventListener('click', window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    }));
+    scrollTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 
   /**
    * Hero Slider
    */
-  var swiper = new Swiper(".sliderFeaturedPosts", {
-    spaceBetween: 0,
-    speed: 500,
-    centeredSlides: true,
-    loop: true,
-    slideToClickedSlide: true,
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".custom-swiper-button-next",
-      prevEl: ".custom-swiper-button-prev",
-    },
-  });
+  if (typeof Swiper !== 'undefined') {
+    new Swiper(".sliderFeaturedPosts", {
+      spaceBetween: 0,
+      speed: 500,
+      centeredSlides: true,
+      loop: true,
+      slideToClickedSlide: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".custom-swiper-button-next",
+        prevEl: ".custom-swiper-button-prev",
+      },
+    });
+  }
 
   /**
    * Open and close the search form.
@@ -69,47 +61,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchClose = document.querySelector('.js-search-close');
   const searchWrap = document.querySelector(".js-search-form-wrap");
 
-  searchOpen.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchWrap.classList.add("active");
-  });
+  if (searchOpen && searchClose && searchWrap) {
+    searchOpen.addEventListener("click", (e) => {
+      e.preventDefault();
+      searchWrap.classList.add("active");
+    });
 
-  searchClose.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchWrap.classList.remove("active");
-  });
+    searchClose.addEventListener("click", (e) => {
+      e.preventDefault();
+      searchWrap.classList.remove("active");
+    });
+  }
 
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  if (typeof GLightbox !== 'undefined') {
+    GLightbox({
+      selector: '.glightbox'
+    });
+  }
 
   /**
    * Animation on scroll function and init
    */
   function aos_init() {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+    }
   }
   window.addEventListener('load', () => {
     aos_init();
   });
 
+  /**
+   * Pure Counter
+   */
+  if (typeof PureCounter !== 'undefined') {
+    new PureCounter();
+  }
 });
-
-/**
-* Template Name: Medilab
-* Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-* Updated: Jun 29 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 (function() {
   "use strict";
@@ -120,8 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+    if (selectHeader && (selectHeader.classList.contains('scroll-up-sticky') || selectHeader.classList.contains('sticky-top') || selectHeader.classList.contains('fixed-top'))) {
+      window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+    }
   }
 
   document.addEventListener('scroll', toggleScrolled);
@@ -131,13 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
    * Mobile nav toggle
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-
-  function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
+  if (mobileNavToggleBtn) {
+    function mobileNavToogle() {
+      document.querySelector('body').classList.toggle('mobile-nav-active');
+      mobileNavToggleBtn.classList.toggle('bi-list');
+      mobileNavToggleBtn.classList.toggle('bi-x');
+    }
+    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
   }
-  mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
 
   /**
    * Hide mobile nav on same-page/hash links
@@ -148,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileNavToogle();
       }
     });
-
   });
 
   /**
@@ -176,48 +173,46 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Scroll top button
    */
-  let scrollTop = document.querySelector('.scroll-top');
-
-  function toggleScrollTop() {
-    if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+  const scrollTopBtn = document.querySelector('.scroll-top');
+  if (scrollTopBtn) {
+    function toggleScrollTop() {
+      window.scrollY > 100 ? scrollTopBtn.classList.add('active') : scrollTopBtn.classList.remove('active');
     }
-  }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
+    window.addEventListener('load', toggleScrollTop);
+    document.addEventListener('scroll', toggleScrollTop);
 
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
+    scrollTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
   /**
    * Animation on scroll function and init
    */
   function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+    }
   }
   window.addEventListener('load', aosInit);
 
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
-
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
+  if (typeof GLightbox !== 'undefined') {
+    GLightbox({
+      selector: '.glightbox'
+    });
+  }
 
   /**
    * Frequently Asked Questions Toggle
@@ -232,17 +227,19 @@ document.addEventListener('DOMContentLoaded', () => {
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
+    if (typeof Swiper !== 'undefined') {
+      document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+        let config = JSON.parse(
+          swiperElement.querySelector(".swiper-config").innerHTML.trim()
+        );
 
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
-      }
-    });
+        if (swiperElement.classList.contains("swiper-tab")) {
+          initSwiperWithCustomPagination(swiperElement, config);
+        } else {
+          new Swiper(swiperElement, config);
+        }
+      });
+    }
   }
 
   window.addEventListener("load", initSwiper);

@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,16 +25,16 @@ public class CUser {
 	private Integer cid;
 
 	@Column(unique = true)
-	private String username; // 아이디-email
+	@Email(message = "이메일이 유효해야합니다.")
+	private String username; // 아이디 -> 이메일로 가입하게끔
+
 	private String password; // 비밀번호
 	private boolean enabled; //
 	private String role; // 권한
 
-	@Column(unique = true)
-	private String cemail; // 이메일
 	private String cname; //이름-작성자
 	private LocalDateTime cdate; // 날짜
 	
-	
-	
+
+
 }

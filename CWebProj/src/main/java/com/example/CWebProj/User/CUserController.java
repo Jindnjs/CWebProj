@@ -1,19 +1,22 @@
 package com.example.CWebProj.User;
 
 import java.net.URI;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 public class CUserController {
@@ -30,6 +33,7 @@ public class CUserController {
 	public String signup(CUser cuser) {
 		cuserService.create(cuser);
 		return "user/signup";
+		
 	}
 
 	@GetMapping("/signin")
@@ -52,14 +56,27 @@ public class CUserController {
 		return "user/findid";
 	}
 
-	@PreAuthorize("isAnonymous()")
 	@GetMapping("/findpw")
 	public String findpw() {
 		return "user/findpw";
 	}
 
+	@PostMapping("/findpw")
+	public String findpw(Model model, @RequestParam("username") String username,
+	                     @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {
+	    CUser cuser = this.cuserService.findpw(username);
+
+	    if (bindingResult.hasErrors()) {
+	        model.addAttribute("cuser", cuser);
+	        return "user/resetpw";
+	    }
+	    return "redirect:/signin"; 
+	}
 	
-	
+	@GetMapping("/resetpw")
+	public String resetpw() {
+		return "user/resetpw";
+	}
 	
 	//구글 로그인
 	@Value("${spring.security.oauth2.client.registration.google.client-id}")
