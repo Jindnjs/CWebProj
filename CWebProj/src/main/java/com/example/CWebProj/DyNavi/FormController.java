@@ -1,9 +1,8 @@
 package com.example.CWebProj.DyNavi;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.io.IOException;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,14 +41,15 @@ public class FormController {
 	
 	
 	@GetMapping(value = "/form2/{menuId}")
-	public String form2(Model model, @PathVariable("menuId") Integer menuId) {
-		List<Board> boards=this.boardService.getAllboard();
-		List<Board> filterboards=boards.stream().filter(board->board.getMenuId()==menuId).collect(Collectors.toList());
-		Collections.reverse(filterboards);
-		model.addAttribute("MenuCate", navService.getMenu(menuId));
-		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		model.addAttribute("boardList", filterboards);
-		//model.addAttribute("id", id);
+	public String form2(Model model, @PathVariable("menuId") Integer menuId,@RequestParam(value="page", defaultValue = "0") int page) {		
+		List<Board> notices = boardService.getNotices(menuId);
+		Page<Board> paging = boardService.getPageList(menuId, page);
+		
+	    model.addAttribute("MenuCate", navService.getMenu(menuId));
+	    model.addAttribute("sidebar", navService.getSidebar(menuId));
+	    model.addAttribute("notices", notices); 
+	    
+	    model.addAttribute("paging", paging);
 
 		return "readform/textform";
 		}

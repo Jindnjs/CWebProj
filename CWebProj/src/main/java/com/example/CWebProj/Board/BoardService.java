@@ -27,13 +27,14 @@ public class BoardService {
 	
 	private final CUserService cUserService;
 
-
 	private final S3Service s3Service;
 	
 	public List<Board> getAllboard(){
 		return this.boardRepository.findAll();
 	}
 
+	//board.setCuser()는 authen으로 받기
+	//if문으로 비로그인 시에는 입력칸에 적은거로 받기
 	public void boardcreate(Integer menuid, Board board) {
 		board.setViewcount(0);
 		board.setCreateDate(LocalDateTime.now());
@@ -112,9 +113,16 @@ public class BoardService {
 	    }
 	}
 
-
-	
 	public void delete(Integer id) {
 		boardRepository.deleteById(id);
+	}
+	
+	//심규성 페이징 기능 test
+	public List<Board> getNotices(Integer menuId) {
+		return boardRepository.findByMenuIdAndNoticeTrueOrderByCreateDateDesc(menuId);
+    }
+	public Page<Board> getPageList(Integer menuId, int page){
+		Pageable pageable = PageRequest.of(page, 13-this.getNotices(menuId).size());
+		return boardRepository.findByMenuIdAndNoticeFalseOrderByCreateDateDesc(menuId, pageable);
 	}
 }

@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.CWebProj.Comment.Comment;
+import com.example.CWebProj.User.CUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -28,7 +28,7 @@ public class Board {
    @Column(length=200)
    private String title;
    
-   //작성자 > 유저로 바꿔야함
+   
    private String author;
    
    //글 내용
