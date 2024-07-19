@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -131,6 +132,17 @@ public class CUserService implements UserDetailsService {
 			return 0;
 		}
 
+	}
+	
+	public CUser authen() {
+		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        String username = userDetails.getUsername();
+	        return this.cuserRepository.findByUsername(username).orElse(null);
+		}
+		
+		return null;
 	}
 
 }

@@ -43,7 +43,9 @@
             <!-- 작성자, 작성일시 -->
             <div class="row border-bottom">
                 <div class="col-md-6">
-                    <p>작성자: <span th:text="${board.author}"></span></p>
+                    <p>작성자: <span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+                    		 <span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
+                    </p>
                 </div>
                 <div class="col-md-6 text-right">
                     <p>작성일시: <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span></p>

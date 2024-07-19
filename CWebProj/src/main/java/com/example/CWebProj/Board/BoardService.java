@@ -25,7 +25,7 @@ public class BoardService {
 
 	private final BoardRepository boardRepository;
 	
-	private final CUserService cUserService;
+	private final CUserService cuserService;
 
 	private final S3Service s3Service;
 	
@@ -39,7 +39,7 @@ public class BoardService {
 		board.setViewcount(0);
 		board.setCreateDate(LocalDateTime.now());
 		board.setMenuId(menuid);
-		
+		board.setCuser(this.cuserService.authen());
 		board.setNotice(false);
 		this.boardRepository.save(board);
 	}

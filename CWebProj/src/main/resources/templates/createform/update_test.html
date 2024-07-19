@@ -27,7 +27,14 @@
 		<div class="row">
 			<div class="col-md-6 mb-4">
 				<input type="text" name="title" id="title" class="form-control mb-2" th:value="${board.title}">
-				<input type="text" name="author" id="author" class="form-control" th:value="${board.author}">
+				<div th:if="${#authorization.expression('isAuthenticated()')}">
+                	 <input class="form-control mb-2" th:value="${currentCUser != null ? currentCUser.cname : ''}" readonly="readonly">
+            	</div>
+            
+	            <!-- 비로그인 상태일 때 -->
+	            <div th:if="${#authorization.expression('!isAuthenticated()')}">
+	                <input type="text" name="author" id="author" class="form-control mb-2" th:value="${board.author}">
+	            </div>
 			</div>
 			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end">
 			</div>
