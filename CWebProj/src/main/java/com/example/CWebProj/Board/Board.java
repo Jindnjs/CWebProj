@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.CWebProj.Comment.Comment;
+import com.example.CWebProj.User.CUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -28,7 +28,9 @@ public class Board {
    @Column(length=200)
    private String title;
    
-   //작성자 > 유저로 바꿔야함
+   @ManyToOne
+   private CUser cuser;
+   
    private String author;
    
    //글 내용
@@ -39,7 +41,7 @@ public class Board {
    private LocalDateTime createDate;
    
    //조회수
-   private Integer viewcount;
+   private Integer viewcount = 0;
    
    //공지여부
    private boolean notice;
@@ -49,10 +51,14 @@ public class Board {
    
    //썸네일
    private String imageLink;
+
+   //유튜브 링크
+   private String youtubeLink;
    
     //댓글
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
     private List<Comment> commentList;
+    
     
     //댓글 수
 }

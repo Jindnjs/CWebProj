@@ -227,96 +227,6 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
-# Global Header
---------------------------------------------------------------*/
-.header {
-  --background-color: #008374;
-  --heading-color: #ffffff;
-  color: var(--default-color);
-  transition: all 0.5s;
-  z-index: 997;
-  background-color: var(--background-color);
-}
-
-.header .topbar {
-  background-color: color-mix(in srgb, var(--accent-color) 90%, black 10%);
-  height: 40px;
-  padding: 0;
-  font-size: 14px;
-  transition: all 0.5s;
-}
-
-.header .topbar .contact-info i {
-  font-style: normal;
-  color: var(--contrast-color);
-}
-
-.header .topbar .contact-info i a,
-.header .topbar .contact-info i span {
-  padding-left: 5px;
-  color: var(--contrast-color);
-}
-
-@media (max-width: 575px) {
-
-  .header .topbar .contact-info i a,
-  .header .topbar .contact-info i span {
-    font-size: 13px;
-  }
-}
-
-.header .topbar .contact-info i a {
-  line-height: 0;
-  transition: 0.3s;
-}
-
-.header .topbar .contact-info i a:hover {
-  color: var(--contrast-color);
-  text-decoration: underline;
-}
-
-.header .topbar .social-links a {
-  color: color-mix(in srgb, var(--contrast-color), transparent 40%);
-  line-height: 0;
-  transition: 0.3s;
-  margin-left: 20px;
-}
-
-.header .topbar .social-links a:hover {
-  color: var(--contrast-color);
-}
-
-.header .branding {
-  min-height: 60px;
-  padding: 10px 0;
-}
-
-.header .logo {
-  line-height: 1;
-}
-
-.header .logo img {
-  max-height: 36px;
-  margin-right: 8px;
-}
-
-.header .logo h1 {
-  font-size: 30px;
-  margin: 0;
-  font-weight: 700;
-  color: var(--heading-color);
-}
-
-.header .logo span {
-  font-size: 32px;
-  margin-left: 2px;
-  color: var(--nav-hover-color);
-}
-
-.scrolled .header {
-  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
-}
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -731,39 +641,6 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
-# Scroll Top Button
---------------------------------------------------------------*/
-.scroll-top {
-  position: fixed;
-  visibility: hidden;
-  opacity: 0;
-  right: 15px;
-  bottom: -15px;
-  z-index: 99999;
-  background-color: var(--accent-color);
-  width: 44px;
-  height: 44px;
-  border-radius: 50px;
-  transition: all 0.4s;
-}
-
-.scroll-top i {
-  font-size: 24px;
-  color: var(--contrast-color);
-  line-height: 0;
-}
-
-.scroll-top:hover {
-  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
-  color: var(--contrast-color);
-}
-
-.scroll-top.active {
-  visibility: visible;
-  opacity: 1;
-  bottom: 15px;
-}
 
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices

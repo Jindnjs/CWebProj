@@ -1,7 +1,5 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
-
-
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
@@ -16,8 +14,8 @@
 					            	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 						                <ol class="breadcrumb">
 						                    <li class="breadcrumb-item active">Home</li>
-						                    <li class="breadcrumb-item active" aria-current="page">커뮤니티</li>
-						                    <li class="breadcrumb-item active" aria-current="page">자유게시판</li>
+						                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.menuName}"></span></li>
+						                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.categoryName}"></li>
 						                </ol>
 					            	</nav>
 					        	</div>
@@ -41,36 +39,36 @@
 					        </tr>
 					        </thead>
 					        <tbody>
-					        
-		        				<!-- Notice board -->
-						    	<tr th:each="board : ${boardList}" th:if="${board.notice}">						    
-					            	<td Style="background-color:#DCDCDC">공지</td>
-						            <td Style="background-color:#DCDCDC">
-						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>
-						            	<span class="text small ms-2"
-						            		th:if="${#lists.size(board.commentList) != 0}"
-						            		th:text="|(${#lists.size(board.commentList)})|"></span>
-					            	</td>
+                    
+                    
+                    <!-- 공지 -->
+						         <tr th:each="board : ${notices}" th:if="${board.notice}">						    
+						            <td Style="background-color:#DCDCDC">공지</td>
+						            <td Style="background-color:#DCDCDC" >
+						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
+						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
+						            	</td>
 						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td Style="background-color:#DCDCDC" th:text="${board.author}"></td>
+						            <td Style="background-color:#DCDCDC">
+						            	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
-						        
-						        <!-- General board -->
-						        <tr th:each="board : ${boardList}" th:if="${!board.notice}" class="normal-row" style="cursor: pointer;">						    
-						            <td  class="number"></td>
-					           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
+
+						        <tr th:each="board,loop : ${paging}" th:if="${!board.notice}" class="normal-row" >						    
+						            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
-						            	<span class="text small ms-2"
-						            		th:if="${#lists.size(board.commentList) != 0}"
-						            		th:text="|(${#lists.size(board.commentList)})|"></span>
-					            	</td>
+						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
+						            	</td>
+
 						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td  th:text="${board.author}"></td>
+						            <td>
+						             	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
+            						</td>
 						            <td  th:text="${board.viewcount}"></td>
-						        </tr>
-						       
-						       
+						        </tr>     
 					        </tbody>
 				    	</table>
 				    	
@@ -81,43 +79,40 @@
 				                    
 				            ************************************************************
 				            ======================================================== -->
-					        
-					        <div aria-label="Page navigation">
-					            <ul class="pagination justify-content-center">
-					                <li class="page-item">
-					                    <a class="page-link" href="#" aria-label="Previous">
-					                        <span aria-hidden="true">&laquo;</span>
-					                    </a>
-					                </li>
-					                <li class="page-item"><a class="page-link" href="#">1</a></li>
-					                <li class="page-item"><a class="page-link" href="#">2</a></li>
-					                <li class="page-item"><a class="page-link" href="#">3</a></li>
-					                <li class="page-item">
-					                    <a class="page-link" href="#" aria-label="Next">
-					                        <span aria-hidden="true">&raquo;</span>
-					                    </a>
-					                </li>
-					            </ul>
-					        </div>
- 
-<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 
-	<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var normalRows = document.querySelectorAll('tr.normal-row');
-            var totalCount = normalRows.length;
-            normalRows.forEach(function(row, index) {
-                row.querySelector('.number').textContent = totalCount - index;
-            });
-        });
-    </script>
-    
+				           <div>
+				            <div th:if="${!paging.isEmpty()}" aria-label="Page navigation">
+						        <ul class="pagination justify-content-center">
+						            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+						                <a class="page-link"
+						                    th:href="@{|?page=${paging.number-1}|}" aria-label="Previous">
+						                    <span>이전</span>
+						                </a>
+						            </li>
+						            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+						            th:if="${page >= paging.number-3 and page <= paging.number+3}"
+						                th:classappend="${page == paging.number} ? 'active'" 
+						                class="page-item">
+						                <a th:text="${page+1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+						            </li>
+						            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+						                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+						                    <span>다음</span>
+						                </a>
+						            </li>
+						        </ul>
+						    </div>
+						    <div class=" d-flex justify-content-end">				        
+								<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
+							</div>
+						</div>    
+
       <script th:inline="javascript">
         function redirectToDetail(boardId, menuCateId) {
             var url = '/form2/' + menuCateId + '/detail/' + boardId;
             window.location.href = url;
         }
-    </script>
+      </script>
 
 </div>
 </html>

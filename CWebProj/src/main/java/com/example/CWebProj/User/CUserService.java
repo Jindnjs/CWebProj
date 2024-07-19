@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -78,6 +79,24 @@ public class CUserService implements UserDetailsService {
         this.cuserRepository.save(cuser);
     }
 	
+	//유저 데이터 다 불러오기
+	public List<CUser> readlist() {
+		return cuserRepository.findAll();
+	}
+	
+	// 유저 상세정보 가져오기
+	public CUser readdetail(Integer cid) {
+		Optional<CUser> oc = cuserRepository.findById(cid);
+		return oc.get();
+	}
+		
+	
+	//유저 정보 업데이트
+	public void update(CUser cuser) {
+		cuserRepository.save(cuser);
+	}
+	
+	
 	
 	//비번 잊었을때
 	public CUser findpw(String username) {
@@ -131,6 +150,17 @@ public class CUserService implements UserDetailsService {
 			return 0;
 		}
 
+	}
+	
+	public CUser authen() {
+		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        String username = userDetails.getUsername();
+	        return this.cuserRepository.findByUsername(username).orElse(null);
+		}
+		
+		return null;
 	}
 
 }
