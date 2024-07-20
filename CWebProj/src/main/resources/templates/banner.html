@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/banner.css" rel="stylesheet">
 </head>
 <body>
 
+<section>
+<h2>배너 이미지 수정 페이지</h2>
 <table class="table">
     <thead class="table-dark">
         <tr>
@@ -16,8 +20,8 @@
     </thead>
     <tbody>
         <tr th:each="banner, loop : ${banners}">
-            <td th:text="${loop.count}"></td>
-            <td th:text="${banner.image}"></td>
+            <td th:text="${loop.count}" class="number"></td>
+            <td><img th:src="|${downpath}/${banner.image}|" width="300px"></td>
             <td>
                 <button onclick="showForm(this)" th:data-id="${banner.id}">변경</button>
                 <form th:id="'form-' + ${banner.id}" th:action="@{|/banner/update/${banner.id}|}" method="post" enctype="multipart/form-data" style="display:none;">
@@ -29,6 +33,7 @@
         </tr>
     </tbody>
 </table>
+</section>
 
 <script>
     function showForm(button) {

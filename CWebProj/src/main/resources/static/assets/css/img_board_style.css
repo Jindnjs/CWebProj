@@ -1,112 +1,144 @@
-@charset "UTF-8";
-
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
-.btn btn-primary{
-	background-color: red;
+.btn-blue {
+    background-color: blue;
+    border: none;
+    color: white;
+    margin-bottom: 10px;
 }
- .blog-posts{
- margin-top: -50px;
- }
- 
- .post-img {
-            margin-bottom: 10px; /* 이미지 아래의 마진을 줄입니다. */
-        }
-        .post-meta {
-            margin-top: 5px; /* 메타 데이터 위의 마진을 줄입니다. */
-        }
- 
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.img-fluid {
+    width: 300px; /* 고정 너비 */
+    height: 200px; /* 고정 높이 */
+    object-fit: cover; /* 비율을 유지하면서 크기 조정 */
+}
+
+.img-fluid-view {
+    width: auto;
+    height: auto;
+    max-width: 100%; /* 부모 요소의 너비를 넘지 않도록 제한 */
+    max-height: 100%; /* 부모 요소의 높이를 넘지 않도록 제한 */
+    display: block; /* 이미지 아래에 여백이 생기는 것을 방지 */
+}
+
+.blog-posts {
+    margin-top: -50px;
+}
+
+.post-img {
+    margin-bottom: 10px; /* 이미지 아래의 마진을 줄입니다. */
+}
+
+.post-meta {
+    margin-top: 5px; /* 메타 데이터 위의 마진을 줄입니다. */
+}
+
 .blog-posts article {
-  background-color: var(--surface-color);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  height: 100%;
-  overflow: hidden;
+    background-color: var(--surface-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    height: 100%;
+    overflow: hidden;
 }
 
 .blog-posts .post-img {
-  max-height: 240px;
-  margin: -30px -30px 15px -30px;
-  overflow: hidden;
+    max-height: 240px;
+    margin: -30px -30px 15px -30px;
+    overflow: hidden;
 }
 
 .blog-posts .post-category {
-  font-size: 16px;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  margin-bottom: 10px;
+    font-size: 16px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    margin-bottom: 10px;
 }
 
 .blog-posts .title {
-  font-size: 20px;
-  font-weight: 700;
-  padding: 0;
-  margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    justify-content: space-between; /* 제목과 버튼을 양쪽으로 배치 */
+    align-items: center; /* 제목과 버튼을 수직으로 정렬 */
 }
 
 .blog-posts .title a {
-  color: var(--heading-color);
-  transition: 0.3s;
+    color: var(--heading-color);
+    transition: 0.3s;
 }
 
 .blog-posts .title a:hover {
-  color: var(--accent-color);
+    color: var(--accent-color);
 }
 
 .blog-posts .post-author-img {
-  width: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
 }
 
 .blog-posts .post-author {
-  font-weight: 1000;
-  margin-bottom: 5px;
+    font-weight: 1000;
+    margin-bottom: 5px;
 }
 
 .blog-posts .post-date {
-  font-size: 15px;
-
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  margin-bottom: 0;
+    font-size: 15px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    margin-bottom: 0;
 }
 
+.blog-posts .btn_update {
+    display: flex;
+    gap: 10px; /* 버튼 사이의 간격 */
+}
+
+.blog-posts .update, .blog-posts .delete {
+    cursor: pointer;
+}
 
 /*--------------------------------------------------------------
 # Blog Pagination Section
 --------------------------------------------------------------*/
 .blog-pagination {
-  padding-top: 0;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+    padding-top: 0;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
 .blog-pagination ul {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .blog-pagination li {
-  margin: 0 5px;
-  transition: 0.3s;
+    margin: 0 5px;
+    transition: 0.3s;
 }
 
 .blog-pagination li a {
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  padding: 7px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    padding: 7px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .blog-pagination li a.active,
 .blog-pagination li a:hover {
-  background: var(--accent-color);
-  color: var(--contrast-color);
+    background: var(--accent-color);
+    color: var(--contrast-color);
 }
 
 .blog-pagination li a.active a,
 .blog-pagination li a:hover a {
-  color: var(--contrast-color);
+    color: var(--contrast-color);
 }

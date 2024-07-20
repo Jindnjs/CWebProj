@@ -1,11 +1,17 @@
 @charset "UTF-8";
+h2{
+	font-size:25px;
+	text-align: left;
+}
 
 .table {
     max-width: 900px;
     margin: auto;
     text-align: center;
 }
-
+.number{
+	font-weight: bold;
+}
 .table thead th {
     padding: 8px 12px;
     font-size: 14px;
