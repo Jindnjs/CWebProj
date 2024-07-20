@@ -287,14 +287,21 @@
 </div>
 <!-- end of delete modal -->
 
+
 <!-- Blog Pagination Section -->
 <div class="container">
-    <div class="blog-pagination">
-        <ul>
-            <li th:each="page, iterStat : ${paging.pageList}">
-                <a th:href="@{/form3/${MenuCate.id}/?page=${page.number}}" th:text="${page.number + 1}"></a>
-            </li>
-        </ul>
+    <div class="blog-pagination" th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${!paging.hasPrevious()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${paging.number - 1}|}"><span>이전</span></a>
+        </li>
+        <li th:each="pageNum: ${#numbers.sequence(1, paging.totalPages)}" th:if="${pageNum >= paging.number + 1 - 3 and pageNum <= paging.number + 1 + 3}" th:classappend="${pageNum == paging.number + 1} ? 'active'" class="page-item">
+            <a th:text="${pageNum}" class="page-link" th:href="@{|?page=${pageNum - 1}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!paging.hasNext()} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${paging.number + 1}|}"><span>다음</span></a>
+        </li>
+    </ul>
     </div>
 </div>
 </div>
