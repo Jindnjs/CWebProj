@@ -79,6 +79,7 @@ public class FormController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", this.boardService.getboard(boardId));
 		model.addAttribute("currentCUser", cuserService.authen());
+		boardService.incrementViewCount(boardId);
 		return "readform/detail_test";
 	}
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")

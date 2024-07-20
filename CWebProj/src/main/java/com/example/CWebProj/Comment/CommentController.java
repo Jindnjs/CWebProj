@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
-import com.example.CWebProj.DyNavi.MenuCateg;
-import com.example.CWebProj.DyNavi.NavService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,15 +20,13 @@ public class CommentController {
 
 	private final BoardService boardService;
 	
-	private final NavService navService;
 	
 	@PostMapping("/{menuId}/create/{boardId}")
 	public String createComment(@PathVariable("menuId") Integer menuId,@PathVariable("boardId") Integer boardId,
-			@RequestParam("content") String content) {
+			@RequestParam("content") String content,@RequestParam("author") String author) {
 		Board board=this.boardService.getboard(boardId);
-		MenuCateg menucateg=this.navService.getMenu(menuId);
-		this.commentService.create(board, content);
-		return "redirect:/"+menucateg.getBoardLink()+"/"+menuId+"/detail/"+boardId;
+		this.commentService.create(board, content,author);
+		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
 	
 	

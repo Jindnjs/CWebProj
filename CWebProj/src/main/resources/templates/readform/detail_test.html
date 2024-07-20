@@ -1,15 +1,59 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
 	<style>
-		.comment-item {
-	            border-bottom: 1px solid #dee2e6; /* 선 추가 */
-	            padding: 10px 0;
-	    }
-	    .comment-list {
-	            list-style-type: none;
-	            padding: 0;
-	    }
-	</style>
+        .container-detail {
+            border: 1px solid #dee2e6; /* 전체 틀 추가 */
+            padding: 20px;
+            background-color: #f8f9fa; 
+            
+        }
+        .comment-item {  
+            padding: 10px 0;
+            font-size: 13px; 
+        }
+        .comment-item:last-child {
+            border-bottom: 1px solid #dee2e6;
+        }
+         .content-area {
+            min-height: 300px;     
+            border-bottom: 1px solid #dee2e6; 
+        }
+         .button-group {
+            display: flex;
+            justify-content: flex-end; 
+            margin-top: 10px; 
+        }
+        .sub {
+            display: flex;
+            justify-content: flex-end; 
+            margin-top: 10px; 
+        }
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            border-bottom: 1px solid #dee2e6;
+        }
+        .details-author{
+        	font-size: 16px; 
+        }
+        .details-date, .details-viewcount {
+            font-size: 14px; 
+        }
+
+        .details-author {
+            margin-right: auto; 
+        }
+
+        .details-date, .details-viewcount {
+            margin-left: 20px; 
+        }
+
+        .border-bottom.mb-3 h3 {
+            text-align: left; 
+        }
+        
+    </style>
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
@@ -35,33 +79,43 @@
 						
 						
  
-  <div class="container">
+  <div class="container-detail">
             <!-- 제목 -->
             <div class="border-bottom mb-3">
             <h3 th:text="${board.title}"></h3>
             </div>
             <!-- 작성자, 작성일시 -->
-            <div class="row border-bottom">
-                <div class="col-md-6">
-                    <p>작성자: <span th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            <div class="details-container">
+                <div class="details-author">
+                    <p>작성자 : <span th:if="${board.cuser == null}" th:text="${board.author}"></span>
                     		 <span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
                     </p>
                 </div>
-                <div class="col-md-6 text-right">
-                    <p>작성일시: <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                
+                <div class="details-date">
+                    <p>작성일시 : <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                </div>
+                
+                 <div class="details-viewcount">
+                    <p>조회수 : <span th:text="${board.viewcount}"></span></p>
                 </div>
             </div>
             <div>
-    
-            
-            
+       
             <!-- 내용 -->
-            <div class="border-bottom py-3">
+            <div class="content-area">
             <div th:utext="${board.content}" id="content"></div>
             </div>
+            
             <!-- 삭제, 수정 버튼 비로그인일때 currentCUser의 cid를 받지 못해 오류가 발생한다 그래서 비로그인시 현재 사용자를null로 만들어 버림-->
-           <div class="text-right mt-3" th:if="${currentCUser != null}">
-            <div th:if="${currentCUser.cid == board.cuser.cid}">
+            <div class="button-group">
+           <div class="text-right mt-3" th:if="${currentCUser != null} and ${board.cuser!=null}">
+            <div th:if="${currentCUser.cid == board.cuser.cid} and !${#authorization.expression('hasRole(''ADMIN'')')}">
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
+            </div>
+            </div>
+            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
                 <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
             </div>
@@ -69,23 +123,28 @@
             </div>
             <!-- 댓글 목록 -->
             <div class="border-bottom mt-4">
-            <h5 class="mt-4 mb-3" th:text="|${#lists.size(board.commentList)}개의 댓글이 있습니다.|"></h5>
+            <h7 class="mt-4 mb-3" th:text="|${#lists.size(board.commentList)}개의 댓글이 있습니다.|"></h7>
             </div>
             <ul class="comment-list">
                 <li th:each="comment : ${board.commentList}" class="comment-item">
+                	<span th:text="${comment.author}"></span>
+    				:
                     <span th:text="${comment.content}"></span>
                 </li>
             </ul>
             
             <!-- 댓글 입력 폼 -->
             <div class="mt-4">
-                <h5>댓글 작성</h5>
+                <h7>댓글 작성</h7>
                 <form th:action="@{|/comment/${MenuCate.id}/create/${board.id}|}" method="post">
                     <div class="form-group">
+                    	 <input type="text" class="form-control mb-2" name="author" placeholder="작성자" 
+                        th:value="${currentCUser != null ? currentCUser.cname : ''}" 
+                        th:readonly="${currentCUser != null}" style="font-size: 13px;" required>
                         <textarea class="form-control" rows="4" name="content" placeholder="댓글을 입력하세요"></textarea>
                     </div>
-                    <div class="text-right">
-                    <button type="submit" class="btn btn-primary">답변 등록</button>
+                    <div class="sub">
+                    	<button type="submit" class="btn btn-primary">댓글 등록</button>
                     </div>
                 </form>
             </div>

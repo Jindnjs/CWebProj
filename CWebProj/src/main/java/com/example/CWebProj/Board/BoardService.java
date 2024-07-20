@@ -40,7 +40,6 @@ public class BoardService {
 		board.setCreateDate(LocalDateTime.now());
 		board.setMenuId(menuid);
 		board.setCuser(this.cuserService.authen());
-		board.setNotice(false);
 		this.boardRepository.save(board);
 	}
 	

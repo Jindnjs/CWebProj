@@ -39,7 +39,7 @@
 					        </tr>
 					        </thead>
 					        <tbody>
-						         <tr th:each="board : ${notices}" th:if="${board.notice}">						    
+						         <tr th:each="board : ${notices}">						    
 						            <td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC" >
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
@@ -51,7 +51,7 @@
             							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
-						        <tr th:each="board,loop : ${paging}" th:if="${!board.notice}" class="normal-row" >						    
+						        <tr th:each="board,loop : ${paging}"  class="normal-row" >						    
 						            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
 						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
@@ -95,11 +95,10 @@
 						            </li>
 						        </ul>
 						    </div>
-						    <div class=" d-flex justify-content-end" th:if="${MenuCate.id==9}">				        
+						    <div class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasRole(''ADMIN'')')}">				        
 								<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 							</div>
 						</div>    
-
       <script th:inline="javascript">
         function redirectToDetail(boardId, menuCateId) {
             var url = '/form2/' + menuCateId + '/detail/' + boardId;

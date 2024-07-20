@@ -31,4 +31,6 @@ public class Comment {
 	
 	@ManyToOne
 	private CUser cuser;
+	
+	private String author;
 }
