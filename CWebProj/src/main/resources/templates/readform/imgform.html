@@ -42,6 +42,13 @@
     }
 
     function submitUpdateForm() {
+    	const title = document.getElementById('updateTitle').value.trim();
+
+        if (title === "") {
+        	alert("제목을 입력해주세요");
+        	return;
+        }
+    	
         const form = document.getElementById('updateForm');
         const formData = new FormData(form);
 
@@ -93,7 +100,7 @@
                 document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                 document.getElementById('viewAuthor').innerText = data.author;
                 document.getElementById('viewCount').innerText = '조회' + data.viewcount;
-                document.getElementById('viewImage').src = downpath + '/' + data.imageLink;
+                document.getElementById('viewImage').src = downpath + '/' + data.mediaLink;
                 new bootstrap.Modal(document.getElementById('viewModal')).show();
             })
             .catch(error => {
@@ -207,7 +214,7 @@
                 <article>
                     <div class="post-img">
                         <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                            <img th:src="|${downpath}/${board.imageLink}|" alt="image" class="img-fluid">
+                            <img th:src="|${downpath}/${board.mediaLink}|" alt="image" class="img-fluid">
                         </a>
                     </div>
                     <div class="title">
@@ -233,34 +240,39 @@
 <!-- End Blog Posts Section -->
 
 <!-- Update Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">수정하기</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <form id="updateForm" th:onsubmit="event.preventDefault(); submitUpdateForm();">
-                    <input type="hidden" id="updateBoardId" name="boardId">
-                    <input type="hidden" id="updateMenuId" name="menuId">
-                    <div class="mb-3">
-                        <label for="updateTitle" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="updateTitle" name="title">
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">사진 수정</h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </form>
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button" th:onclick="submitUpdateForm()">수정</button>
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">취소</button>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form id="updateForm" enctype="multipart/form-data">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="mb-3">
+                                <label for="updateTitle" class="form-label">제목</label>
+                                <input type="text" class="form-control" id="updateTitle" name="title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateMultipartFile" class="form-label">파일 선택</label>
+                                <input class="form-control" id="updateMultipartFile" type="file" name="multipartFile">
+                            </div>
+                            <input type="hidden" id="updateMenuId" name="menuId">
+                            <input type="hidden" id="updateBoardId" name="boardId">
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" th:onclick="submitUpdateForm()">수정</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- end of update modal -->
+        <!-- end of update modal -->
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

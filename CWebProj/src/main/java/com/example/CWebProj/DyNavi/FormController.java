@@ -186,25 +186,25 @@ public class FormController {
 	@ResponseBody
 	public String form4create(Model model, @PathVariable("menuId") Integer menuId,
 	                          @RequestParam("title") String title,
-	                          @RequestParam("youtubeLink") String youtubeLink,
+	                          @RequestParam("mediaLink") String mediaLink,
 	                          @RequestParam("content") String content) throws IOException {
 	    if(title.equals("")) {
 	    	return "제목을 지어주세요.";
 	    }
-	    if(youtubeLink.equals("")) {
+	    if(mediaLink.equals("")) {
 	    	return "유튜브 url을 입력해주세요.";
 	    } else {
 	    	String youtubePrefix = "https://youtu.be/";
-	        if(youtubeLink.startsWith(youtubePrefix)) {
-	            youtubeLink = youtubeLink.substring(youtubePrefix.length());
-	            youtubeLink = "https://www.youtube.com/embed/" + youtubeLink;
+	        if(mediaLink.startsWith(youtubePrefix)) {
+	            mediaLink = mediaLink.substring(youtubePrefix.length());
+	            mediaLink = "https://www.youtube.com/embed/" + mediaLink;
 	        }
 	    }
 	    
 	    Board board = new Board();
 	    board.setMenuId(menuId);
 	    board.setTitle(title);
-	    board.setYoutubeLink(youtubeLink);
+	    board.setMediaLink(mediaLink);
 	    board.setContent(content);
 	    boardService.boardcreate(menuId, board);
 	    return "success";
@@ -216,16 +216,38 @@ public class FormController {
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("menu", navService.getMenu(menuId));
 	    response.put("sidebar", navService.getSidebar(menuId));
-	    response.put("board", boardService.getBoard(boardId));
+
+	    Board board = boardService.getBoard(boardId);
+
+	    if (board.getMediaLink() != null && !board.getMediaLink().startsWith("https://youtu.be/")) {
+	        board.setMediaLink("https://youtu.be/" + board.getMediaLink());
+	    }
+	    response.put("board", board);
 	    
 	    return ResponseEntity.ok(response);
 	}
 	@PostMapping(value = "/form4/{menuId}/update/{boardId}")
     @ResponseBody
     public String form4update(@RequestParam("boardId") Integer boardId, 
-    		@RequestParam("title") String title) throws IOException {
+    		@RequestParam("title") String title,
+    		@RequestParam("mediaLink") String mediaLink) throws IOException {
+		
+		if(title.equals("")) {
+	    	return "제목을 지어주세요.";
+	    }
+	    if(mediaLink.equals("")) {
+	    	return "유튜브 url을 입력해주세요.";
+	    } else {
+	    	String youtubePrefix = "https://youtu.be/";
+	        if(mediaLink.startsWith(youtubePrefix)) {
+	            mediaLink = mediaLink.substring(youtubePrefix.length());
+	        }
+	    }
+		
         Board board = boardService.getBoard(boardId);
         board.setTitle(title);
+        board.setMediaLink(mediaLink);
+        boardService.updateboard(board);
         return "success";
     }
 	@GetMapping(value = "/form4/{menuId}/delete/{boardId}")

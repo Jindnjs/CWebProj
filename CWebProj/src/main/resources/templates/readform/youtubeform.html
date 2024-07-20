@@ -14,9 +14,9 @@
             const form = document.getElementById('createForm');
             const formData = new FormData(form);
 
-            const youtubeLink = document.getElementById('createYoutubeLink').value;
-            if (youtubeLink.startsWith("https://youtu.be/")) {
-                formData.set('youtubeLink', youtubeLink.replace("https://youtu.be/", ""));
+            const mediaLink = document.getElementById('createmediaLink').value;
+            if (mediaLink.startsWith("https://youtu.be/")) {
+                formData.set('mediaLink', mediaLink.replace("https://youtu.be/", ""));
             }
 
             fetch('/form4/' + menuId + '/create', {
@@ -32,6 +32,82 @@
                 }).catch(error => {
                     console.error('Form submission error:', error);
                 });
+        }
+
+        function openUpdateModal(menuId, boardId) {
+            fetch('/form4/' + menuId + '/update/' + boardId)
+                .then(response => response.json())
+                .then(data => {
+                    const board = data.board;
+                    document.getElementById('updateBoardId').value = boardId;
+                    document.getElementById('updateMenuId').value = menuId;
+                    document.getElementById('updateTitle').value = board.title;
+                    document.getElementById('updateMediaLink').value = board.mediaLink;
+                    document.getElementById('updateContent').value = board.content;
+                    new bootstrap.Modal(document.getElementById('updateModal')).show();
+                })
+                .catch(error => {
+                    console.error('Error fetching board data:', error);
+                });
+        }
+
+        function submitUpdateForm() {
+            const title = document.getElementById('updateTitle').value.trim();
+            const mediaLink = document.getElementById('updateMediaLink').value.trim();
+            const content = document.getElementById('updateContent').value.trim();
+
+            if (title === "") {
+            	alert("제목을 입력해주세요");
+            	return;
+            } else if (mediaLink === "") {
+            	alert("링크를 입력해주세요");
+            	return;
+            } else if (!mediaLink.startsWith("https://youtu.be/")) {
+                alert("링크 형식에 맞지 않습니다. (유튜브 영상 > '공유'버튼 클릭 > 주소 '복사' 클릭 후 붙여넣기)");
+                return;
+            }
+
+            const form = document.getElementById('updateForm');
+            const formData = new FormData(form);
+
+            const menuId = document.getElementById('updateMenuId').value;
+            const boardId = document.getElementById('updateBoardId').value;
+
+            fetch('/form4/' + menuId + '/update/' + boardId, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Form submission error:', response);
+                }
+            }).catch(error => {
+                console.error('Form submission error:', error);
+            });
+        }
+
+        function openDeleteModal(boardId, menuId) {
+            document.getElementById('deleteBoardId').value = boardId;
+            document.getElementById('deleteMenuId').value = menuId;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        function submitDeleteForm() {
+            const boardId = document.getElementById('deleteBoardId').value;
+            const menuId = document.getElementById('deleteMenuId').value;
+
+            fetch('/form4/' + menuId + '/delete/' + boardId, {
+                method: 'GET'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Form submission error:', response);
+                }
+            }).catch(error => {
+                console.error('Form submission error:', error);
+            });
         }
     </script>
 
@@ -55,24 +131,28 @@
         <button class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">영상 올리기</button>
     </div>
 
+    <!-- create modal -->
     <div class="modal fade" id="scrollingLong2" tabindex="-1" aria-labelledby="scrollingLongModalLabel2" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollingLongModalLabel2">영상 올리기</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
                 </div>
+
                 <div class="modal-body">
-                    <form id="createForm" enctype="multipart/form-data" onsubmit="event.preventDefault(); submitCreateForm([[${MenuCate.id}]]);">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <form id="createForm" th:onsubmit="event.preventDefault(); submitCreateForm([[${MenuCate.id}]]);">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        
                         <div class="mb-3">
                             <div class="mb-0">
                                 <label for="createTitle" class="form-label">제목</label>
                                 <input class="form-control form-control-sm" id="createTitle" name="title" type="text" placeholder="제목을 입력하세요" />
                             </div>
                             <div class="mb-0">
-                                <label for="createYoutubeLink" class="form-label">영상 링크 첨부</label>
-                                <input class="form-control form-control-sm" id="createYoutubeLink" name="youtubeLink" type="text" placeholder="https://youtu.be/ 링크를 입력하세요" />
+                                <label for="createmediaLink" class="form-label">영상 링크 첨부</label>
+                                <input class="form-control form-control-sm" id="createmediaLink" name="mediaLink" type="text" placeholder="https://youtu.be/ 링크를 입력하세요" />
                             </div>
                             <div class="mb-0">
                                 <label for="createContent" class="form-label">내용</label>
@@ -82,13 +162,82 @@
                         <input type="hidden" id="createMenuId" name="menuId" th:value="${MenuCate.id}">
                     </form>
                 </div>
+
                 <div class="modal-footer d-flex justify-content-end">
-                    <button class="btn btn-primary" type="button" onclick="submitCreateForm([[${MenuCate.id}]])">올리기</button>
+                    <button class="btn btn-primary" type="button" th:onclick="submitCreateForm([[${MenuCate.id}]])">올리기</button>
                     <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- end of create modal -->
+
+    <!-- update modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">영상 수정</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="updateForm" th:onsubmit="event.preventDefault(); submitUpdateForm();">
+                    	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    	
+                        <input type="hidden" id="updateBoardId" name="boardId">
+                        <input type="hidden" id="updateMenuId" name="menuId">
+                        <div class="mb-3">
+                            <div class="mb-0">
+                                <label for="updateTitle" class="form-label">제목</label>
+                                <input class="form-control form-control-sm" id="updateTitle" name="title" type="text" />
+                            </div>
+                            <div class="mb-0">
+                                <label for="updateMediaLink" class="form-label">영상 링크 첨부</label>
+                                <input class="form-control form-control-sm" id="updateMediaLink" name="mediaLink" type="text" />
+                            </div>
+                            <div class="mb-0">
+                                <label for="updateContent" class="form-label">내용</label>
+                                <input class="form-control form-control-sm" id="updateContent" name="content" type="text" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-end">
+                    <button class="btn btn-primary" type="button" th:onclick="submitUpdateForm()">수정</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of update modal -->
+
+    <!-- delete modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">영상 삭제</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs-9"></span></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>정말 삭제하시겠습니까?</p>
+                    <input type="hidden" id="deleteBoardId">
+                    <input type="hidden" id="deleteMenuId">
+                </div>
+
+                <div class="modal-footer d-flex justify-content-end">
+                    <button class="btn btn-danger" type="button" th:onclick="submitDeleteForm()">삭제</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of delete modal -->
 
     <div class="table-responsive">
         <table class="table align-middle">
@@ -107,8 +256,8 @@
                     <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                     <td>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary" type="button" th:onclick="'submitUpdateForm(' + ${board.id} + ')'">수정</button>
-                            <button class="btn btn-secondary ms-2" type="button" data-bs-dismiss="modal">취소</button>
+                            <button class="btn btn-primary" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]])">수정</button>
+                            <button class="btn btn-secondary ms-2" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
                         </div>
                     </td>
                 </tr>
@@ -117,7 +266,7 @@
                         <div th:id="'collapseExample' + ${board.id}" class="collapse">
                             <div class="card card-body">
                                 <h1 th:text="${board.title}"></h1>
-                                <iframe width="760" height="500" th:src="'https://www.youtube.com/embed/' + ${board.youtubeLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <iframe width="760" height="500" th:src="'https://www.youtube.com/embed/' + ${board.mediaLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 <p th:text="${board.content}"></p>
                             </div>
                         </div>

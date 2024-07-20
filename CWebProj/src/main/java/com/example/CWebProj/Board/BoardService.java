@@ -84,7 +84,7 @@ public class BoardService {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid + "_" + multipartFile.getOriginalFilename();
 			s3Service.uploadFile(multipartFile, fileName);
-			board.setImageLink(fileName);
+			board.setMediaLink(fileName);
 		}
 		board.setCreateDate(LocalDateTime.now());
 		
@@ -102,7 +102,7 @@ public class BoardService {
 	            UUID uuid = UUID.randomUUID();
 	            String fileName = uuid + "_" + multipartFile.getOriginalFilename();
 	            s3Service.uploadFile(multipartFile, fileName);
-	            existingBoard.setImageLink(fileName);
+	            existingBoard.setMediaLink(fileName);
 	        }
 
 	        boardRepository.save(existingBoard);
