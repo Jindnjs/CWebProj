@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
-.btn-blue {
+.btn {
     background-color: blue;
     border: none;
     color: white;
@@ -13,18 +13,25 @@
     justify-content: flex-end;
 }
 
+.btn_update .delete, .update{
+	background-color: blue;
+	border-radius:4px;
+	border: none;
+	color: white;
+	font-size: 13px;
+}
 .img-fluid {
-    width: 300px; /* 고정 너비 */
-    height: 200px; /* 고정 높이 */
-    object-fit: cover; /* 비율을 유지하면서 크기 조정 */
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
 }
 
 .img-fluid-view {
     width: auto;
     height: auto;
-    max-width: 100%; /* 부모 요소의 너비를 넘지 않도록 제한 */
-    max-height: 100%; /* 부모 요소의 높이를 넘지 않도록 제한 */
-    display: block; /* 이미지 아래에 여백이 생기는 것을 방지 */
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
 
 .blog-posts {
@@ -33,6 +40,7 @@
 
 .post-img {
     margin-bottom: 10px; /* 이미지 아래의 마진을 줄입니다. */
+    padding: 0;
 }
 
 .post-meta {
@@ -42,14 +50,14 @@
 .blog-posts article {
     background-color: var(--surface-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 10px;
     height: 100%;
     overflow: hidden;
 }
 
 .blog-posts .post-img {
     max-height: 240px;
-    margin: -30px -30px 15px -30px;
+    margin: -15px -15px 5px -10px;
     overflow: hidden;
 }
 
@@ -65,8 +73,8 @@
     padding: 0;
     margin: 0 0 20px 0;
     display: flex;
-    justify-content: space-between; /* 제목과 버튼을 양쪽으로 배치 */
-    align-items: center; /* 제목과 버튼을 수직으로 정렬 */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .blog-posts .title a {
@@ -97,7 +105,7 @@
 
 .blog-posts .btn_update {
     display: flex;
-    gap: 10px; /* 버튼 사이의 간격 */
+    gap: 10px;
 }
 
 .blog-posts .update, .blog-posts .delete {
