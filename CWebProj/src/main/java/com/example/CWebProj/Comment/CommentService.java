@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.User.CUserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,15 +19,18 @@ public class CommentService {
 	
 	private final BoardService boardService;
 	
-	public void create(Board board,String content) {
+	private final CUserService cuserService;
+	
+	public void create(Board board,String content,String author) {
 		Comment comment=new Comment();
+
 		comment.setBoard(board);
 		comment.setContent(content);
+		comment.setAuthor(author);
 		comment.setDate(LocalDateTime.now());
+		comment.setCuser(this.cuserService.authen());
 		this.commentRepository.save(comment);
 	}
-	
-	
 	
 	public Comment getComment(Integer id) {
 		Optional<Comment> op = commentRepository.findById(id);

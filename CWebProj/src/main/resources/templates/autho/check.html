@@ -8,23 +8,16 @@
 	
 	<h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
 	<p>
-		<a href="/admin">admin</a>
+		<a href="/autho/admin">admin</a>
 	<p>
-		<a href="/manager">manager</a>
-	<p>
-		<a href="/user">user</a>
-	<p>
-	 	<a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
-	
-	 <p>	
+		<a href="/manager">manager</a>	
 
 <div sec:authorize="isAuthenticated()">[ Logged in ]</div><br>
 admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div><br>
 manager <div sec:authorize="hasRole('ROLE_MANAGER')">[ yes ]</div><br>
-user <div sec:authorize="hasRole('ROLE_USER')">[ yes ]</div><br>
-
-<a href="/">메인으로 가기</a>
-
+	<br>
+	<a href="/">메인으로 가기</a>
+	<a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
+	<a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
 </body>
 </html>

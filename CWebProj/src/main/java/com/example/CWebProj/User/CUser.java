@@ -2,11 +2,16 @@ package com.example.CWebProj.User;
 
 import java.time.LocalDateTime;
 
+import com.example.CWebProj.Board.Board;
+import com.example.CWebProj.Comment.Comment;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,12 +28,12 @@ public class CUser {
 	@Column(unique = true)
 	@Email(message = "이메일이 유효해야합니다.")
 	private String username; // 아이디 -> 이메일로 가입하게끔
+
 	private String password; // 비밀번호
-	private boolean enabled; //
+	private boolean enabled; // 활성화 여부
 	private String role; // 권한
 
-	@Column(unique = true)
-	private String cname; //이름
+	private String cname; //이름-작성자
 	private LocalDateTime cdate; // 날짜
 	
 	

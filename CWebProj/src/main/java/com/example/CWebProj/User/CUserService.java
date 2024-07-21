@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -107,6 +108,46 @@ public class CUserService implements UserDetailsService {
 		
 	}
 	
+	//유저 데이터 다 불러오기
+	public List<CUser> readlist() {
+		return cuserRepository.findAll();
+	}
+	
+	// 유저 상세정보 가져오기
+	public CUser readdetail(Integer cid) {
+		Optional<CUser> oc = cuserRepository.findById(cid);
+		return oc.get();
+	}
+		
+	
+	//유저 정보 업데이트
+	public void update(CUser cuser) {
+		cuserRepository.save(cuser);
+	}
+	
+	
+	
+	//비번 잊었을때
+	public CUser findpw(String username) {
+
+		Optional<CUser> cuser = this.cuserRepository.findByUsername(username);
+
+		if (cuser.isPresent()) {
+			return cuser.get();
+		}else {
+			throw new DataNotFoundException("존재하지 않는 이메일입니다.");
+		}
+	}
+	
+	
+	//비번 자동생성
+	private boolean isStrongPassword(String password) {
+		String pattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		return password.matches(pattern);
+	}
+	
+	
+
 	// 구글로그인처리
 	@Autowired
 	private HttpServletRequest req;
@@ -136,6 +177,17 @@ public class CUserService implements UserDetailsService {
 			return 0;
 		}
 
+	}
+	
+	public CUser authen() {
+		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        String username = userDetails.getUsername();
+	        return this.cuserRepository.findByUsername(username).orElse(null);
+		}
+		
+		return null;
 	}
 
 }
