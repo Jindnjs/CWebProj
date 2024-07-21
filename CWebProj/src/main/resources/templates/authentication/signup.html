@@ -19,7 +19,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets_p/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets_p/img/favicons/favicon-16x16.png">
     <link rel="shortcut icon" type="image/x-icon" href="/assets_p/img/favicons/favicon.ico">
-    <link rel="manifest" href="/assets_p_p/img/favicons/manifest.json">
+    <link rel="manifest" href="/assets_p/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="/assets_p/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
     <script src="/vendors/simplebar/simplebar.min.js"></script>
@@ -55,7 +55,8 @@
     </script>
   </head>
 <body>
-  <!-- ===============================================-->
+<main>
+<!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
@@ -65,44 +66,38 @@
               <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="images/7.png" alt="phoenix" width="450" title="메인화면으로 돌아가기"/>
               </div>
             </a>
-            <div class="position-relative">
-              <hr class="bg-body-secondary mt-5 mb-4" />
+            <div class="position-relative mt-4">
+              <hr class="bg-body-secondary" />
               <div class="divider-content-center"></div>
             </div>
-            <div class="mb-3 text-start">
-              <label class="form-label" for="id">아이디</label>
-              <div class="form-icon-container">
-                <input class="form-control form-icon-input" id="id" type="id" placeholder="Id" /><span class="fas fa-user text-body fs-9 form-icon"></span>
+            <form action="/signup" method="post">
+
+		 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <div class="mb-3 text-start">
+                <label class="form-label" for="name">이름</label>
+                <input class="form-control" name="cname" id="name" type="text" placeholder="Name" />
               </div>
-            </div>
-            <div class="mb-3 text-start">
-              <label class="form-label" for="password">비밀번호</label>
-              <div class="form-icon-container">
-                <input class="form-control form-icon-input" id="password" type="password" placeholder="Password" /><span class="fas fa-key text-body fs-9 form-icon"></span>
+              <div class="mb-3 text-start">
+                <label class="form-label" for="email">이메일</label>
+                <input class="form-control" name="username" id="email" type="email" placeholder="name@example.com" />
               </div>
-            </div>
-            <div class="row flex-between-center mb-7">
-              <div class="col-auto">
-                <div class="form-check mb-0">
-                  <input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" />
-                  <label class="form-check-label mb-0" for="basic-checkbox">내 정보 기억하기</label>
+              <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                  <label class="form-label" for="password">비밀번호</label>
+                  <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="Password" />
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label" for="confirmPassword">비밀번호 확인</label>
+                  <input class="form-control form-icon-input" id="confirmPassword" type="password" placeholder="Confirm Password" />
                 </div>
               </div>
-              <div class="col-auto">
-              <a class="fs-9 fw-semibold" href="findpw">비밀번호 찾기</a>
-            </div>
-            <button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>구글 이메일로 로그인</button>
-            <button class="btn btn-primary w-100 mb-3">로그인</button>
-            <div class="text-center"><a class="fs-9 fw-bold" href="/signup">회원가입하기</a></div>
+              <button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>구글 이메일로 가입하기</button>
+              <input type="submit" class="btn btn-primary w-100 mb-3" value="가입하기"></button>
+            </form>
           </div>
         </div>
       </div>
-    </main>
-    <!-- ===============================================-->
-    <!--    End of Main Content-->
-    <!-- ===============================================-->
-    
-    
+</main>
        <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
