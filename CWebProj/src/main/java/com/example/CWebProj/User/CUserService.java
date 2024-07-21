@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import com.example.CWebProj.Autho.AuthenKeyValService;
 import com.example.CWebProj.AwsBucket.S3Service;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,8 @@ public class CUserService implements UserDetailsService {
 	private final S3Service s3Service;
 	
 	private final PasswordEncoder passwordEncoder;
+	
+	private final AuthenKeyValService authenKeyValService;
 	// 로그인처리
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,24 +71,24 @@ public class CUserService implements UserDetailsService {
 
 	}
 	
-//	//비번 재설정용
-//	@Transactional
-//	public void resetPassword(String uuid, String newPassword) {
-//		//redis에 uuid가 있는지 확인, 없으면 error
-//		if (email == null) {
-//			System.out.println("redis에 이메일이 없습니다.");
-//			return;
-//		}
-//
-//		//redis에서 uuid로 email을 찾아온다.
-//		CUser cuser = cuserRepository.findByUsername(email).get();
-//
-//		//비밀번호 재설정
-//		cuser.setPassword(passwordEncoder.encode((newPassword)));
-//
-//		//비밀번호 업데이트 후 redis에서 uuid를 지운다.
-//		redisService.deleteValues(uuid);
-//	}
+	//비번 재설정용
+	public void resetPassword(String uuid, String newPassword) {
+		//redis에 uuid가 있는지 확인, 없으면 error
+		String email = authenKeyValService.getValue(uuid);
+		if (email == null) {
+			System.out.println("redis에 이메일이 없습니다.");
+			return;
+		}
+
+		//redis에서 uuid로 email을 찾아온다.
+		CUser cuser = cuserRepository.findByUsername(email).get();
+
+		//비밀번호 재설정
+		cuser.setPassword(passwordEncoder.encode((newPassword)));
+
+		//비밀번호 업데이트 후 redis에서 uuid를 지운다.
+		authenKeyValService.delete(uuid);
+	}
 	
 	
 	//유저 데이터 저장

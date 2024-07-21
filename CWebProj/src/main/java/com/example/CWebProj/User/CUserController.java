@@ -8,11 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.CWebProj.Autho.AuthenKeyValService;
 import com.example.CWebProj.Mail.SendMailService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -23,26 +26,24 @@ public class CUserController {
 	private final CUserService cuserService;
 	
 	private final SendMailService mailService;
+	
+	private final AuthenKeyValService authenKeyValService;
+	
 	@GetMapping("/signup")
 	public String signup() {
-		return "user/signup";
+		return "authentication/signup";
 	}
 
 	@PostMapping("/signup")
 	public String signup(CUser cuser) {
 		cuserService.create(cuser);
-		return "user/signup";
+		return "redirect:/signin";
 		
 	}
 
 	@GetMapping("/signin")
 	public String signin() {
-		return "user/signin";
-	}
-
-	@GetMapping("/signout")
-	public String signout() {
-		return "user/signin";
+		return "authentication/signin";
 	}
 
 	@GetMapping("/profile")
@@ -57,7 +58,7 @@ public class CUserController {
 
 	@GetMapping("/resetpw")
 	public String findpw() {
-		return "user/resetpw2";
+		return "authentication/resetpw";
 	}
 
 //	@PostMapping("/findpw")
@@ -74,16 +75,36 @@ public class CUserController {
 	//UUID 생성 및 이메일 전송
 	@PostMapping("/findpw")
 	public String sendResetPassword(
-		@RequestParam("email") String email) {		
+		@RequestParam("email") String email) throws MessagingException {		
 		System.out.println("서버로 넘어온 이메일 = " + email);
+		
+		//이메일 주소의 유효성 검증
+		//만약 없으면 회원가입창으로 보냄
+		
 		mailService.sendResetPasswordEmail(email);
-		return "index";
+		return "redirect:/signin";
 	}
+	@GetMapping("/reset/{uuid}")
+	public String resetPassword(@PathVariable("uuid") String uuid) {
+		String email = authenKeyValService.getValue(uuid);
+		if (email == null) {
+			System.out.println("redis에 이메일이 없습니다.");
+			return "redirect:/signin";
+		}
+		return "authentication/resetpw";
+	}
+	@PostMapping("/reset/{uuid}")
+	public String resetPassword(@PathVariable("uuid") String uuid, 
+			@RequestParam("password") String password) {
+		cuserService.resetPassword(uuid, password);
+		return "redirect:/signin";
+	}
+
 	
 	
 	@GetMapping("/findpw")
 	public String resetpw() {
-		return "user/findpw";
+		return "authentication/findpw";
 	}
 	
 	//구글 로그인
