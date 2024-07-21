@@ -6,8 +6,29 @@
 </head>
 <body>
 
-회원들 다 불러와야 함
+   <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>고객번호 </th>
+            <th>아이디 </th>
+            <th>권한 </th>
+            <th>이름 </th>           
+            <th>가입일   </th>      
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="cuser : ${cusers}">
+            <td th:text="${cuser.cid}"></td>
+            <td><a th:href="@{|/user/userdetail/${cuser.cid}|}" th:text="${cuser.username}"></a></td>
+                        <td th:text="${cuser.role}"></td>
+                        <td th:text="${cuser.cname}"></td>
+                        <td th:text="${#temporals.format(cuser.cdate, 'yyyy-MM-dd HH:mm')}"></td>
+            
+        </tr>
+    </tbody>
+</table>
+<a href="/">메인으로 가기</a>
 
-<h1> Admin Only</h1>
+
 </body>
 </html>

@@ -79,6 +79,24 @@ public class CUserService implements UserDetailsService {
         this.cuserRepository.save(cuser);
     }
 	
+	//유저 데이터 다 불러오기
+	public List<CUser> readlist() {
+		return cuserRepository.findAll();
+	}
+	
+	// 유저 상세정보 가져오기
+	public CUser readdetail(Integer cid) {
+		Optional<CUser> oc = cuserRepository.findById(cid);
+		return oc.get();
+	}
+		
+	
+	//유저 정보 업데이트
+	public void update(CUser cuser) {
+		cuserRepository.save(cuser);
+	}
+	
+	
 	
 	//비번 잊었을때
 	public CUser findpw(String username) {

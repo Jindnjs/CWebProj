@@ -55,6 +55,7 @@
         
     </style>
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
+
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
 					        	<div class="col-auto">
@@ -80,6 +81,7 @@
 						
  
   <div class="container-detail">
+
             <!-- 제목 -->
             <div class="border-bottom mb-3">
             <h3 th:text="${board.title}"></h3>
@@ -100,6 +102,7 @@
                     <p>조회수 : <span th:text="${board.viewcount}"></span></p>
                 </div>
             </div>
+
             <div>
        
             <!-- 내용 -->
@@ -151,5 +154,48 @@
         </div>
     </div>
  
+	
+	
+	<!-- 모달 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	        <form th:action="@{|/comment/update/${MenuCate.id}|}" method="post">
+	            <input type="hidden" class="cid" id="recipient-name-id" name="commentId">
+	          <div class="mb-3">
+	            <label for="content" class="col-form-label">댓글	:</label>
+	            <input class="form-control" id="recipient-name-content" name="commentContent"></input>
+	          </div>
+	          <input type="submit" value="저장">
+	        </form>
+	      </div>
+	
+	    </div>
+	  </div>
+	</div>
+	       
+        
+<script>
+
+const exampleModal = document.getElementById('exampleModal')
+if (exampleModal) {
+  exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient = button.getAttribute('data-bs-id')
+    const ccc = button.getAttribute('data-bs-content')
+    // If necessary, you could initiate an Ajax request here
+
+    const modalBodyInput = document.getElementById('recipient-name-id')
+    const modalBodyText = document.getElementById('recipient-name-content')
+    modalBodyInput.value = recipient
+    modalBodyText.value = ccc
+  })
+}
+
+</script> 
+        
 </div>
 </html>

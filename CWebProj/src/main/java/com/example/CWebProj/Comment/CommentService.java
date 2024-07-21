@@ -23,6 +23,7 @@ public class CommentService {
 	
 	public void create(Board board,String content,String author) {
 		Comment comment=new Comment();
+
 		comment.setBoard(board);
 		comment.setContent(content);
 		comment.setAuthor(author);
@@ -30,8 +31,6 @@ public class CommentService {
 		comment.setCuser(this.cuserService.authen());
 		this.commentRepository.save(comment);
 	}
-	
-	
 	
 	public Comment getComment(Integer id) {
 		Optional<Comment> op = commentRepository.findById(id);

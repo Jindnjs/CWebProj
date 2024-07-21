@@ -39,7 +39,9 @@
 					        </tr>
 					        </thead>
 					        <tbody>
+
 						         <tr th:each="board : ${notices}">						    
+
 						            <td Style="background-color:#DCDCDC">공지</td>
 						            <td Style="background-color:#DCDCDC" >
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
@@ -51,12 +53,15 @@
             							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
 						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
+
 						        <tr th:each="board,loop : ${paging}"  class="normal-row" >						    
+
 						            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
 						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
 						            	</td>
+
 						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
 						            <td>
 						             	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
@@ -65,7 +70,8 @@
 						            <td  th:text="${board.viewcount}"></td>
 						        </tr>     
 					        </tbody>
-					    </table>
+				    	</table>
+				    	
 					    	<!-- =======================================================
 				            ************************************************************
 				                    
@@ -73,6 +79,7 @@
 				                    
 				            ************************************************************
 				            ======================================================== -->
+
 				           <div>
 				            <div th:if="${!paging.isEmpty()}" aria-label="Page navigation">
 						        <ul class="pagination justify-content-center">

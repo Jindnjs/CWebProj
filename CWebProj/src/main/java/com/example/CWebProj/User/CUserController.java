@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -77,6 +79,32 @@ public class CUserController {
 	public String resetpw() {
 		return "user/resetpw";
 	}
+	
+	//유저 정보 가져오기
+	@GetMapping("/user/userdetail/{cid}")
+	public String detail(Model model,@PathVariable ("cid") Integer cid) {
+		
+		model.addAttribute("cuser", cuserService.readdetail(cid));
+		
+		return "user/userdetail";
+	}
+
+	
+	//유저 정보 업데이트
+	@PostMapping("/admin/update")
+	public String update(@ModelAttribute CUser cuser) {
+		cuserService.update(cuser);
+		return "redirect:/autho/admin";
+	}
+	
+	//관리자페이지에 접근할때
+	@GetMapping("/autho/admin")
+	public String admin(Model model) {
+		model.addAttribute("cusers", cuserService.readlist());
+		return "autho/admin";
+	}
+	
+	
 	
 	//구글 로그인
 	@Value("${spring.security.oauth2.client.registration.google.client-id}")
