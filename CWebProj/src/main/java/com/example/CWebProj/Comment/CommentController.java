@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.DyNavi.MenuCateg;
 
 import lombok.RequiredArgsConstructor;
 

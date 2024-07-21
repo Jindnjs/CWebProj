@@ -4,18 +4,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.AwsBucket.S3Service;
-
-import jakarta.annotation.PostConstruct;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BannerService {
@@ -25,17 +22,11 @@ public class BannerService {
 
     @Autowired
     private S3Service s3Service;
-
-    @PostConstruct
-    public void initializeBanners() throws IOException {
-        List<Banner> existingBanners = bannerRepository.findAll();
-        if (existingBanners.isEmpty()) {
-            for (int i = 1; i <= 7; i++) {
-                Banner banner = new Banner();
-                bannerRepository.save(banner);
-            }
-        }
+    
+    public void save(Banner banner) {
+        bannerRepository.save(banner);
     }
+
 
     public void update(Banner banner, MultipartFile file) throws IOException {
         if (file != null && !file.isEmpty()) {
@@ -56,6 +47,27 @@ public class BannerService {
     }
 
     public List<Banner> readlist() {
+    	reorderBanners();
         return bannerRepository.findAll();
+    }
+    
+    @Transactional
+    public void delete(Integer id) {
+        bannerRepository.deleteById(id);
+        reorderBanners();
+    }
+    
+    @Transactional
+    public void reorderBanners() {
+        List<Banner> banners = bannerRepository.findAllByOrderByNumAsc();
+        for (int i = 0; i < banners.size(); i++) {
+            Banner banner = banners.get(i);
+            banner.setNum(i + 1);
+            bannerRepository.save(banner);
+        }
+    }
+    
+    public long count() {
+    	return bannerRepository.count();
     }
 }
