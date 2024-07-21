@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,28 +81,28 @@ public class CUserController {
 		return "user/resetpw";
 	}
 	
-	//유저 정보 가져오기
+	// 관리자페이지에 접근할때 -> redirect때문인지 autho컨트롤러에 못넣음
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@GetMapping("autho/admin")
+	public String admin(Model model) {
+		model.addAttribute("cusers", cuserService.readlist());
+		return "autho/admin";
+	}
+
+	// 유저 정보 가져오기
 	@GetMapping("/user/userdetail/{cid}")
-	public String detail(Model model,@PathVariable ("cid") Integer cid) {
-		
+	public String detail(Model model, @PathVariable("cid") Integer cid) {
+
 		model.addAttribute("cuser", cuserService.readdetail(cid));
-		
+
 		return "user/userdetail";
 	}
 
-	
-	//유저 정보 업데이트
+	// 유저 정보 업데이트
 	@PostMapping("/admin/update")
 	public String update(@ModelAttribute CUser cuser) {
 		cuserService.update(cuser);
 		return "redirect:/autho/admin";
-	}
-	
-	//관리자페이지에 접근할때
-	@GetMapping("/autho/admin")
-	public String admin(Model model) {
-		model.addAttribute("cusers", cuserService.readlist());
-		return "autho/admin";
 	}
 	
 	

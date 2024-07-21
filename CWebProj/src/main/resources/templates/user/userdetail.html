@@ -14,19 +14,24 @@
 		<p>
 			아이디 : <input type="text" name="username" th:value="${cuser.username}"
 				readonly>
-				
+		
 		<p>
 			이름 : <input type="text" name="cname" th:value="${cuser.cname}"
 				readonly>
+		
 		<p>
 			권한 : <select name="role" id="role" onchange="this.form.submit()">
 				<option th:value="${cuser.role}" SELECTED>[[${cuser.role}]]</option>
 				<option value="ROLE_ADMIN">ROLE_ADMIN</option>
 				<option value="ROLE_MANAGER">ROLE_MANAGER</option>
 				<option value="ROLE_USER">ROLE_USER</option>
-
 			</select>
 		<p>
+			활성화여부 : <input type="text" name="enabled" th:value="${cuser.enabled}"
+						readonly>
+		<p>
+			비밀번호 : <input type="text" name="password" th:value="${cuser.password}"
+						readonly>
 	</form>
 
 </body>

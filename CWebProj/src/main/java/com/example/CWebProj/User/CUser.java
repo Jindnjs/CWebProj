@@ -30,7 +30,7 @@ public class CUser {
 	private String username; // 아이디 -> 이메일로 가입하게끔
 
 	private String password; // 비밀번호
-	private boolean enabled; //
+	private boolean enabled; // 활성화 여부
 	private String role; // 권한
 
 	private String cname; //이름-작성자
