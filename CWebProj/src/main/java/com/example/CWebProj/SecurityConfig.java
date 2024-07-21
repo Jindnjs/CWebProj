@@ -34,6 +34,9 @@ public class SecurityConfig {
 	              .formLogin((formLogin) -> formLogin
                     .loginPage("/signin")
                     .defaultSuccessUrl("/"))
+	              .csrf(csrf -> csrf
+		                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		                )
 								
 	              .logout((logout) -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/signout"))

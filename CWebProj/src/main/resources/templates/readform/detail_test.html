@@ -157,6 +157,7 @@
         <div class="mt-4">
             <h7>댓글 작성</h7>
             <form th:action="@{|/comment/${MenuCate.id}/create/${board.id}|}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <div class="form-group">
                     <input type="text" class="form-control mb-2" name="author" placeholder="작성자" 
                     th:value="${currentCUser != null ? currentCUser.cname : ''}" 

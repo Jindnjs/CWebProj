@@ -129,5 +129,9 @@ public class BoardService {
         board.setViewcount(board.getViewcount() + 1);
         boardRepository.save(board);
     }
+	
+	public List<Board> newboard(Integer menuId){
+		return this.boardRepository.findTop3ByMenuIdOrderByCreateDateDesc(menuId);
+	}
 
 }
