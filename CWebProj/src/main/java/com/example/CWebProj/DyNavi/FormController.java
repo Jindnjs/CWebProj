@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
-import com.example.CWebProj.User.CUser;
 import com.example.CWebProj.User.CUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,13 +33,20 @@ public class FormController {
 	private final BoardService boardService;
 	private final CUserService cuserService;
 	
+	@Value("${google.maps.api.key}")
+    private String googleMapsApiKey;
+	
 	//form1
 	@GetMapping(value = "/form1/{menuId}")
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		
-//		model.addAllAttributes("llist 
+		if(menuId == 3) {
+			String url = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey + "&loading=async&callback=initMap";
+			model.addAttribute("mapsApiUrl", url);
+		}
+		
 		return "readform/bodyform";
 	}
 	
