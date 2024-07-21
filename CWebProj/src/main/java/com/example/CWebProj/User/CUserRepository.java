@@ -5,5 +5,5 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CUserRepository extends JpaRepository<CUser, Integer> {
-	Optional<CUser> findByUsername(String username); // login check
+	Optional<CUser> findByUsername(String username);
 }

@@ -110,9 +110,6 @@ public class CUserService implements UserDetailsService {
 		}
 	}
 	
-
-	//비번 리셋
-	
 	
 	//비번 자동생성
 	private boolean isStrongPassword(String password) {
