@@ -231,6 +231,8 @@
                     </div>
                 </div>
                 <!-- end of view modal -->
+                
+                
 
                 <!-- Blog Posts Section -->
                 <div class="row gy-4">
@@ -244,7 +246,7 @@
                     </div>
                             <div class="title">
                                 <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                                    [[${board.title}]]
+                                    <span th:text="${board.title.length() > 10} ? ${board.title.substring(0, 10)} + '...' : ${board.title}"></span>
                                 </a>
                                 <div class="btn_update">
                                     <button class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
