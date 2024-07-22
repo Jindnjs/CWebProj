@@ -109,6 +109,10 @@ public class CUserService implements UserDetailsService {
 		return cuserRepository.findAll();
 	}
 	
+	//ADMIN만 빼고 불러오기
+	public List<CUser> getAllNonAdminUsers() {
+        return cuserRepository.findByRoleNot("ROLE_ADMIN");
+    }
 	
 	// 유저 상세정보 가져오기
 	public CUser readdetail(Integer cid) {

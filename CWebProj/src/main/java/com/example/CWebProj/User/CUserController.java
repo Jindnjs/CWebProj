@@ -1,10 +1,7 @@
 package com.example.CWebProj.User;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -115,12 +112,27 @@ public class CUserController {
 		return "authentication/findpw";
 	}
 	
+	
+	@GetMapping("/autho")
+	public String index() {
+		return "autho/check";
+	}
+	
+	
 	// 관리자페이지에 접근할때 -> redirect때문인지 autho컨트롤러에 못넣음
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@GetMapping("autho/admin")
 	public String admin(Model model) {
 		model.addAttribute("cusers", cuserService.readlist());
 		return "autho/admin";
+	}
+
+	//매니저 페이지에 접근할때 -> 목사님 권한
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
+	@GetMapping("/autho/manager")
+	public String manager(Model model) {
+		model.addAttribute("cusers", cuserService.getAllNonAdminUsers());
+		return "autho/manager";
 	}
 
 	// 유저 정보 가져오기
@@ -131,6 +143,16 @@ public class CUserController {
 
 		return "user/userdetail";
 	}
+	
+	// 매니저 유저 정보 가져오기
+		@GetMapping("/user/userdetail_manager/{cid}")
+		public String detail_manager(Model model, @PathVariable("cid") Integer cid) {
+
+			model.addAttribute("cuser", cuserService.readdetail(cid));
+
+			return "user/userdetail";
+		}
+		
 
 	// 유저 정보 업데이트
 	@PostMapping("/admin/update")
@@ -139,6 +161,12 @@ public class CUserController {
 		return "redirect:/autho/admin";
 	}
 	
+	// 매니저 유저 정보 업데이트
+		@PostMapping("/manager/update")
+		public String update_manager(@ModelAttribute CUser cuser) {
+			cuserService.update(cuser);
+			return "redirect:/autho/admin";
+		}
 	
 	
 	//구글 로그인

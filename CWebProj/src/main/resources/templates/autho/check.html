@@ -10,7 +10,7 @@
 	<p>
 		<a href="/autho/admin">admin</a>
 	<p>
-		<a href="/manager">manager</a>	
+		<a href="/autho/manager">manager</a>	
 
 <div sec:authorize="isAuthenticated()">[ Logged in ]</div><br>
 admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div><br>
