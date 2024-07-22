@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,14 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
-import com.example.CWebProj.AwsBucket.S3Service;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -34,29 +28,18 @@ public class CUserService implements UserDetailsService {
 
 	private final CUserRepository cuserRepository;
 	
-	private final S3Service s3Service;
-	
-	private final PasswordEncoder passwordEncoder;
-	
 	private final AuthenKeyValService authenKeyValService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	// 로그인처리
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		Optional<CUser> tcuser = cuserRepository.findByUsername(username);
-		if (tcuser.isEmpty()) {
-			throw new UsernameNotFoundException("회원가입 되어 있지 않습니다.");
-		}
-		CUser cuser = tcuser.get();
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		if ("ROLE_USER".equals(cuser.getRole())) {
-			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		} else if ("ROLE_MANAGER".equals(cuser.getRole())) {
-			authorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
-		} else {
-			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		}
-		return new User(cuser.getUsername(), cuser.getPassword(), authorities);
+		// TODO Auto-generated method stub
+		CUser cuser = cuserRepository.findByUsername(username).orElseThrow(() -> {
+            return new UsernameNotFoundException("해당 유저를 찾을 수 없습니다.");
+        });
+		return new PrincipalDetails(cuser);
 	}
 
 	
@@ -138,13 +121,6 @@ public class CUserService implements UserDetailsService {
 		}else {
 			throw new DataNotFoundException("존재하지 않는 이메일입니다.");
 		}
-	}
-	
-	
-	//비번 자동생성
-	private boolean isStrongPassword(String password) {
-		String pattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-		return password.matches(pattern);
 	}
 	
 	
