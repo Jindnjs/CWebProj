@@ -56,12 +56,15 @@
 	                <input type="text" name="author" id="author" class="form-control mb-2" placeholder="작성자">
 	            </div>
 				</div>
-			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-			    <select name="notice" class="form-select" aria-label="Default select example">
-				  <option selected>선택하세요</option>
-				  	<option value="true">공지</option>
-				  	<option value="false">일반</option>
-				</select>
+			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end" th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+			     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">
+                        <label class="form-check-label" for="noticeTrue">공지</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="noticeFalse" name="notice" value="false">
+                        <label class="form-check-label" for="noticeFalse">일반</label>
+                    </div>
 			</div>
 			<div class="mb-4">
 				<textarea name="content" id="summernote" rows="10" ></textarea>
@@ -133,13 +136,35 @@
 				$('.note-placeholder').text('내용');
 			}
 			
+			 if (!$('#noticeTrue').is(':checked') && !$('#noticeFalse').is(':checked')) {
+                 $('#checkboxError').show();
+                 isValid = false;
+             } else {
+                 $('#checkboxError').hide();
+             }
+			
 			if (!isValid) {
                 window.scrollTo(0, 0);
             }
 
 			return isValid;
 		}
-
+		
+      $('#noticeTrue, #noticeFalse').on('change', function() {
+          var isCheckedTrue = $('#noticeTrue').is(':checked');
+          var isCheckedFalse = $('#noticeFalse').is(':checked');
+          
+          if (isCheckedTrue && isCheckedFalse) {
+              // If both are checked, uncheck the other one
+              if (this.id === 'noticeTrue') {
+                  $('#noticeFalse').prop('checked', false);
+              } else {
+                  $('#noticeTrue').prop('checked', false);
+              }
+          }
+      });
+      
+      
 		// 입력 시 유효성 검사 및 스타일 변경
 		$('#title, #author').on('input', function() {
 			if ($(this).val().trim()) {
