@@ -17,6 +17,10 @@
 	 .form-label{
 	 	display: none
 	 }
+	 #checkboxError {
+            display: none;
+            color: red;
+        }
 </style>
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 					    <div class="container mt-3">
@@ -136,12 +140,14 @@
 				$('.note-placeholder').text('내용');
 			}
 			
-			 if (!$('#noticeTrue').is(':checked') && !$('#noticeFalse').is(':checked')) {
-                 $('#checkboxError').show();
-                 isValid = false;
-             } else {
-                 $('#checkboxError').hide();
-             }
+			if ($('#noticeTrue').length > 0) { // 체크박스가 존재하는 경우에만 검사
+		        if (!$('#noticeTrue').is(':checked') && !$('#noticeFalse').is(':checked')) {
+		            $('#checkboxError').show();
+		            isValid = false;
+		        } else {
+		            $('#checkboxError').hide();
+		        }
+		    }
 			
 			if (!isValid) {
                 window.scrollTo(0, 0);
@@ -151,18 +157,18 @@
 		}
 		
       $('#noticeTrue, #noticeFalse').on('change', function() {
-          var isCheckedTrue = $('#noticeTrue').is(':checked');
-          var isCheckedFalse = $('#noticeFalse').is(':checked');
-          
-          if (isCheckedTrue && isCheckedFalse) {
-              // If both are checked, uncheck the other one
-              if (this.id === 'noticeTrue') {
-                  $('#noticeFalse').prop('checked', false);
-              } else {
-                  $('#noticeTrue').prop('checked', false);
-              }
-          }
-      });
+    	    var isCheckedTrue = $('#noticeTrue').is(':checked');
+    	    var isCheckedFalse = $('#noticeFalse').is(':checked');
+
+    	    if (isCheckedTrue && isCheckedFalse) {
+    	        // If both are checked, uncheck the other one
+    	        if (this.id === 'noticeTrue') {
+    	            $('#noticeFalse').prop('checked', false);
+    	        } else {
+    	            $('#noticeTrue').prop('checked', false);
+    	        }
+    	    }
+    	});
       
       
 		// 입력 시 유효성 검사 및 스타일 변경
