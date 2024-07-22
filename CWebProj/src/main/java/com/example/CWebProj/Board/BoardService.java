@@ -123,6 +123,9 @@ public class BoardService {
 		Pageable pageable = PageRequest.of(page, 13-this.getNotices(menuId).size());
 		return boardRepository.findByMenuIdAndNoticeFalseOrderByCreateDateDesc(menuId, pageable);
 	}
+	public List<Board> indexBoard(Integer menuId){
+		return this.boardRepository.findTop4ByMenuIdOrderByCreateDateDesc(menuId);
+	}
 
 	public void incrementViewCount(Integer boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
