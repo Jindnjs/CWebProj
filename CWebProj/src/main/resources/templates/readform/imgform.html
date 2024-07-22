@@ -93,8 +93,17 @@
                     console.error('Form submission error:', error);
                 });
             }
+            
+            function truncateTitle(title, maxLength) {
+                if (title.length > maxLength) {
+                    return title.substring(0, maxLength) + '...';
+                } else {
+                    return title;
+                }
+            }
 
-            function openViewModal(menuId, boardId, downpath) {
+            function openViewModal(menuId, boardId, downpath, title) {
+            	title = truncateTitle(title, 10);
                 fetch('/form3/' + menuId + '/detail/' + boardId)
                     .then(response => response.json())
                     .then(data => {
@@ -243,9 +252,10 @@
                         </a>
                     </div>
                             <div class="title">
-                                <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                                    [[${board.title}]]
-                                </a>
+                                <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]], '[[${board.title}]]')">
+								    <span th:text="${board.title.length() > 20} ? ${board.title.substring(0, 20)} + '...' : ${board.title}"></span>
+								</a>
+
                                 <div class="btn_update">
                                     <button class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
                                     <button class="delete" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
