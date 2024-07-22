@@ -16,20 +16,16 @@
     <thead class="table-dark">
         <tr>
             <th>번호</th>
-            <th>배너 이미지</th>
-
-            <th>수정</th>
-
+            <th colspan="2">배너 이미지</th>
             <th>변경 버튼</th>
             <th>삭제 버튼</th>
-
         </tr>
     </thead>
     <tbody>
         <tr th:each="banner, loop : ${banners}">
 
             <td th:text="${loop.count}" class="number"></td>
-            <td><img th:src="|${downpath}/${banner.image}|" width="300px"></td>
+            <td colspan="2"><img th:src="|${downpath}/${banner.image}|" width="300px"></td>
 
             <td>
                 <button onclick="showForm(this)" th:data-id="${banner.id}">변경</button>
