@@ -1,7 +1,23 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
+<script th:if="${menuId == 3}" th:src="${mapsApiUrl}"></script>
+<script>
+function initMap() {
+	var location = { lat: 25.578691, lng: -80.356109 }; // 예시 좌표
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 20,
+        center: location
+    });
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+    </script>
 <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 소개
+
+<div th:if="${menuId == 3}" id="map" style="height: 500px; width: 100%;"></div>
 
 </div>
 </html>

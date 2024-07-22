@@ -1,5 +1,19 @@
 <html layout:decorate="~{layouts/layout_main}">
 <div layout:fragment="content_main">
+<script th:src="${mapsApiUrl}"></script>
+<script>
+function initMap() {
+	var location = { lat: 25.578691, lng: -80.356109 }; // 예시 좌표
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 20,
+        center: location
+    });
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+}
+    </script>
 
     <main id="main">
     	
@@ -149,10 +163,13 @@
                     ======================================================== -->
                     <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
+                            <a href="/form1/3" class="stretched-link">
                                 <h3><strong>찾아오시는 길</strong></h3>
                             </a>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="/form1/3" class="stretched-link">
+                            	<h4>10201 Bahia Dr, Miami, FL 33189</h4>
+							    <div id="map" style="height: 150px; width: 100%;">	</div>
+                            </a>
                         </div>
                     </div>
                 </div>

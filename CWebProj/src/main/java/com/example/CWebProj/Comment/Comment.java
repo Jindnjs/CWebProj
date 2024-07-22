@@ -3,6 +3,7 @@ package com.example.CWebProj.Comment;
 import java.time.LocalDateTime;
 
 import com.example.CWebProj.Board.Board;
+import com.example.CWebProj.User.CUser;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,4 +28,9 @@ public class Comment {
 	
 	@ManyToOne
 	private Board board;
+	
+	@ManyToOne
+	private CUser cuser;
+	
+	private String author;
 }
