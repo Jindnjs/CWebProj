@@ -2,27 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Banner Management</title>
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<title>Insert title here</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/banner.css" rel="stylesheet">
+
 </head>
 <body>
 
+<section>
+<h2>배너 수정 페이지</h2>
 <table class="table">
     <thead class="table-dark">
         <tr>
             <th>번호</th>
             <th>배너 이미지</th>
+
+            <th>수정</th>
+
             <th>변경 버튼</th>
             <th>삭제 버튼</th>
+
         </tr>
     </thead>
     <tbody>
         <tr th:each="banner, loop : ${banners}">
-            <td th:text="${banner.num}"></td>
-            <td>
-                <img th:src="@{|${downpath}/${banner.image}|}" alt="배너 이미지" width="400px">
-            </td>
+
+            <td th:text="${loop.count}" class="number"></td>
+            <td><img th:src="|${downpath}/${banner.image}|" width="300px"></td>
+
             <td>
                 <button onclick="showForm(this)" th:data-id="${banner.id}">변경</button>
                 <form th:id="'form-' + ${banner.id}" th:action="@{|/banner/update/${banner.id}|}" method="post" enctype="multipart/form-data" style="display:none;">
@@ -37,6 +45,7 @@
         </tr>
     </tbody>
 </table>
+</section>
 
 <button onclick="createBanner()">추가</button>
 

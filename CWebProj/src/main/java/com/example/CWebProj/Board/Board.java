@@ -50,10 +50,7 @@ public class Board {
    private Integer menuId;
    
    //썸네일
-   private String imageLink;
-
-   //유튜브 링크
-   private String youtubeLink;
+   private String mediaLink;
    
     //댓글
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) 
