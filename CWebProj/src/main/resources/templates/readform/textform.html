@@ -102,7 +102,7 @@
 						            </li>
 						        </ul>
 						    </div>
-						    <div class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasRole(''ADMIN'')')}">				        
+						    <div class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">				        
 								<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 							</div>
 						</div>    
