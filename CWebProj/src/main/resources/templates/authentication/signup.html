@@ -53,6 +53,21 @@
         userLinkRTL.setAttribute('disabled', true);
       }
     </script>
+    <script>
+
+    function validateForm() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorElement = document.getElementById('password_error_message');
+        
+        if (password !== confirmPassword) {
+            errorElement.textContent = "비밀번호가 일치하지 않습니다.";
+            return false;
+        }
+        
+        return true;
+    }
+    </script>
   </head>
 <body>
 <main>
@@ -70,29 +85,31 @@
               <hr class="bg-body-secondary" />
               <div class="divider-content-center"></div>
             </div>
-            <form action="/signup" method="post">
+            <form action="/signup" method="post" onsubmit="return validateForm()">
 
 		 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
               <div class="mb-3 text-start">
                 <label class="form-label" for="name">이름</label>
-                <input class="form-control" name="cname" id="name" type="text" placeholder="Name" />
+                <input class="form-control" name="cname" id="name" type="text" placeholder="Name" required/>
               </div>
               <div class="mb-3 text-start">
                 <label class="form-label" for="email">이메일</label>
-                <input class="form-control" name="username" id="email" type="email" placeholder="name@example.com" />
+                <input class="form-control" name="username" id="username" type="email" placeholder="name@example.com" required/>
+               
               </div>
               <div class="row g-3 mb-3">
                 <div class="col-sm-6">
                   <label class="form-label" for="password">비밀번호</label>
-                  <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="Password" />
+                  <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="Password" minlength="8" required/>
                 </div>
                 <div class="col-sm-6">
                   <label class="form-label" for="confirmPassword">비밀번호 확인</label>
-                  <input class="form-control form-icon-input" id="confirmPassword" type="password" placeholder="Confirm Password" />
+                  <input class="form-control form-icon-input" name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm Password" minlength="8" required/>
                 </div>
               </div>
               <button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>구글 이메일로 가입하기</button>
               <input type="submit" class="btn btn-primary w-100 mb-3" value="가입하기"></button>
+              <p id="password_error_message" style="color: red;"></p>
             </form>
           </div>
         </div>

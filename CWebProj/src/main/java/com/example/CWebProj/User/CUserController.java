@@ -1,7 +1,10 @@
 package com.example.CWebProj.User;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -64,6 +67,8 @@ public class CUserController {
 		return "authentication/resetpw";
 	}
 
+	
+	
 //	@PostMapping("/findpw")
 //	public String findpw(Model model, @RequestParam("username") String username,
 //	                     @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {

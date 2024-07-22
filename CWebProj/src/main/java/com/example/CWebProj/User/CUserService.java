@@ -57,9 +57,9 @@ public class CUserService implements UserDetailsService {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
 		return new User(cuser.getUsername(), cuser.getPassword(), authorities);
-
 	}
 
+	
 	// 회원가입처리
 	public void create(CUser cuser) {
 
@@ -69,8 +69,9 @@ public class CUserService implements UserDetailsService {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		cuser.setPassword(passwordEncoder.encode(cuser.getPassword()));
 		cuserRepository.save(cuser);
-
 	}
+	
+	
 	
 	//비번 재설정용
 	public void resetPassword(String uuid, String newPassword) {
@@ -92,12 +93,6 @@ public class CUserService implements UserDetailsService {
 	}
 	
 	
-	//유저 데이터 저장
-	public void userdata(String username) {
-        CUser cuser = new CUser();
-        cuser.setUsername(username);
-        this.cuserRepository.save(cuser);
-    }
 	
 	public boolean checkEmail(String Email) {
 		Optional<CUser> oc = cuserRepository.findByUsername(Email);
@@ -108,10 +103,12 @@ public class CUserService implements UserDetailsService {
 		
 	}
 	
+	
 	//유저 데이터 다 불러오기
 	public List<CUser> readlist() {
 		return cuserRepository.findAll();
 	}
+	
 	
 	// 유저 상세정보 가져오기
 	public CUser readdetail(Integer cid) {
@@ -146,38 +143,6 @@ public class CUserService implements UserDetailsService {
 		return password.matches(pattern);
 	}
 	
-	
-
-	// 구글로그인처리
-	@Autowired
-	private HttpServletRequest req;
-
-	public int logincheck(String username) {
-
-		Optional<CUser> tcuser = cuserRepository.findByUsername(username);
-		CUser cuser = tcuser.get();
-
-		if (cuser != null) {
-
-			List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-			list.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-			SecurityContext sc = SecurityContextHolder.getContext();
-
-			sc.setAuthentication(new UsernamePasswordAuthenticationToken(cuser.getUsername(), null, list));
-
-			HttpSession session = req.getSession(true);
-
-			session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
-
-			return 1;
-
-		} else {
-
-			return 0;
-		}
-
-	}
 	
 	public CUser authen() {
 		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
