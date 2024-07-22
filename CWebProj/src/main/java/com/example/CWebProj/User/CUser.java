@@ -36,5 +36,7 @@ public class CUser {
 	private String cname; //이름-작성자
 	private LocalDateTime cdate; // 날짜
 	
-	
+	//구글 로그인을 위한 정보
+	private String provider;
+	private String providerId;
 }
