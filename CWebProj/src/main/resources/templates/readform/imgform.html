@@ -94,20 +94,13 @@
                 });
             }
 
-            function truncateTitle(title, maxLength) {
-                if (title.length > maxLength) {
-                    return title.substring(0, maxLength) + '...';
-                } else {
-                    return title;
-                }
-            }
 
 
             function openViewModal(menuId, boardId, downpath) {
                 fetch('/form3/' + menuId + '/detail/' + boardId)
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('viewTitle').innerText = truncateTitle(data.title, 10);
+                        document.getElementById('viewTitle').innerText = data.title;
                         document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                         document.getElementById('viewAuthor').innerText = data.author;
                         document.getElementById('viewCount').innerText = '조회' + data.viewcount;
