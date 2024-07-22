@@ -15,6 +15,7 @@ h2{
 .number{
 	font-weight: bold;
 }
+
 .table thead th {
     padding: 8px 12px;
     font-size: 14px;
@@ -39,3 +40,4 @@ button {
     padding: 5px 10px;
     border:none;
 }
+

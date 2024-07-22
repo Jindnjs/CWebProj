@@ -94,11 +94,20 @@
                 });
             }
 
+            function truncateTitle(title, maxLength) {
+                if (title.length > maxLength) {
+                    return title.substring(0, maxLength) + '...';
+                } else {
+                    return title;
+                }
+            }
+
+
             function openViewModal(menuId, boardId, downpath) {
                 fetch('/form3/' + menuId + '/detail/' + boardId)
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('viewTitle').innerText = data.title;
+                        document.getElementById('viewTitle').innerText = truncateTitle(data.title, 10);
                         document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                         document.getElementById('viewAuthor').innerText = data.author;
                         document.getElementById('viewCount').innerText = '조회' + data.viewcount;
@@ -108,8 +117,6 @@
                     .catch(error => {
                         console.error('Error fetching board details:', error);
                     });
-
-                new bootstrap.Modal(document.getElementById('viewModal')).show();
             }
 
             function formatLocalDateTime(localDateTime) {
@@ -151,24 +158,24 @@
         <section id="blog-posts" class="blog-posts section">
             <div class="container">
                 <!-- =======================================================
-    ************************************************************
+    			************************************************************
     
-    사진 올리기 버튼
+    			사진 올리기 버튼
     
-    ************************************************************
-    ========================================================= -->
+    			************************************************************
+    			========================================================= -->
                 <!-- Create Modal Trigger Button -->
                 <div class="btn-container">
                     <button class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#createModal">사진 올리기</button>
                 </div>
 
                 <!-- =======================================================
-        ************************************************************
+        		************************************************************
         
-        사진 올리기 버튼을 클릭했을 때
+        		사진 올리기 버튼을 클릭했을 때
         
-        ************************************************************
-        ========================================================= -->
+        		************************************************************
+        		========================================================= -->
                 <!-- Create Modal -->
                 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -205,12 +212,12 @@
 
 
                 <!-- =======================================================
-        ************************************************************
+        		************************************************************
         
-        사진을 클릭했을 때
+       		 	사진을 클릭했을 때
         
-        ************************************************************
-        ========================================================= -->
+       			************************************************************
+        		========================================================= -->
                 <!-- View Modal -->
                 <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -238,24 +245,27 @@
                         <!-- Start post list item -->
                         <article>
                             <div class="post-img">
-                        <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                            <img th:src="|${downpath}/${board.mediaLink}|" alt="image" class="img-fluid image">
-                        </a>
-                    </div>
-                            <div class="title">
                                 <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                                    [[${board.title}]]
+                                    <img th:src="|${downpath}/${board.mediaLink}|" alt="image" class="img-fluid image">
                                 </a>
-                                <div class="btn_update">
-                                    <button class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
-                                    <button class="delete" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
-                                </div>
                             </div>
-                            <div class="post-meta">
-                                <p class="post-author">[[${board.author}]]</p>
-                                <p class="post-date">[[${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}]]</p>
+                            <div class="post_container">
+                                <div class="title">
+                                    <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
+                            <span th:text="${board.title.length() > 10} ? ${board.title.substring(0, 10)} + '...' : ${board.title}"></span>
+                        </a>
+
+                                    <div class="btn_update">
+                                        <button class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
+                                        <button class="delete" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
+                                    </div>
+                                </div>
+                                <div class="post-meta">
+                                    <p class="post-author">[[${board.author}]]</p>
+                                    <p class="post-date">[[${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}]]</p>
                         <p class="post-viewcount">조회: [[${board.viewcount}]]</p>
                     </div>
+                     </div>
                 </article>
                 <!-- End post list item -->
             </div>
