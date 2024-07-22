@@ -8,9 +8,9 @@
 	
 	<h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
 	<p>
-		<a href="/autho/admin">admin</a>
+		<a href="/autho/adminlist">admin</a>
 	<p>
-		<a href="/autho/manager">manager</a>	
+		<a href="/autho/managerlist">manager</a>	
 
 <div sec:authorize="isAuthenticated()">[ Logged in ]</div><br>
 admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div><br>

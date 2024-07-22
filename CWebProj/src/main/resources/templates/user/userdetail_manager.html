@@ -22,7 +22,6 @@
 		<p>
 			권한 : <select name="role" id="role" onchange="this.form.submit()">
 				<option th:value="${cuser.role}" SELECTED>[[${cuser.role}]]</option>
-				<option value="ROLE_ADMIN">ROLE_ADMIN</option>
 				<option value="ROLE_MANAGER">ROLE_MANAGER</option>
 				<option value="ROLE_USER">ROLE_USER</option>
 			</select>
