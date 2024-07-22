@@ -3,6 +3,7 @@ package com.example.CWebProj.User;
 import java.time.LocalDateTime;
 
 import com.example.CWebProj.Board.Board;
+import com.example.CWebProj.Comment.Comment;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,12 +30,11 @@ public class CUser {
 	private String username; // 아이디 -> 이메일로 가입하게끔
 
 	private String password; // 비밀번호
-	private boolean enabled; //
+	private boolean enabled; // 활성화 여부
 	private String role; // 권한
 
 	private String cname; //이름-작성자
 	private LocalDateTime cdate; // 날짜
 	
-
-
+	
 }

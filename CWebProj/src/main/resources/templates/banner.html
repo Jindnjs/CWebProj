@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="assets/css/banner.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -15,13 +17,20 @@
         <tr>
             <th>번호</th>
             <th>배너 이미지</th>
+
             <th>수정</th>
+
+            <th>변경 버튼</th>
+            <th>삭제 버튼</th>
+
         </tr>
     </thead>
     <tbody>
         <tr th:each="banner, loop : ${banners}">
+
             <td th:text="${loop.count}" class="number"></td>
             <td><img th:src="|${downpath}/${banner.image}|" width="300px"></td>
+
             <td>
                 <button onclick="showForm(this)" th:data-id="${banner.id}">변경</button>
                 <form th:id="'form-' + ${banner.id}" th:action="@{|/banner/update/${banner.id}|}" method="post" enctype="multipart/form-data" style="display:none;">
@@ -30,10 +39,15 @@
                     <button type="submit">업데이트</button>
                 </form>
             </td>
+            <td>
+                <button onclick="deleteBanner(this)" th:data-id="${banner.id}">삭제</button>
+            </td>
         </tr>
     </tbody>
 </table>
 </section>
+
+<button onclick="createBanner()">추가</button>
 
 <script>
     function showForm(button) {
@@ -41,6 +55,54 @@
         var form = document.getElementById('form-' + bannerId);
         form.style.display = (form.style.display === 'block') ? 'none' : 'block';
     }
+
+    function deleteBanner(button) {
+        var bannerId = button.getAttribute('data-id');
+        var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+        if (confirmDelete) {
+            fetch('/banner/delete/' + bannerId, {
+                method: 'GET'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Error deleting banner:', response);
+                }
+            }).catch(error => {
+                console.error('Error deleting banner:', error);
+            });
+        }
+    }
+
+    function createBanner() {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+        
+        const bannerCount = document.querySelectorAll('tbody tr').length;
+        if (bannerCount >= 7) {
+            alert('배너는 최대 7개까지 추가할 수 있습니다.');
+            return;
+        }
+
+        fetch("/banner/create", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({})
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  window.location.reload();
+              } else {
+                  console.error("Failed to add banner.");
+              }
+          }).catch(error => {
+              console.error("Error adding banner:", error);
+          });
+    }
 </script>
+
 </body>
 </html>

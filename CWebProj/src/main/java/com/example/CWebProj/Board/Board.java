@@ -28,6 +28,8 @@ public class Board {
    @Column(length=200)
    private String title;
    
+   @ManyToOne
+   private CUser cuser;
    
    private String author;
    

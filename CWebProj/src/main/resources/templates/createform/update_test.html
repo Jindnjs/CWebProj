@@ -19,7 +19,7 @@
 	<form method="post" onsubmit="return validateForm()">
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<input type="hidden" name="id" th:value="${board.id}">
-		<input type="hidden" name="date" th:value="${board.createDate}">
+		<input type="hidden" name="createDate" th:value="${board.createDate}">
 		<input type="hidden" name="viewcount" th:value="${board.viewcount}">
 		<input type="hidden" name="notice" th:value="${board.notice}">
 		<input type="hidden" name="menuId" th:value="${board.menuId}">
@@ -27,7 +27,15 @@
 		<div class="row">
 			<div class="col-md-6 mb-4">
 				<input type="text" name="title" id="title" class="form-control mb-2" th:value="${board.title}">
-				<input type="text" name="author" id="author" class="form-control" th:value="${board.author}">
+				<div th:if="${board.author==null}">
+					 <input type="text" class="form-control mb-2" th:value="${board.cuser.cname}" readonly="readonly">
+                	 <input type="hidden" name="cuser" th:value="${board.cuser.cid}">
+            	</div>
+            
+	            <!-- 비로그인 상태일 때 -->
+	            <div th:if="${board.author!=null}">
+	                <input type="text" name="author" id="author" class="form-control mb-2" th:value="${board.author}">
+	            </div>
 			</div>
 			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end">
 			</div>
@@ -83,14 +91,16 @@
 				$('#title').attr('placeholder', '제목');
 			}
 
-			if (!$('#author').val().trim()) {
-				$('#author').addClass('error is-invalid');
-				$('#author').attr('placeholder', '작성자를 입력하세요');
-				isValid = false;
-			} else {
-				$('#author').removeClass('error is-invalid');
-				$('#author').attr('placeholder', '작성자');
-			}
+			if ($('#author').length > 0) { // #author가 존재하는 경우에만 검사
+		        if (!$('#author').val().trim()) {
+		            $('#author').addClass('error is-invalid');
+		            $('#author').attr('placeholder', '작성자를 입력하세요');
+		            isValid = false;
+		        } else {
+		            $('#author').removeClass('error is-invalid');
+		            $('#author').attr('placeholder', '작성자');
+		        }
+		    }
 
 			if (!$('#summernote').val().trim()) {         
 				$('.note-placeholder').text('내용을 입력하세요');

@@ -12,16 +12,6 @@
     <title>아름다운장로교회-회원가입</title>
 
 
-    <!-- ===============================================-->
-    <!--    Favicons-->
-    <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets_p/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets_p/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets_p/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="/assets_p/img/favicons/favicon.ico">
-    <link rel="manifest" href="/assets_p/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="/assets_p/img/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
     <script src="/vendors/simplebar/simplebar.min.js"></script>
     <script src="/assets_p/js/config.js"></script>
 
@@ -55,51 +45,62 @@
     </script>
   </head>
 <body>
-<main>
-<!-- ===============================================-->
+  <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
       <div class="container">
         <div class="row flex-center min-vh-100 py-5">
-          <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3"><a class="d-flex flex-center text-decoration-none mb-4" href="/index">
+          <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3"><a class="d-flex flex-center text-decoration-none mb-4" href="/">
               <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="images/7.png" alt="phoenix" width="450" title="메인화면으로 돌아가기"/>
               </div>
             </a>
-            <div class="position-relative mt-4">
-              <hr class="bg-body-secondary" />
+            <div class="position-relative">
+              <hr class="bg-body-secondary mt-5 mb-4" />
               <div class="divider-content-center"></div>
             </div>
-            <form action="/signup" method="post">
-              <div class="mb-3 text-start">
-                <label class="form-label" for="name">이름</label>
-                <input class="form-control" id="name" type="text" placeholder="Name" />
+            
+            <form action="/signin" method="post">
+		<div th:if="${param.error}">
+			<div class="alert alert-danger">아이디와 비밀번호를 확인해주세요</div>
+		</div>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		
+            <div class="mb-3 text-start">
+              <label class="form-label" for="id">아이디</label>
+              <div class="form-icon-container">
+                <input class="form-control form-icon-input" id="id" name="username" type="id" placeholder="Id" /><span class="fas fa-user text-body fs-9 form-icon"></span>
               </div>
-              <div class="mb-3 text-start">
-                <label class="form-label" for="id">아이디</label>
-                <input class="form-control" id="id" type="text" placeholder="Id" />
+            </div>
+            <div class="mb-3 text-start">
+              <label class="form-label" for="password">비밀번호</label>
+              <div class="form-icon-container">
+                <input class="form-control form-icon-input" name="password" id="password" type="password" placeholder="Password" /><span class="fas fa-key text-body fs-9 form-icon"></span>
               </div>
-              <div class="mb-3 text-start">
-                <label class="form-label" for="email">이메일</label>
-                <input class="form-control" id="email" type="email" placeholder="name@example.com" />
-              </div>
-              <div class="row g-3 mb-3">
-                <div class="col-sm-6">
-                  <label class="form-label" for="password">비밀번호</label>
-                  <input class="form-control form-icon-input" id="password" type="password" placeholder="Password" />
+            </div>
+            <div class="row flex-between-center mb-7">
+              <div class="col-auto">
+                <div class="form-check mb-0">
+                  <input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" />
+                  <label class="form-check-label mb-0" for="basic-checkbox">내 정보 기억하기</label>
                 </div>
-                <div class="col-sm-6">
-                  <label class="form-label" for="confirmPassword">비밀번호 확인</label>
-                  <input class="form-control form-icon-input" id="confirmPassword" type="password" placeholder="Confirm Password" />
-                </div>
               </div>
-              <button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>구글 이메일로 가입하기</button>
-              <button class="btn btn-primary w-100 mb-3">가입하기</button>
-            </form>
+              <div class="col-auto">
+              <a class="fs-9 fw-semibold" href="findpw">비밀번호 찾기</a>
+            </div>
+            <button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>구글 이메일로 로그인</button>
+            <input type="submit" class="btn btn-primary w-100 mb-3" value="로그인"></input>
+            <div class="text-center"><a class="fs-9 fw-bold" href="/signup">회원가입하기</a></div>
           </div>
+          </form>
         </div>
       </div>
-</main>
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+    
+    
        <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
