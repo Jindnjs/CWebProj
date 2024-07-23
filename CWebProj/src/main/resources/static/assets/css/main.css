@@ -1262,11 +1262,12 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   background-color: var(--background-color);
+  
 }
 
 .header .topbar {
-  background-color: rgb(0, 71, 171);
-  height: 40px;
+  background-color:#1c448e;
+  height: 30px;
   padding: 0;
   font-size: 14px;
   transition: all 0.5s;
@@ -1289,6 +1290,7 @@ h6 {
  	.header .topbar .social-links a {
     	font-size: 6px; 
     	margin: 0 1spx; 
+    	display: flex !important;
 	}
 }
 
