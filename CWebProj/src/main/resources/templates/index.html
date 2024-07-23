@@ -1,5 +1,155 @@
 <html layout:decorate="~{layouts/layout_main}">
 <div layout:fragment="content_main">
+
+<style>
+
+.hero-slider {
+    height: 450px;
+    width: 55vw;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+     z-index: 1;
+     padding:0;
+}
+.black-background {
+    background-color:#3A3A3A;
+    padding: 30px 0;
+}
+.blue-background {
+    background-color:#39738A;
+    padding: 30px 0;
+    height:50px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    position: relative; /* 상대 위치 설정 */
+    padding-bottom: 10px; /* 밑줄과 제목 간의 간격 */
+    margin: 0; /* 기본 마진 제거 */
+    text-align: left;
+    font-size: 29px;
+    font-weight: bold;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px; /* 밑줄 두께 */
+    background-color: #444444; /* 밑줄 색상 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* 각 항목을 가로로 정렬 */
+.section-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-item {
+    background: #3A3A3A; /* 배경을 회색으로 설정 */
+    padding: 20px;
+    border: none; /* 테두리 제거 */
+    margin: 0;
+    flex: 1;
+    position: relative; /* 하단 구분선을 위한 위치 설정 */
+    box-sizing: border-box;
+}
+
+/* 제목과 리스트 사이의 구분선 스타일 */
+.section-item > h3 {
+    margin: 0 0 10px 0; /* 제목과 구분선 사이의 간격 조정 */
+    color: white; /* 제목 색상 설정 */
+}
+
+.section-item::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #444444; /* 구분선 색상 */
+    margin-bottom: 20px; /* 구분선과 리스트 사이의 간격 */
+}
+
+/* 리스트 스타일 */
+.news-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #CCCCCC;
+    font-size: 15px;
+}
+
+.news-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#main-sections {
+  margin-top: -40px; 
+}
+  .news-title {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+    .news-date {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px; /* 제목과 날짜 사이 간격 */
+        text-align: right;
+        color: #CCCCCC;
+    }
+    
+    
+    .hero-slider {
+    height: 400px; /* 원하시는 높이로 설정 */
+    width: 60vw;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    margin: 0 auto; /* 중앙 정렬 */
+    position: relative;
+	}
+
+	.hero-slider .swiper-slide {
+	    height: 80%;
+	}
+
+	.bg-img{
+		background: url('https://jindevbucket.s3.ap-northeast-2.amazonaws.com/c82b4ecc-e0c7-4885-8396-2eb463f365a0_asdf.jpg');
+		background-size: 100% 100%;
+		margin-top:22px;
+	}
+	.container-md{
+		height:400px;
+	}
+		
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .section-content {
+        flex-direction: column;
+    }
+    
+   
+}
+</style>
 <script th:src="${mapsApiUrl}"></script>
 <script>
 function initMap() {
@@ -16,6 +166,7 @@ function initMap() {
     </script>
 
     <main id="main">
+    <div class="bg-img">
     	
     	<!-- =======================================================
         ************************************************************
@@ -28,8 +179,8 @@ function initMap() {
         <section id="hero-slider" class="hero-slider">
             <div class="container-md">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="swiper sliderFeaturedPosts">
+                    <div class="col-12 pe-0 ps-0" style="height:400px">
+                        <div class="swiper sliderFeaturedPosts" style="height:400px">
                             <div class="swiper-wrapper">
 
                                 <div class="swiper-slide" th:each="banner : ${banners}">
@@ -53,115 +204,76 @@ function initMap() {
                 </div>
             </div>
         </section><!-- End Hero Slider Section -->
-
-        <!-- 김나영 -->
-
-
-        <!-- Services Section -->
-        <section id="services" class="services section">
+</div>
+        
+        <div class="blue-background">
+        	<div class="far fa-clock"></div>
+        	
+        </div>
+			
+    <!-- =======================================================
+    ************************************************************
+                
+    주요 섹션
+                
+    ************************************************************
+    ======================================================== -->
+     <section style="padding-top:0">
+        <div class="black-background">
             <div class="container">
-                <div class="row gy-4">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item  position-relative">
-                            <div class="textbar">
-                            <!-- =======================================================
-                            ************************************************************
-                            
-                            교회소식란
-                            
-                            ************************************************************
-                            ======================================================== -->
-                            </div>
-                            <a href="/nav_exam" class="stretched-link"></a>
-                            <h3><strong>교회 소식</strong></h3>
+                <div class="section-content">
+                    <div class="section-item">
+                        <h3 class="section-title">교회 소식</h3>
+                        <ul class="news-list" >
+                            <li th:each="news : ${news}" class="news-content">
+                            <a th:href="@{|/form2/${news.menuId}/detail/${news.id}|}" >
+                            	 <span class="news-title" th:text="${news.title}"></span>	 
                             </a>
-                            <!-- 교회 소식 리스트 -->
-                            <ul class="news-list">
-                                <li>리스트 1</li>
-                                <li>리스트 2</li>
-                                <li>리스트 3</li>
-                            </ul>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                            
-                    금주의 말씀
-                            
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3><strong>금주의 말씀</strong></h3>
+                            	<span class="news-date" th:text="${#temporals.format(news.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(news)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                    <div class="section-item">
+                        <h3 class="section-title">주보</h3>
+                        <ul class="news-list">
+                           <li th:each="weekly : ${weekly}" class="news-content">
+                            <a th:href="@{|/form2/${weekly.menuId}/detail/${weekly.id}|}" >
+                            	 <span class="news-title" th:text="${weekly.title}"></span>	 
                             </a>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                    
-                    갤러리
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3><strong>아름다운 갤러리</strong></h3>
+                            	<span class="news-date" th:text="${#temporals.format(weekly.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(weekly)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                    <div class="section-item">
+                        <h3 class="section-title">자유게시판</h3>
+                        <ul class="news-list">
+                            <li th:each="free : ${free}" class="news-content">
+                            <a th:href="@{|/form2/${free.menuId}/detail/${free.id}|}" >
+                            	 <span class="news-title" th:text="${free.title}"></span>	 
                             </a>
-                            <!-- class 추가 -->
-                            <ul class="news-list">
-                                <li>리스트 1</li>
-                                <li>리스트 2</li>
-                                <li>리스트 3</li>
-                            </ul>
-                        </div>
-                    </div><!-- End Service Item -->
+                            	<span class="news-date" th:text="${#temporals.format(free.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(free)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Main Sections -->
                     
-                    <!-- =======================================================
-                    ************************************************************
-                            
-                    예배 안내
-                            
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3>예배 안내</h3>
-                            </a>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div><!-- End Service Item -->
+                  <!-- =======================================================
+    ************************************************************
                     
-                    <!-- =======================================================
-                    ************************************************************
+    찾아오시는 길 섹션
                     
-                    교육란 - 클릭시 게시판 교육
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3>교육</h3>
-                            </a>
-
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                    
-                    클릭 시 게시판 - 지도 표시 예정
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
+    ************************************************************
+    ======================================================== -->
+    <section id="location" class="location">
+        <div class="container">
+            <div class="row gy-4">
+                 <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <a href="/form1/3" class="stretched-link">
                                 <h3><strong>찾아오시는 길</strong></h3>
@@ -172,12 +284,23 @@ function initMap() {
                             </a>
                         </div>
                     </div>
-                </div>
             </div>
-        </section> <!-- End Post Grid Section -->
+        </div>
+    </section>
 
 
     </main><!-- End #main -->
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titles = document.querySelectorAll('.news-title');
+        titles.forEach(title => {
+            const maxLength = 25; // 제목의 최대 길이 설정
+            if (title.textContent.length > maxLength) {
+                title.textContent = title.textContent.substring(0, maxLength) + '...';
+            }
+        });
+    });
+</script>
 </div>
 </html>

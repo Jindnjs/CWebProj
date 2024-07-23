@@ -94,20 +94,13 @@
                 });
             }
 
-            function truncateTitle(title, maxLength) {
-                if (title.length > maxLength) {
-                    return title.substring(0, maxLength) + '...';
-                } else {
-                    return title;
-                }
-            }
 
 
             function openViewModal(menuId, boardId, downpath) {
                 fetch('/form3/' + menuId + '/detail/' + boardId)
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('viewTitle').innerText = truncateTitle(data.title, 10);
+                        document.getElementById('viewTitle').innerText = data.title;
                         document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                         document.getElementById('viewAuthor').innerText = data.author;
                         document.getElementById('viewCount').innerText = '조회' + data.viewcount;
@@ -144,12 +137,12 @@
             ************************************************************
             ========================================================= -->
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item active">Home</li>
-                            <li class="breadcrumb-item active" aria-current="page">커뮤니티</li>
-                            <li class="breadcrumb-item active" aria-current="page">자유게시판</li>
-                        </ol>
-                    </nav>
+		                <ol class="breadcrumb">
+		                    <li class="breadcrumb-item active">Home</li>
+		                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.menuName}"></span></li>
+		                    <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.categoryName}"></li>
+		                </ol>
+	            	</nav>
                 </div>
             </div>
         </div>
@@ -166,7 +159,7 @@
     			========================================================= -->
                 <!-- Create Modal Trigger Button -->
                 <div class="btn-container">
-                    <button class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#createModal">사진 올리기</button>
+                    <button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}" class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#createModal">사진 올리기</button>
                 </div>
 
                 <!-- =======================================================
@@ -252,12 +245,12 @@
                             <div class="post_container">
                                 <div class="title">
                                     <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                            <span th:text="${board.title.length() > 10} ? ${board.title.substring(0, 10)} + '...' : ${board.title}"></span>
+                            <span th:text="${board.title.length() > 8} ? ${board.title.substring(0, 8)} + '...' : ${board.title}"></span>
                         </a>
 
                                     <div class="btn_update">
-                                        <button class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
-                                        <button class="delete" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
+                                        <button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}" class="update" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]], '[[${board.title}]]')">수정</button>
+                                        <button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}" class="delete" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
                                     </div>
                                 </div>
                                 <div class="post-meta">

@@ -41,6 +41,5 @@ public class CUser {
 	//구글 로그인을 위한 정보
 	private String provider;
 	private String providerId;
-	
-	
+
 }

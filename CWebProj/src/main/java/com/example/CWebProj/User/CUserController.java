@@ -49,10 +49,6 @@ public class CUserController {
 		return "authentication/signin";
 	}
 
-	@GetMapping("/profile")
-	public String profile() {
-		return "user/profile";
-	}
 
 	@GetMapping("/findid")
 	public String findid() {
@@ -64,7 +60,6 @@ public class CUserController {
 		return "authentication/resetpw";
 	}
 
-	
 	
 //	@PostMapping("/findpw")
 //	public String findpw(Model model, @RequestParam("username") String username,
@@ -121,18 +116,18 @@ public class CUserController {
 	
 	// 관리자페이지에 접근할때 -> redirect때문인지 autho컨트롤러에 못넣음
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@GetMapping("autho/admin")
+	@GetMapping("autho/adminlist")
 	public String admin(Model model) {
 		model.addAttribute("cusers", cuserService.readlist());
-		return "autho/admin";
+		return "autho/adminlist";
 	}
 
 	//매니저 페이지에 접근할때 -> 목사님 권한
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
-	@GetMapping("/autho/manager")
+	@GetMapping("/autho/managerlist")
 	public String manager(Model model) {
 		model.addAttribute("cusers", cuserService.getAllNonAdminUsers());
-		return "autho/manager";
+		return "autho/managerlist";
 	}
 
 	// 유저 정보 가져오기
@@ -145,29 +140,42 @@ public class CUserController {
 	}
 	
 	// 매니저 유저 정보 가져오기
-		@GetMapping("/user/userdetail_manager/{cid}")
-		public String detail_manager(Model model, @PathVariable("cid") Integer cid) {
+	@GetMapping("/user/userdetail_manager/{cid}")
+	public String detail_manager(Model model, @PathVariable("cid") Integer cid) {
 
-			model.addAttribute("cuser", cuserService.readdetail(cid));
+		model.addAttribute("cuser", cuserService.readdetail(cid));
 
-			return "user/userdetail";
-		}
+		return "user/userdetail";
+	}
 		
 
-	// 유저 정보 업데이트
+	// 관리자 유저 정보 업데이트
 	@PostMapping("/admin/update")
 	public String update(@ModelAttribute CUser cuser) {
 		cuserService.update(cuser);
-		return "redirect:/autho/admin";
+		return "redirect:/autho/adminlist";
 	}
 	
 	// 매니저 유저 정보 업데이트
-		@PostMapping("/manager/update")
-		public String update_manager(@ModelAttribute CUser cuser) {
-			cuserService.update(cuser);
-			return "redirect:/autho/admin";
-		}
+	@PostMapping("/manager/update")
+	public String update_manager(@ModelAttribute CUser cuser) {
+		cuserService.update(cuser);
+		return "redirect:/autho/admin";
+	}
+
 	
+	@GetMapping("/profile")
+	public String profile() {
+		return "user/profile";
+	}
+
+	
+	// 프로필 정보 업데이트
+	@PostMapping("/user/update")
+	public String userupdate(@ModelAttribute CUser cuser) {
+		cuserService.update(cuser);
+		return "redirect:/user/profile";
+	}
 	
 	//구글 로그인
 	@Value("${spring.security.oauth2.client.registration.google.client-id}")
