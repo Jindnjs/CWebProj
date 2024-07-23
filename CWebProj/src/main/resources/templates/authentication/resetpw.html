@@ -73,26 +73,12 @@
                                     <!--/.bg-holder-->
 
                                     <div class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7">
-                                        <h3 class="mb-3 text-body-emphasis fs-7">Phoenix Authentication</h3>
-                                        <p class="text-body-tertiary">Give yourself some hassle-free development process with the uniqueness of Phoenix!</p>
-                                        <ul class="list-unstyled mb-0 w-max-content w-md-auto">
-                                            <li class="d-flex align-items-center">
-                                                <span class="uil uil-check-circle text-success me-2"></span>
-                                                <span class="text-body-tertiary fw-semibold">Fast</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <span class="uil uil-check-circle text-success me-2"></span>
-                                                <span class="text-body-tertiary fw-semibold">Simple</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <span class="uil uil-check-circle text-success me-2"></span>
-                                                <span class="text-body-tertiary fw-semibold">Responsive</span>
-                                            </li>
-                                        </ul>
+                                        <h3 class="mb-3 text-body-emphasis fs-7">비밀번호 재설정</h3>
+                                        <p class="text-body-tertiary">새로운 비밀번호를 입력하세요</p>
                                     </div>
                                     <div class="position-relative z-n1 mb-6 d-none d-md-block text-center mt-md-15">
-                                        <img class="auth-title-box-img d-dark-none" src="/assets_i/img/spot-illustrations/auth.png" alt=""/>
-                                        <img class="auth-title-box-img d-light-none" src="/assets_i/img/spot-illustrations/auth-dark.png" alt=""/>
+                                        <img class="auth-title-box-img d-dark-none" src="/images/8.png" alt=""/>
+                                        <img class="auth-title-box-img d-light-none" src="/images/8.png" alt=""/>
                                     </div>
                                 </div>
                                 <div class="col mx-auto">
@@ -100,17 +86,17 @@
                                         <div class="text-center mb-7">
                                             <a class="d-flex flex-center text-decoration-none mb-4" href="/index.html">
                                                 <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block">
-                                                    <img src="/assets_i/img/icons/logo.png" alt="phoenix" width="58"/>
+                                                    <img src="/images/8.png" alt="phoenix" width="58"/>
                                                 </div>
                                             </a>
-                                            <h4 class="text-body-highlight">Reset new password</h4>
-                                            <p class="text-body-tertiary">Type your new password</p>
+                                            <h4 class="text-body-highlight">비밀번호 재설정</h4>
+                                            <p class="text-body-tertiary">새로운 비밀번호를 입력하세요</p>
                                         </div>
                                         <form method="post" class="mt-5">
                                         	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                                            <input class="form-control mb-2" id="password" type="password" name="password" placeholder="Type new password"/>
-                                            <input class="form-control mb-4" id="confirmPassword" type="password" placeholder="Cofirm new password"/>
-                                            <button class="btn btn-primary w-100" type="submit">Set Password</button>
+                                            <input class="form-control mb-2" id="password" type="password" name="password" placeholder="새 비밀번호"/>
+                                            <input class="form-control mb-4" id="confirmPassword" type="password" placeholder="새 비밀번호 확인"/>
+                                            <button class="btn btn-primary w-100" type="submit">비밀번호 저장</button>
                                         </form>
                                     </div>
                                 </div>

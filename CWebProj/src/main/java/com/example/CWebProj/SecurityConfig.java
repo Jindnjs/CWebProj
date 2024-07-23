@@ -24,7 +24,7 @@ public class SecurityConfig {
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 	            		
 	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()            
-	            	.requestMatchers(new AntPathRequestMatcher("/autho/user")).authenticated()
+	            	.requestMatchers(new AntPathRequestMatcher("/profile/update")).authenticated()
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
 	              .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
 	              .formLogin((formLogin) -> formLogin

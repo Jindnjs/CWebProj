@@ -64,7 +64,7 @@
 				<h3><a href="/">메인 페이지</a></h3>
 			</ol>
 		</nav>
-		<h2 class="text-bold text-body-emphasis mb-5">프로필</h2>
+		<h2 class="text-bold text-body-emphasis mb-5">Admin Page</h2>
 		<div id="cusers"
 			data-list='{"valueNames":["User","email","city","last_active","joined"],"page":10,"pagination":true}'>
 			<div class="row align-items-center justify-content-between g-3 mb-4">
@@ -93,7 +93,7 @@
 							<td th:text="${cuser.cid}"></td>
 							
 							<td class="email align-middle white-space-nowrap"><a
-								th:href="@{|/user/userdetail_manager/${cuser.cid}|}"
+								th:href="@{|/user/userdetail/${cuser.cid}|}"
 								th:text="${cuser.username}"></a></td>
 							
 								<td th:text="${cuser.role}"></td>
