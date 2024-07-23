@@ -44,7 +44,9 @@ public class FormController {
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		
+		if(menuId==1) {
+			model.addAttribute("board", this.boardService.getNotices(1));
+		}
 		if(menuId == 3) {
 			String url = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey + "&loading=async&callback=initMap";
 			model.addAttribute("mapsApiUrl", url);
@@ -80,7 +82,8 @@ public class FormController {
 	            currentUser.getRole().contains("ROLE_ADMIN") || 
 	            currentUser.getRole().contains("ROLE_MANAGER")
 	        );
-	        if (menuId != 9 && !isAdminOrManager) {
+	         
+	        if (!(navService.getMenu(menuId).getCategoryName().equals("자유게시판")) && !isAdminOrManager) {
 	            return "redirect:/";
 	        }
 			model.addAttribute("MenuCate", navService.getMenu(menuId));

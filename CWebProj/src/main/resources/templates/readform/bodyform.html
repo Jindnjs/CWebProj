@@ -14,9 +14,48 @@ function initMap() {
     });
 }
     </script>
-<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
-소개
-
+	<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
+	
+	<div class="container mt-3">
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <!-- =======================================================
+                ************************************************************
+                
+                브레드크럼-현재 위치
+                
+                ************************************************************
+                ======================================================== -->
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">Home</li>
+                        <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.menuName}"></span></li>
+                        <li class="breadcrumb-item active" aria-current="page"><span th:text="${MenuCate.categoryName}"></span></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+	
+	<div class="container-detail" th:if="menuId==1||menuId==2">
+        <!-- 제목 -->
+        <div class="border-bottom mb-3">
+            <h3 th:text="${board.title}"></h3>
+        </div>
+        <!-- 내용 -->
+        <div class="content-area">
+            <div th:utext="${board.content}" id="content"></div>
+        </div>
+        
+        <!-- 삭제, 수정 버튼 -->
+        <div class="button-group">
+            <div th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
+            </div>
+        </div>
+	</div>
+	
 <div th:if="${menuId == 3}" id="map" style="height: 500px; width: 100%;"></div>
 
 </div>
