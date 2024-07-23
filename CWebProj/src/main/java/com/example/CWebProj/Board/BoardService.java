@@ -126,6 +126,9 @@ public class BoardService {
 	public List<Board> indexBoard(Integer menuId){
 		return this.boardRepository.findTop4ByMenuIdOrderByCreateDateDesc(menuId);
 	}
+	public Board getform1(Integer menuId) {
+		return this.boardRepository.findByMenuId(menuId).get();
+	}
 
 	public void incrementViewCount(Integer boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("Invalid board Id:" + boardId));
