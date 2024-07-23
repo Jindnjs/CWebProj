@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.User.CUser;
 import com.example.CWebProj.User.CUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +44,10 @@ public class FormController {
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		
-		if(menuId == 3) {
+		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
+			model.addAttribute("board", this.boardService.getform1(menuId));
+		}
+		else if(menuId == 3) {
 			String url = "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey + "&loading=async&callback=initMap";
 			model.addAttribute("mapsApiUrl", url);
 		}
@@ -50,6 +55,31 @@ public class FormController {
 		return "readform/bodyform";
 	}
 	
+	@GetMapping(value = "/form1/{menuId}/update/{boardId}")
+	public String updateform1(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		
+	    CUser currentUser = cuserService.authen(); 
+	    Board board = boardService.getboard(boardId);
+	    
+	    boolean isAdminOrManager = currentUser != null && (
+	        currentUser.getRole().contains("ROLE_ADMIN") || 
+	        currentUser.getRole().contains("ROLE_MANAGER")
+	    );
+	    
+
+	    if (!isAdminOrManager) {
+	        return "redirect:/";
+	    }
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("board", board);
+		return "createform/update_test";
+	}
+	@PostMapping(value = "/form1/{menuId}/update/{boardId}")
+	public String updateform1(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		this.boardService.updateboard(board);
+		return "redirect:/form1/"+menuId;
+	}
 	
 	
 	//form2
@@ -70,6 +100,17 @@ public class FormController {
 		}
 		@GetMapping(value = "/form2/create/{menuId}")
 		public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
+			
+		     CUser currentUser = cuserService.authen();
+		        
+	         boolean isAdminOrManager = currentUser != null && (
+	            currentUser.getRole().contains("ROLE_ADMIN") || 
+	            currentUser.getRole().contains("ROLE_MANAGER")
+	        );
+	         
+	        if (!(navService.getMenu(menuId).getCategoryName().equals("자유게시판")) && !isAdminOrManager) {
+	            return "redirect:/";
+	        }
 			model.addAttribute("MenuCate", navService.getMenu(menuId));
 			model.addAttribute("sidebar", navService.getSidebar(menuId));
 			model.addAttribute("currentCUser", cuserService.authen());
@@ -91,14 +132,39 @@ public class FormController {
 	}
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
 	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		CUser currentUser = cuserService.authen(); 
+	    Board board = boardService.getboard(boardId);
+	    
+	    boolean isAdminOrManager = currentUser != null && (
+	        currentUser.getRole().contains("ROLE_ADMIN") || 
+	        currentUser.getRole().contains("ROLE_MANAGER")
+	    );
+	    boolean isAuthor = board.getCuser() != null && board.getCuser().equals(currentUser); // 게시글 작성자와 현재 사용자 비교
+
+	    if (!isAdminOrManager && !isAuthor) {
+	        return "redirect:/";
+	    }
 		this.boardService.deleteboard(boardId);
 		return "redirect:/form2/"+menuId;
 	}
 	@GetMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		
+	    CUser currentUser = cuserService.authen(); 
+	    Board board = boardService.getboard(boardId);
+	    
+	    boolean isAdminOrManager = currentUser != null && (
+	        currentUser.getRole().contains("ROLE_ADMIN") || 
+	        currentUser.getRole().contains("ROLE_MANAGER")
+	    );
+	    boolean isAuthor = board.getCuser() != null && board.getCuser().equals(currentUser); // 게시글 작성자와 현재 사용자 비교
+
+	    if (!isAdminOrManager && !isAuthor) {
+	        return "redirect:/";
+	    }
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		model.addAttribute("board", this.boardService.getboard(boardId));
+		model.addAttribute("board", board);
 		return "createform/update_test";
 	}
 	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
