@@ -6,12 +6,12 @@
     overflow: hidden;
     margin: 0 auto;
     position: relative;
-     z-index: 1;
-     padding:0;
+    z-index: 1;
+    padding:0;
 }
 .blue-background {
     background-color:#1c448e;
-    padding: 30px 0;
+    padding: 20px 0;
 }
 .white-background {
     background-color:rgb(255, 255, 255);
@@ -51,12 +51,6 @@
     flex: 1;
     position: relative; /* 하단 구분선을 위한 위치 설정 */
     box-sizing: border-box;
-}
-
-/* 제목과 리스트 사이의 구분선 스타일 */
-.section-item > h3 {
-    margin: 0 0 10px 0; /* 제목과 구분선 사이의 간격 조정 */
-    color: white; /* 제목 색상 설정 */
 }
 
 
@@ -176,6 +170,9 @@
     .hero-slider{
     	width:100%;
     }
+    .link-album{
+    	text-align: center;
+    }
 }
 .white-background {
     background-color: rgb(255, 255, 255);
@@ -214,4 +211,55 @@
     display: flex;
     flex-direction: column; /* a 태그 내부에서 아이콘과 텍스트를 수직으로 나열 */
     align-items: center; /* 아이콘과 텍스트를 수평으로 중앙 정렬 */  
+}
+
+
+.album-section {
+   
+    background-color: #f0f0f0;
+}
+.album-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.album-item {
+	position: relative;
+	height:230px;
+     width: 300px;
+    margin: 5px;
+}
+.album-item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.album-item .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 하단에 정렬 */
+    align-items: flex-start; /* 왼쪽에 정렬 */   
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+    pointer-events: none; /* overlay가 이미지 클릭을 방해하지 않도록 함 */
+}
+.album-item:hover .image-overlay {
+    opacity: 1;
+}
+.album-item .image-date {
+    color: white;
+    font-size: 18px;
+}
+
+.image-title {
+    font-size: 18px;   
+    color: white;
 }
