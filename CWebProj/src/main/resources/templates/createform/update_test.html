@@ -54,7 +54,8 @@
 				<textarea name="content" id="summernote" rows="10" th:text="${board.content}"></textarea>
 			</div>
 			<div class="d-flex justify-content-end mb-4">
-				<a th:href="@{/form2/{id}(id=${MenuCate.id})}" class="btn btn-primary me-2">취소</a>
+				<a th:if="${board.menuId==1 || board.menuId==2}" th:href="@{|/form1/${board.menuId}|}" class="btn btn-primary me-2">취소</a>
+				<a th:if="${board.menuId!=1 && board.menuId!=2}" th:href="@{/form2/{id}(id=${MenuCate.id})}" class="btn btn-primary me-2">취소</a>
 				<input type="submit" value="수정" class="btn btn-primary">
 			</div>
 		</div>

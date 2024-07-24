@@ -87,7 +87,10 @@ public class FormController {
 	
 	
 	@GetMapping(value = "/form2/{menuId}")
-	public String form2(Model model, @PathVariable("menuId") Integer menuId,@RequestParam(value="page", defaultValue = "0") int page) {		
+	public String form2(Model model, @PathVariable("menuId") Integer menuId,@RequestParam(value="page", defaultValue = "0") int page) {	
+		if(menuId==1||menuId==2||menuId==3) {
+			return "redirect:/";
+		}
 		List<Board> notices = boardService.getNotices(menuId);
 		Page<Board> paging = boardService.getPageList(menuId, page);
 		
@@ -101,7 +104,9 @@ public class FormController {
 		}
 	@GetMapping(value = "/form2/create/{menuId}")
 	public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
-		
+		if(menuId==1||menuId==2||menuId==3) {
+			return "redirect:/";
+		}
 	     CUser currentUser = cuserService.authen();
 	        
          boolean isAdminOrManager = currentUser != null && (
@@ -131,6 +136,9 @@ public class FormController {
 	}
 	@GetMapping(value = "/form2/{menuId}/detail/{boardId}")
 	public String form2detail(Model model, @PathVariable("menuId") Integer menuId,@PathVariable("boardId") Integer boardId){
+		if(menuId==1||menuId==2||menuId==3) {
+			return "redirect:/";
+		}
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", this.boardService.getboard(boardId));
@@ -143,6 +151,9 @@ public class FormController {
 	}
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
 	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		if(menuId==1||menuId==2||menuId==3) {
+			return "redirect:/";
+		}
 		CUser currentUser = cuserService.authen(); 
 	    Board board = boardService.getboard(boardId);
 	    
