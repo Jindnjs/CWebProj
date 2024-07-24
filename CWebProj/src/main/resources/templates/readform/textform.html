@@ -31,8 +31,11 @@ text-align: center;
 .table .view-column {
     width: 100px; /* 조회 열의 너비 */
 }
+h2{
+font-family: "IBM Plex Sans KR", sans-serif;
+}
 </style>
-<h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
+<h2 class="mb-3" th:text="${MenuCate.categoryName}"></h2>
 					    <div class="container mt-3">
 					    	<div class="row justify-content-end">
 					        	<div class="col-auto">

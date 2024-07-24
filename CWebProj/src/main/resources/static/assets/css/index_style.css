@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+*{
+	font-family: "IBM Plex Sans KR", sans-serif;
+}
 .hero-slider {
     height: 450px;
     width: 55vw;
@@ -145,38 +147,6 @@
 	.container-md{
 		height:400px;
 	}
-		
-/* Hover 상태에서 애니메이션 적용 */
-.fade-in-fwd:hover {
-	-webkit-animation: fade-in-fwd 0.9s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	        animation: fade-in-fwd 0.9s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
-
-@-webkit-keyframes fade-in-fwd {
-  0% {
-    -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    opacity: 1;
-  }
-}
-@keyframes fade-in-fwd {
-  0% {
-    -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    opacity: 1;
-  }
-}
-
 /* 반응형 조정 */
 @media (max-width: 768px) {
     .section-content {
@@ -209,6 +179,15 @@
 .icon-item img {
     width: 50px; /* 아이콘의 너비 조정 */
     height: 50px; /* 아이콘의 높이 조정 */
+    -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.icon-item:hover img{
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
 }
 
 .icon-item span {
