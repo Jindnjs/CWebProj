@@ -30,7 +30,7 @@ public class BannerController {
     public String banner(Model model) {
         model.addAttribute("banners", bannerService.readlist());
         model.addAttribute("downpath", "https://" + downpath);
-        return "banner";
+        return "admin/banner";
     }
 
     @PostMapping("/update/{id}")

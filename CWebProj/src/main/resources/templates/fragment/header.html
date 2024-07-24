@@ -20,8 +20,9 @@
 
 
                     <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/banner}">배너 변경 페이지</a>
+                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/nav/edit}">네비 변경 페이지</a>
                   	<a th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''MANAGER'')')}" th:href="@{/autho}">권한체크페이지</a>
-                  	<a href="/test">테스트 페이지</a>
+
                     <a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
                
