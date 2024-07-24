@@ -1,9 +1,16 @@
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
+.ibm-plex-sans-kr-regular {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 *{
 	 font-family: "IBM Plex Sans KR", sans-serif;
 }
+
 .btn {
     background-color: blue;
     border: none;

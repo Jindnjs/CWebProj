@@ -12,20 +12,19 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-:root {
-  scroll-behavior: smooth;
-}
-
-*{
-	 font-family: "IBM Plex Sans KR", sans-serif;
-}
-
 .ibm-plex-sans-kr-regular {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
 
 body {
   color: rgba(var(--color-primary-rgb), 1);
@@ -40,15 +39,6 @@ a {
 a:hover {
   color: var(--color-links-hover);
   text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-primary);
 }
 
 #main {
@@ -1123,17 +1113,6 @@ a:hover {
   color: color-mix(in srgb, var(--accent-color), transparent 25%);
   text-decoration: none;
 }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--heading-color);
-  font-family: var(--heading-font);
-}
-
 /* Pulsating Play Button
 ------------------------------*/
 .pulsating-play-btn {

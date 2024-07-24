@@ -1,7 +1,14 @@
 @charset "UTF-8";
-*{
-	font-family: "IBM Plex Sans KR", sans-serif;
+.ibm-plex-sans-kr-regular {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
+
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
+
 .hero-slider {
     height: 450px;
     width: 55vw;
