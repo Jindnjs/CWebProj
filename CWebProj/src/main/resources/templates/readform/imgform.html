@@ -94,20 +94,13 @@
                 });
             }
 
-            function truncateTitle(title, maxLength) {
-                if (title.length > maxLength) {
-                    return title.substring(0, maxLength) + '...';
-                } else {
-                    return title;
-                }
-            }
 
 
             function openViewModal(menuId, boardId, downpath) {
                 fetch('/form3/' + menuId + '/detail/' + boardId)
                     .then(response => response.json())
                     .then(data => {
-                        document.getElementById('viewTitle').innerText = truncateTitle(data.title, 10);
+                        document.getElementById('viewTitle').innerText = data.title;
                         document.getElementById('viewDate').innerText = formatLocalDateTime(data.createDate);
                         document.getElementById('viewAuthor').innerText = data.author;
                         document.getElementById('viewCount').innerText = '조회' + data.viewcount;
@@ -252,7 +245,7 @@
                             <div class="post_container">
                                 <div class="title">
                                     <a href="javascript:void(0);" th:onclick="openViewModal([[${MenuCate.id}]], [[${board.id}]], [[${downpath}]])">
-                            <span th:text="${board.title.length() > 10} ? ${board.title.substring(0, 10)} + '...' : ${board.title}"></span>
+                            <span th:text="${board.title.length() > 8} ? ${board.title.substring(0, 8)} + '...' : ${board.title}"></span>
                         </a>
 
                                     <div class="btn_update">

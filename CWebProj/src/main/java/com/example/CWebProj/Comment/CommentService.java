@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.CWebProj.Board.Board;
-import com.example.CWebProj.Board.BoardService;
 import com.example.CWebProj.User.CUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
-	
-	private final BoardService boardService;
 	
 	private final CUserService cuserService;
 	

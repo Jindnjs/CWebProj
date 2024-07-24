@@ -1,0 +1,129 @@
+<html data-navigation-type="default" data-navbar-horizontal-shape="default" lang="en-US" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+ 
+  
+    <script src="/vendors/simplebar/simplebar.min.js"></script>
+    <script src="/assets_p/js/config.js"></script>
+
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link href="/assets_p/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
+    <link href="/assets_p/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
+    <link href="/assets_p/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
+    <link href="/assets_p/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
+    <script>
+      var phoenixIsRTL = window.config.config.phoenixIsRTL;
+      if (phoenixIsRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+    </script>
+</head>
+<body>
+
+	<div class="content">
+		<nav class="mb-2" aria-label="breadcrumb">
+		
+		<h3>접속자 : <a th:text="${#authentication.name}"></a></h3><br>
+		<h3>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<br> admin으로 접속하셨습니다
+			</div>
+
+			<div sec:authorize="hasRole('ROLE_MANAGER')">
+				<br> manager로 접속하셨습니다
+			</div>
+
+			<div sec:authorize="hasRole('ROLE_USER')">
+				<br> user로 접속하셨습니다
+			</div>
+			</h3>
+
+			<ol class="breadcrumb mb-0">
+				<h3><a href="/">메인 페이지</a></h3>
+			</ol>
+		</nav>
+		<h2 class="text-bold text-body-emphasis mb-5">Manager Page</h2>
+		<div id="cusers"
+			data-list='{"valueNames":["User","email","city","last_active","joined"],"page":10,"pagination":true}'>
+			<div class="row align-items-center justify-content-between g-3 mb-4">
+				<div class="col col-auto">
+						</form>
+					</div>
+				</div>
+				<div class="col-auto">
+				</div>
+			</div>
+			<div
+				class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1">
+				<div class="table-responsive scrollbar ms-n1 ps-1">
+					<table class="table table-sm fs-9 mb-0">
+					<thead class="table-dark">
+						<tr>
+							<th>고객번호</th>
+							<th>아이디</th>
+							<th>권한</th>
+							<th>이름</th>
+							<th>가입일</th>
+						</tr>
+					</thead>
+					<tbody class="list" id="cusers-table-body">
+							<tr th:each="cuser : ${cusers}">
+							<td th:text="${cuser.cid}"></td>
+							
+							<td class="email align-middle white-space-nowrap"><a
+								th:href="@{|/user/userdetail_manager/${cuser.cid}|}"
+								th:text="${cuser.username}"></a></td>
+							
+								<td th:text="${cuser.role}"></td>
+								<td th:text="${cuser.cname}"></td>
+								<td th:text="${#temporals.format(cuser.cdate, 'yyyy-MM-dd HH:mm')}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		
+
+	<!-- ===============================================-->
+	<!--    JavaScripts-->
+	<!-- ===============================================-->
+	<script src="/vendors/popper/popper.min.js"></script>
+	<script src="/vendors/bootstrap/bootstrap.min.js"></script>
+	<script src="/vendors/anchorjs/anchor.min.js"></script>
+	<script src="/vendors/is/is.min.js"></script>
+	<script src="/vendors/fontawesome/all.min.js"></script>
+	<script src="/vendors/lodash/lodash.min.js"></script>
+	<script
+		src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+	<script src="/vendors/list.js/list.min.js"></script>
+	<script src="/vendors/feather-icons/feather.min.js"></script>
+	<script src="/vendors/dayjs/dayjs.min.js"></script>
+	<script src="/assets_p/js/phoenix.js"></script>
+	<script src="/vendors/list.js/list.min.js"></script>
+
+</body>
+</html>

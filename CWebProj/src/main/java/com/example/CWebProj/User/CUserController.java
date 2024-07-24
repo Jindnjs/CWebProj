@@ -1,5 +1,6 @@
 package com.example.CWebProj.User;
 
+import java.io.IOException;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
+import com.example.CWebProj.Banner.Banner;
+import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.Mail.SendMailService;
 
 import jakarta.mail.MessagingException;
@@ -31,6 +35,8 @@ public class CUserController {
 	private final SendMailService mailService;
 	
 	private final AuthenKeyValService authenKeyValService;
+	
+	private final NavService navService;
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -49,10 +55,6 @@ public class CUserController {
 		return "authentication/signin";
 	}
 
-	@GetMapping("/profile")
-	public String profile() {
-		return "user/profile";
-	}
 
 	@GetMapping("/findid")
 	public String findid() {
@@ -64,7 +66,6 @@ public class CUserController {
 		return "authentication/resetpw";
 	}
 
-	
 	
 //	@PostMapping("/findpw")
 //	public String findpw(Model model, @RequestParam("username") String username,
@@ -89,6 +90,8 @@ public class CUserController {
 		mailService.sendResetPasswordEmail(email);
 		return "redirect:/signin";
 	}
+	
+	
 	@GetMapping("/reset/{uuid}")
 	public String resetPassword(@PathVariable("uuid") String uuid) {
 		String email = authenKeyValService.getValue(uuid);
@@ -98,12 +101,16 @@ public class CUserController {
 		}
 		return "authentication/resetpw";
 	}
+	
+	
 	@PostMapping("/reset/{uuid}")
 	public String resetPassword(@PathVariable("uuid") String uuid, 
 			@RequestParam("password") String password) {
 		cuserService.resetPassword(uuid, password);
 		return "redirect:/signin";
 	}
+	
+	
 
 	
 	
@@ -119,20 +126,21 @@ public class CUserController {
 	}
 	
 	
-	// 관리자페이지에 접근할때 -> redirect때문인지 autho컨트롤러에 못넣음
+	// 관리자페이지에 접근할때
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@GetMapping("autho/admin")
+	@GetMapping("autho/adminlist")
 	public String admin(Model model) {
 		model.addAttribute("cusers", cuserService.readlist());
-		return "autho/admin";
+		return "autho/adminlist";
 	}
 
+	
 	//매니저 페이지에 접근할때 -> 목사님 권한
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
-	@GetMapping("/autho/manager")
+	@GetMapping("/autho/managerlist")
 	public String manager(Model model) {
 		model.addAttribute("cusers", cuserService.getAllNonAdminUsers());
-		return "autho/manager";
+		return "autho/managerlist";
 	}
 
 	// 유저 정보 가져오기
@@ -145,29 +153,58 @@ public class CUserController {
 	}
 	
 	// 매니저 유저 정보 가져오기
-		@GetMapping("/user/userdetail_manager/{cid}")
-		public String detail_manager(Model model, @PathVariable("cid") Integer cid) {
+	@GetMapping("/user/userdetail_manager/{cid}")
+	public String detail_manager(Model model, @PathVariable("cid") Integer cid) {
 
-			model.addAttribute("cuser", cuserService.readdetail(cid));
+		model.addAttribute("cuser", cuserService.readdetail(cid));
 
-			return "user/userdetail";
-		}
+		return "user/userdetail_manager";
+	}
 		
 
-	// 유저 정보 업데이트
+	// 관리자 유저 정보 업데이트
 	@PostMapping("/admin/update")
 	public String update(@ModelAttribute CUser cuser) {
 		cuserService.update(cuser);
-		return "redirect:/autho/admin";
+		return "redirect:/autho/adminlist";
 	}
 	
 	// 매니저 유저 정보 업데이트
-		@PostMapping("/manager/update")
-		public String update_manager(@ModelAttribute CUser cuser) {
-			cuserService.update(cuser);
-			return "redirect:/autho/admin";
-		}
+	@PostMapping("/manager/update")
+	public String update_manager(@ModelAttribute CUser cuser) {
+		cuserService.update(cuser);
+		return "redirect:/autho/managerlist";
+	}
+
 	
+	@GetMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("MenuCate", navService.getMenu(1));
+		model.addAttribute("sidebar", navService.getSidebar(1));
+		model.addAttribute("cuser", cuserService.authen());
+		return "readform/profile";
+	}
+
+	
+	// 프로필 정보 업데이트
+	@PostMapping("/profile/update")
+	public String updateProfile(@ModelAttribute CUser cuser, @RequestParam("file") MultipartFile file,
+			@RequestParam(required = false) String newPassword, @RequestParam(required = false) String currentPassword,
+			Model model) {
+		try {
+			cuserService.profileupdate(cuser, file, newPassword, currentPassword);
+		} catch (IOException e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
+			return "readform/profile"; // 오류가 발생해도 동일한 페이지로 돌아갑니다.
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			model.addAttribute("passwordErrorMessage", "현재 비밀번호가 일치하지 않습니다.");
+			return "readform/profile"; // 비밀번호 오류가 발생해도 동일한 페이지로 돌아갑니다.
+		}
+		return "redirect:/profile/update";
+	}
+
 	
 	//구글 로그인
 	@Value("${spring.security.oauth2.client.registration.google.client-id}")
