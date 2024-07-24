@@ -125,17 +125,12 @@ public class CUserService implements UserDetailsService {
 	// 프로필 정보 업데이트
 	public void profileupdate(CUser cuser, String newPassword) {
 
-		// 비밀번호 변경 처리
-		/*
-		 * if (newPassword != null || !newPassword.isEmpty()) {
-		 * 
-		 * cuser.setPassword(passwordEncoder.encode((newPassword))); }
-		 * 
-		 * cuserRepository.save(cuser);
-		 */
-		if(newPassword == null) {
-		System.out.println("aqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqsdfasdf");
-		}
+		 if (!newPassword.isEmpty()) {
+		 
+		 cuser.setPassword(passwordEncoder.encode((newPassword))); }
+		 
+		 cuserRepository.save(cuser);
+		
 	}
 
 	
