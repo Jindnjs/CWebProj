@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.example.CWebProj.User.CUserService;
 import com.example.CWebProj.User.PrincipalOauth2UserService;
 
 import lombok.RequiredArgsConstructor;
