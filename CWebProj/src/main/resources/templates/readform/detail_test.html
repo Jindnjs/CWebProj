@@ -1,27 +1,53 @@
 <html layout:decorate="~{layouts/layout_board}">
 <div layout:fragment="content_main">
-
     <style>
         .container-detail {
             border: 1px solid #dee2e6; /* 전체 틀 추가 */
             padding: 20px;
             background-color: #f8f9fa; 
         }
+        .comment-list {
+		    list-style-type: none; /* 불릿 제거 */
+		    padding: 0; /* 기본 패딩 제거 */
+
+		}
         .comment-item {  
             padding: 10px 0;
             font-size: 13px; 
+            display: flex;
+    		align-items: center;
+    		justify-content: space-between; /* 수정: 댓글 내용과 버튼 영역을 양 끝으로 정렬 */
         }
         .comment-item:last-child {
             border-bottom: 1px solid #dee2e6;
         }
+        .comment-author-date {
+		    flex-direction: row;
+		}
+		.comment-profile {
+		    width: 40px;
+		    height: 40px;
+		    border-radius: 50%;
+		    margin-right: 10px;
+		    object-fit: cover; /* 이미지가 컨테이너에 맞게 조정되도록 합니다 */
+		}
+		.comment-content {
+		    flex-grow: 1;
+		     word-wrap: break-word;
+		}
         .content-area {
             min-height: 300px;     
             border-bottom: 1px solid #dee2e6; 
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            background-color: #ffffff;
+            padding:10px;
+            word-wrap: break-word;
         }
         .button-group {
             display: flex;
             justify-content: flex-end; 
-            margin-top: 10px; 
+            margin-bottom: 10px; 
         }
         .sub {
             display: flex;
@@ -49,8 +75,10 @@
         .border-bottom.mb-3 h3 {
             text-align: left; 
         }
-        
+        @media (max-width: 768px) {
+		    }
     </style>
+    
     
     <h2 class="mb-3">[[${MenuCate.categoryName}]]</h2>
 
@@ -74,10 +102,22 @@
             </div>
         </div>
     </div>
+      <div class="button-group">
+            <div class="text-right mt-3" th:if="${currentCUser != null} and ${board.cuser != null}">
+                <div th:if="${currentCUser.cid == board.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+                    <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
+                    <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
+                </div>
+            </div>
+            <div th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
+                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
+            </div>
+        </div>
 
     <div class="container-detail">
         <!-- 제목 -->
-        <div class="border-bottom mb-3">
+        <div class="border-bottom mb-3" style=" word-wrap: break-word;">
             <h3 th:text="${board.title}"></h3>
         </div>
         <!-- 작성자, 작성일시 -->
@@ -100,28 +140,41 @@
             <div th:utext="${board.content}" id="content"></div>
         </div>
         
-        <!-- 삭제, 수정 버튼 -->
-        <div class="button-group">
-            <div class="text-right mt-3" th:if="${currentCUser != null} and ${board.cuser != null}">
-                <div th:if="${currentCUser.cid == board.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
-                    <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
-                    <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
+        <!-- 댓글 입력 폼 -->
+        <div class="mt-4">
+            <h7>댓글 작성</h7>
+            <form th:action="@{|/comment/${MenuCate.id}/create/${board.id}|}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control mb-2" name="author" placeholder="작성자" 
+                    th:value="${currentCUser != null ? currentCUser.cname : ''}" 
+                    th:readonly="${currentCUser != null}" style="font-size: 13px;" required>
+                    <textarea class="form-control" rows="4" name="content" placeholder="댓글을 입력하세요" maxlength="250" required></textarea>
                 </div>
-            </div>
-            <div th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
-                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-danger">삭제</a>
-                <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-warning">수정</a>
-            </div>
+                <div class="sub">
+                    <button type="submit" class="btn btn-primary">댓글 등록</button>
+                </div>
+            </form>
         </div>
-
+    
+        
         <!-- 댓글 목록 -->
         <div class="border-bottom mt-4">
             <h7 class="mt-4 mb-3" th:text="|${#lists.size(board.commentList)}개의 댓글이 있습니다.|"></h7>
         </div>
         <ul class="comment-list">
-            <li th:each="comment : ${board.commentList}" class="comment-item">
-                <span th:text="${comment.author}"></span>:
+            <li th:each="comment : ${commentList}" class="comment-item">
+            
+             <img class="comment-profile" src="https://icnm.co.kr/common/img/default_profile.png" alt="Profile Picture">
+             
+            <div class="comment-content">
+            <div class="comment-author-date">
+                <span th:text="${comment.author}" style="font-weight: bold; font-size:14px"></span>
+                <span th:text="${#temporals.format(comment.date, 'yyyy-MM-dd HH:mm')}"></span>
+                </div>
+                <div style="width:750px">
                 <span th:text="${comment.content}"></span>
+                </div>
+                </div>
                 <div>
                     <button th:if="${currentCUser != null} and ${comment.cuser != null} and 
 					${currentCUser.cid == comment.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}"
@@ -152,23 +205,8 @@
                 </div>
             </li>
         </ul>
-
-        <!-- 댓글 입력 폼 -->
-        <div class="mt-4">
-            <h7>댓글 작성</h7>
-            <form th:action="@{|/comment/${MenuCate.id}/create/${board.id}|}" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control mb-2" name="author" placeholder="작성자" 
-                    th:value="${currentCUser != null ? currentCUser.cname : ''}" 
-                    th:readonly="${currentCUser != null}" style="font-size: 13px;" required>
-                    <textarea class="form-control" rows="4" name="content" placeholder="댓글을 입력하세요" required></textarea>
-                </div>
-                <div class="sub">
-                    <button type="submit" class="btn btn-primary">댓글 등록</button>
-                </div>
-            </form>
-        </div>
-    </div>
+		</div>
+        
 
     <!-- 모달 -->
     <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -237,5 +275,6 @@
             }
         });
     </script>
+    
 </div>
 </html>

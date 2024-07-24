@@ -1,6 +1,7 @@
 package com.example.CWebProj.DyNavi;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.Comment.Comment;
 import com.example.CWebProj.User.CUser;
 import com.example.CWebProj.User.CUserService;
 
@@ -99,27 +99,34 @@ public class FormController {
 
 		return "readform/textform";
 		}
-		@GetMapping(value = "/form2/create/{menuId}")
-		public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
-			
-		     CUser currentUser = cuserService.authen();
-		        
-	         boolean isAdminOrManager = currentUser != null && (
-	            currentUser.getRole().contains("ROLE_ADMIN") || 
-	            currentUser.getRole().contains("ROLE_MANAGER")
-	        );
-	         
-	        if (!(navService.getMenu(menuId).getCategoryName().equals("자유게시판")) && !isAdminOrManager) {
-	            return "redirect:/";
-	        }
-			model.addAttribute("MenuCate", navService.getMenu(menuId));
-			model.addAttribute("sidebar", navService.getSidebar(menuId));
-			model.addAttribute("currentCUser", cuserService.authen());
-			return"createform/textcreateform";
-		}
+	@GetMapping(value = "/form2/create/{menuId}")
+	public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
+		
+	     CUser currentUser = cuserService.authen();
+	        
+         boolean isAdminOrManager = currentUser != null && (
+            currentUser.getRole().contains("ROLE_ADMIN") || 
+            currentUser.getRole().contains("ROLE_MANAGER")
+        );
+               
+        if (!(navService.getMenu(menuId).getCategoryName().equals("자유게시판")) && !isAdminOrManager) {
+            return "redirect:/";
+        }
+		model.addAttribute("MenuCate", navService.getMenu(menuId));
+		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		model.addAttribute("currentCUser", cuserService.authen());
+		return"createform/textcreateform";
+	}
 	@PostMapping(value = "/form2/create/{menuId}")
 	public String form2create(@PathVariable("menuId") Integer menuId,@ModelAttribute Board board) {
+		int noticeCount = boardService.countNotice(menuId);
+	    if (noticeCount >= 5 && board.isNotice()) {
+	    	board.setNotice(false);
+	    	this.boardService.boardcreate(menuId, board);
+	        return "redirect:/form2/" + menuId + "?error=tooManyNotices";
+	    }
 		this.boardService.boardcreate(menuId, board);
+		
 		return "redirect:/form2/"+menuId;
 	}
 	@GetMapping(value = "/form2/{menuId}/detail/{boardId}")
@@ -128,6 +135,9 @@ public class FormController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", this.boardService.getboard(boardId));
 		model.addAttribute("currentCUser", cuserService.authen());
+		List<Comment> commentList=this.boardService.getboard(boardId).getCommentList();
+		Collections.reverse(commentList); // 리스트 반전
+        model.addAttribute("commentList", commentList);
 		boardService.incrementViewCount(boardId);
 		return "readform/detail_test";
 	}
@@ -170,6 +180,12 @@ public class FormController {
 	}
 	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
+		int noticeCount = boardService.countNotice(menuId);
+	    if (noticeCount >= 5 && board.isNotice()) {
+	    	board.setNotice(false);
+	    	this.boardService.boardcreate(menuId, board);
+	        return "redirect:/form2/" + menuId + "?error=tooManyNotices";
+	    }
 		this.boardService.updateboard(board);
 		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
