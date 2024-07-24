@@ -39,10 +39,7 @@
 <div layout:fragment="content_main">
 	<h2>프로필</h2>
 	<div class="content">
-		<form action="/profile/update" method="post"
-			enctype="multipart/form-data">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
+		<form action="/profile/update" method="post" enctype="multipart/form-data">
 			<div class="d-flex align-items-center">
 				<div class="col-12 col-xl-10">
 					<div class="card mb-7">
@@ -85,7 +82,9 @@
 			</div>
 			<div class="mb-6">
 				<div class="row g-3">
-					<h4 class="mb-4">개인정보</h4>
+					<h4 class="mb-4">개인정보</h4><input class="form-control form-icon-input" id="cid"
+									name="cid" style="font-size: 19px; height: 50px;"
+									type="hidden" th:value="${cuser.cid}" />
 					<div class="col-12 col-sm-6">
 						<div class="form-icon-container">
 							<div class="form-floating">
@@ -141,19 +140,6 @@
 					<div class="col-12 col-sm-6">
 						<div class="form-icon-container">
 							<div class="form-floating">
-								<input class="form-control form-icon-input" id="cemail"
-									name="cemail" style="font-size: 19px; height: 50px;"
-									type="text" placeholder="이메일 주소" th:value="${cuser.cemail}" />
-								<label class="text-body-tertiary form-icon-label" for="cemail">
-									<h5>이메일 주소</h5>
-								</label>
-							</div>
-							<span class="fa-solid fa-cemail text-body fs-9 form-icon"></span>
-						</div>
-					</div>
-					<div class="col-12 col-sm-6">
-						<div class="form-icon-container">
-							<div class="form-floating">
 								<textarea class="form-control form-icon-input" id="cinfo"
 									name="cinfo" style="height: 100px;" placeholder="자기소개"
 									th:value="${cuser.cinfo}"></textarea>
@@ -188,11 +174,8 @@
 							<div class="form-floating">
 								<input class="form-control form-icon-input" id="enabled"
 									name="enabled" style="font-size: 19px; height: 50px;"
-									type="text" placeholder="활성화여부" th:value="${cuser.enabled}"
-									readonly /> <label class="text-body-tertiary form-icon-label"
-									for="enabled">
-									<h5>활성화여부</h5>
-								</label>
+									type="hidden" placeholder="활성화여부" th:value="${cuser.enabled}"
+									readonly />
 							</div>
 							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
 						</div>
@@ -228,10 +211,8 @@
                     <h4 class="mb-4">비밀번호 변경</h4>
                     <div class="form-icon-container mb-3">
                         <div class="form-floating">
-                            <input class="form-control form-icon-input" id="currentPassword" name="currentPassword" type="password" placeholder="현재 비밀번호" th:value="${cuser.password}"/>
-                            <label class="text-body-tertiary form-icon-label" for="currentPassword">
-                                <h5>현재 비밀번호</h5>
-                            </label>
+                            <input class="form-control form-icon-input" id="currentPassword" name="currentPassword" type="hidden" placeholder="현재 비밀번호" th:value="${cuser.password}"/>
+                         
                         </div>
                         <span class="fa-solid fa-lock text-body fs-9 form-icon"></span>
                     </div>

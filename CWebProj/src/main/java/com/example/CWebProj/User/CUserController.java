@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
-import com.example.CWebProj.Banner.Banner;
 import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.Mail.SendMailService;
 
@@ -190,18 +189,8 @@ public class CUserController {
 	@PostMapping("/profile/update")
 	public String updateProfile(@ModelAttribute CUser cuser, @RequestParam("file") MultipartFile file,
 			@RequestParam(required = false) String newPassword, @RequestParam(required = false) String currentPassword,
-			Model model) {
-		try {
+			Model model) throws IOException {
 			cuserService.profileupdate(cuser, file, newPassword, currentPassword);
-		} catch (IOException e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
-			return "readform/profile"; // 오류가 발생해도 동일한 페이지로 돌아갑니다.
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			model.addAttribute("passwordErrorMessage", "현재 비밀번호가 일치하지 않습니다.");
-			return "readform/profile"; // 비밀번호 오류가 발생해도 동일한 페이지로 돌아갑니다.
-		}
 		return "redirect:/profile/update";
 	}
 

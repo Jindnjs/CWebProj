@@ -30,6 +30,8 @@ public class CUser {
 
 	@Column(unique = true)
 
+
+	@NotBlank(message = "아이디는 필수 항목입니다")
 	@Email(message = "이메일이 유효해야합니다.")
 	private String username; // 아이디 -> 이메일로 가입하게끔
 
@@ -48,11 +50,10 @@ public class CUser {
 	
 	//프로필을 위한 정보
 	private String cimage; // 프로필 사진
-	private LocalDate cbirth; // 생년월일
+	private String cbirth; // 생년월일
 	private String cphone; // 전화번호
 	private String caddr; // 주소
 	private String cinfo; //자기소개
-	private String cemail; //이메일 주소
 	
 	private String cjob; //직업명
 	private String caffiliation; //현재소속
