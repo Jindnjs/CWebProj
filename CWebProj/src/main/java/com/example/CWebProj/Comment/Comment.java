@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.example.CWebProj.Board.Board;
 import com.example.CWebProj.User.CUser;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
