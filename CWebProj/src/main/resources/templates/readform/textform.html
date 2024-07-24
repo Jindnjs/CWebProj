@@ -14,22 +14,25 @@ text-align: center;
 }
 
 .table .title-column {
-    width: 250px; /* 제목 열의 너비 */
-    max-width: 250px; /* 제목 열의 최대 너비 */
+    width: 240px; /* 제목 열의 너비 */
+    max-width: 240px; /* 제목 열의 최대 너비 */
     overflow: hidden;
    
 }
+.table .table-row{
+	text-align: center;
+}
 
 .table .date-column {
-    width: 150px; /* 등록일 열의 너비 */
+    width: 90px; /* 등록일 열의 너비 */
 }
 
 .table .author-column {
-    width: 120px; /* 작성자 열의 너비 */
+    width: 100px; /* 작성자 열의 너비 */
 }
 
 .table .view-column {
-    width: 100px; /* 조회 열의 너비 */
+    width: 80px; /* 조회 열의 너비 */
 }
 *{
 font-family: "IBM Plex Sans KR", sans-serif;
@@ -56,6 +59,9 @@ font-family: "IBM Plex Sans KR", sans-serif;
 					        	</div>
 					    	</div>
 						</div>
+						<div th:if="${#strings.equals(param.error, 'tooManyNotices')}" style="color: red;">
+						    공지글이 너무 많아 일반글로 저장했습니다.
+						</div>
 						<div style="margin-bottom:10px" class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">				        
 								<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 							</div>
@@ -80,32 +86,32 @@ font-family: "IBM Plex Sans KR", sans-serif;
 
 						         <tr th:each="board : ${notices}">						    
 
-						            <td Style="background-color:#DCDCDC">공지</td>
-						            <td Style="background-color:#DCDCDC" >
+						            <td class="table-row" Style="background-color:#DCDCDC">공지</td>
+						            <td Style="background-color:#DCDCDC; cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a class="title-link" th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
 						            	</td>
-						            <td Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td Style="background-color:#DCDCDC">
-						            	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
-            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
-						            <td Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
+						            <td class="table-row" Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+						            <td class="table-row" Style="background-color:#DCDCDC">
+						            	<span class="author" th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span class="author" th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
+						            <td class="table-row" Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
 						        </tr>
 
-						        <tr th:each="board,loop : ${paging}"  class="normal-row" >						    
+						        <tr th:each="board,loop : ${paging}"  class="normal-row">						    
 
-						            <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
-						           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
+						            <td class="table-row" th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
+					           		<td style="cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a class="title-link" th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
-						            	</td>
+					            	</td>
 
-						            <td  th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td>
-						             	<span th:if="${board.cuser == null}" th:text="${board.author}"></span>
-            							<span th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
+						            <td class="table-row" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+						            <td class="table-row">
+						             	<span class="author" th:if="${board.cuser == null}" th:text="${board.author}"></span>
+            							<span class="author" th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span>
             						</td>
-						            <td  th:text="${board.viewcount}"></td>
+						            <td class="table-row" th:text="${board.viewcount}"></td>
 						        </tr>     
 					        </tbody>
 				    	</table>
@@ -161,6 +167,17 @@ font-family: "IBM Plex Sans KR", sans-serif;
         document.addEventListener("DOMContentLoaded", function() {
             const maxLength = 20; // 제목의 최대 길이 설정
             const links = document.querySelectorAll('.title-link');
+
+            links.forEach(link => {
+                if (link.textContent.length > maxLength) {
+                    link.textContent = link.textContent.substring(0, maxLength) + '...';
+                }
+            });
+        });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const maxLength = 8; // 제목의 최대 길이 설정
+            const links = document.querySelectorAll('.author');
 
             links.forEach(link => {
                 if (link.textContent.length > maxLength) {
