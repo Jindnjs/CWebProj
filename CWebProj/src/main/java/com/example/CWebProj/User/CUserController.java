@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
-import com.example.CWebProj.Banner.Banner;
 import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.Mail.SendMailService;
 
@@ -66,18 +65,6 @@ public class CUserController {
 		return "authentication/resetpw";
 	}
 
-	
-//	@PostMapping("/findpw")
-//	public String findpw(Model model, @RequestParam("username") String username,
-//	                     @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {
-//	    CUser cuser = this.cuserService.findpw(username);
-//
-//	    if (bindingResult.hasErrors()) {
-//	        model.addAttribute("cuser", cuser);
-//	        return "user/resetpw";
-//	    }
-//	    return "redirect:/signin"; 
-//	}
 	//UUID 생성 및 이메일 전송
 	@PostMapping("/findpw")
 	public String sendResetPassword(
@@ -182,7 +169,7 @@ public class CUserController {
 		model.addAttribute("MenuCate", navService.getMenu(1));
 		model.addAttribute("sidebar", navService.getSidebar(1));
 		model.addAttribute("cuser", cuserService.authen());
-		return "readform/profile";
+		return "form/read/profile";
 	}
 
 	
@@ -196,11 +183,11 @@ public class CUserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
-			return "readform/profile"; // 오류가 발생해도 동일한 페이지로 돌아갑니다.
+			return "form/read/profile"; // 오류가 발생해도 동일한 페이지로 돌아갑니다.
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			model.addAttribute("passwordErrorMessage", "현재 비밀번호가 일치하지 않습니다.");
-			return "readform/profile"; // 비밀번호 오류가 발생해도 동일한 페이지로 돌아갑니다.
+			return "form/read/profile"; // 비밀번호 오류가 발생해도 동일한 페이지로 돌아갑니다.
 		}
 		return "redirect:/profile/update";
 	}

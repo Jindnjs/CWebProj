@@ -56,6 +56,6 @@ public class IndexController {
         model.addAttribute("groupedMenuCategories", groupedMenuCategories);
         model.addAttribute("MenuCate", navService.getMenu(1));
 		model.addAttribute("sidebar", navService.getSidebar(1));
-		return "/nav/nav";
+		return "admin/nav";
 	}
 }
