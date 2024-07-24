@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
-	<div th:fragment="header">
-	<style>
-	@media (max-width: 800px) {
- 	.header .topbar .social-links a {
-    	font-size: 12px; 
-    	display: flex !important;
-		}
-	}
-	
-	</style>
-	
-		<header id="header" class="header sticky-top" style="position: fixed; width:100%; top: 0; ">
+<div th:fragment="header">
+    <style>
+    @media (max-width: 800px) {
+            .header .topbar .social-links a {
+                font-size: 12px;
+                display: flex !important;
+            }
+        }
+    </style>
+
+    <header id="header" class="header sticky-top" style="position: fixed; width:100%; top: 0; ">
 
         <div class="topbar d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
                 <div class="contact-info d-flex align-items-center">
                 </div>
                 <div class="social-links d-flex align-items-center">
-                  
 
-                  	<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/banner}">배너 변경 페이지</a>
+
+                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/banner}">배너 변경 페이지</a>
                   	<a th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''MANAGER'')')}" th:href="@{/autho}">권한체크페이지</a>
                   	<a href="/test">테스트 페이지</a>
                     <a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
@@ -36,12 +35,12 @@
 
             <div class="container position-relative d-flex align-items-center justify-content-between">
                  <!-- =======================================================
-                ************************************************************
+                 ************************************************************
                     
-                로고 이미지 클릭하면 인덱스 페이지로 이동
+                 로고 이미지 클릭하면 인덱스 페이지로 이동
                 
-                ************************************************************
-                ======================================================== -->
+                 ************************************************************
+                 ======================================================== -->
                 <a href="/">
                     <img src="/images/7.png" alt="마이애미 아름다운 장로 교회" height="60px">
                 </a>
@@ -61,7 +60,7 @@
 	                        </a>
                             <ul>
                                 <li th:each="category : ${groupMenu.value}"><a th:href="${category.boardLink + '/' + category.id}" 
-	        	th:text="${category.categoryName}"></a></li>
+	        						th:text="${category.categoryName}"></a></li>
                             </ul>
                         </li>
                     </ul>
