@@ -122,32 +122,22 @@ public class CUserService implements UserDetailsService {
 	}
 	
 	
-	//프로필 정보 업데이트
-	public void profileupdate(CUser cuser, MultipartFile file, String newPassword, String currentPassword) throws IOException {
-        if (file != null && !file.isEmpty()) {
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            File tempFile = new File(file.getOriginalFilename());
-            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-                fos.write(file.getBytes());
-            }
-            s3Service.uploadFile(tempFile.getAbsolutePath(), fileName);
-            tempFile.delete();
-            cuser.setCimage(fileName);
-        }
+	// 프로필 정보 업데이트
+	public void profileupdate(CUser cuser, String newPassword) {
 
-        // 비밀번호 변경 처리
-        if (newPassword != null && !newPassword.isEmpty()) {
-            CUser existingUser = cuserRepository.findById(cuser.getCid()).orElseThrow();
-            if (passwordEncoder.matches(currentPassword, existingUser.getPassword())) {
-                cuser.setPassword(passwordEncoder.encode(newPassword));
-            } else {
-                throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
-            }
-        }
+		// 비밀번호 변경 처리
+		/*
+		 * if (newPassword != null || !newPassword.isEmpty()) {
+		 * 
+		 * cuser.setPassword(passwordEncoder.encode((newPassword))); }
+		 * 
+		 * cuserRepository.save(cuser);
+		 */
+		if(newPassword == null) {
+		System.out.println("aqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqsdfasdf");
+		}
+	}
 
-        cuserRepository.save(cuser);
-    }
-	
 	
 	//비번 잊었을때
 	public CUser findpw(String username) {

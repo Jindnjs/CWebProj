@@ -39,52 +39,21 @@
 <div layout:fragment="content_main">
 	<h2>프로필</h2>
 	<div class="content">
-		<form action="/profile/update" method="post" enctype="multipart/form-data">
+		<form action="/profile/update" method="post"
+			enctype="multipart/form-data">
 			<div class="d-flex align-items-center">
 				<div class="col-12 col-xl-10">
-					<div class="card mb-7">
-						<div
-							class="card-header hover-actions-trigger position-relative mb-6"
-							style="min-height: 130px;">
-							<div class="bg-holder rounded-top"
-								style="background-image: linear-gradient(0deg, #000000 -3%, rgba(0, 0, 0, 0) 83%), url(/images/8.png)">
-								<input class="d-none" id="upload-settings-cover-image"
-									type="file"> <label class="cover-image-file-input"
-									for="upload-settings-cover-image"></label>
-								<div
-									class="hover-actions end-0 bottom-0 pe-1 pb-2 text-white dark__text-gray-1100">
-									<svg class="svg-inline--fa fa-camera me-2" aria-hidden="true"
-										focusable="false" data-prefix="fas" data-icon="camera"
-										role="img" xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 512 512" data-fa-i2svg=""></svg>
-								</div>
-							</div>
-							<input class="d-none" id="cimage" name="file" type="file">
-							<label
-								class="avatar avatar-4xl status-online feed-avatar-profile cursor-pointer"
-								for="cimage"> <img id="profileImage"
-								class="rounded-circle img-thumbnail shadow-sm border-0"
-								src="/images/8.png" width="200" alt="">
-							</label>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex flex-wrap mb-2 align-items-center">
-										<h3 class="me-2" th:text="${cuser.cname}"></h3>
-										<span class="fw-normal fs-8" th:text="${cuser.username}"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="mb-6">
 				<div class="row g-3">
-					<h4 class="mb-4">개인정보</h4><input class="form-control form-icon-input" id="cid"
-									name="cid" style="font-size: 19px; height: 50px;"
-									type="hidden" th:value="${cuser.cid}" />
+					<h4 class="mb-4">개인정보</h4>
+					<input class="form-control form-icon-input" id="cid" name="cid"
+						type="hidden" th:value="${cuser.cid}" /> <input
+						class="form-control form-icon-input" id="username" name="username"
+						type="hidden" th:value="${cuser.username}" />
+						<input class="form-control form-icon-input" id="cdate" name="cdate"
+						type="hidden" th:value="${cuser.cdate}" />
 					<div class="col-12 col-sm-6">
 						<div class="form-icon-container">
 							<div class="form-floating">
@@ -103,8 +72,8 @@
 							<div class="form-floating">
 								<input class="form-control form-icon-input" id="cbirth"
 									name="cbirth" style="font-size: 19px; height: 50px;"
-									type="text" placeholder="생년월일" th:value="${cuser.cbirth}" /> <label
-									class="text-body-tertiary form-icon-label" for="cbirth">
+									type="text" placeholder="0000-00-00" th:value="${cuser.cbirth}" />
+								<label class="text-body-tertiary form-icon-label" for="cbirth">
 									<h5>생년월일</h5>
 								</label>
 							</div>
@@ -207,34 +176,40 @@
 						<span class="fa-solid fa-globe text-body fs-9 form-icon"></span>
 					</div>
 				</div>
-                <div class="col-12 col-sm-6">
-                    <h4 class="mb-4">비밀번호 변경</h4>
-                    <div class="form-icon-container mb-3">
-                        <div class="form-floating">
-                            <input class="form-control form-icon-input" id="currentPassword" name="currentPassword" type="hidden" placeholder="현재 비밀번호" th:value="${cuser.password}"/>
-                         
-                        </div>
-                        <span class="fa-solid fa-lock text-body fs-9 form-icon"></span>
-                    </div>
-                    <div class="form-icon-container mb-3">
-                        <div class="form-floating">
-                            <input class="form-control form-icon-input" id="newPassword" name="newPassword" type="password" placeholder="새 비밀번호" />
-                            <label class="text-body-tertiary form-icon-label" for="newPassword">
-                                <h5>새 비밀번호</h5>
-                            </label>
-                        </div>
-                        <span class="fa-solid fa-key text-body fs-9 form-icon"></span>
-                    </div>
-                    <div class="form-icon-container">
-                        <div class="form-floating">
-                            <input class="form-control form-icon-input" id="confirmNewPassword" name="confirmNewPassword" type="password" placeholder="새 비밀번호 확인" />
-                            <label class="text-body-tertiary form-icon-label" for="confirmNewPassword">
-                                <h5>새 비밀번호 확인</h5>
-                            </label>
-                        </div>
-                        <span class="fa-solid fa-key text-body fs-9 form-icon"></span>
-                    </div>
-                </div>
+				<div class="col-12 col-sm-6">
+					<h4 class="mb-4">비밀번호 변경</h4>
+					<div class="form-icon-container mb-3">
+						<div class="form-floating">
+							<input class="form-control form-icon-input" id="currentPassword"
+								name="password" type="hidden" placeholder="현재 비밀번호"
+								th:value="${cuser.password}" />
+
+						</div>
+						<span class="fa-solid fa-lock text-body fs-9 form-icon"></span>
+					</div>
+					<div class="form-icon-container mb-3">
+						<div class="form-floating">
+							<input class="form-control form-icon-input" id="newPassword"
+								name="newPassword" type="password" placeholder="새 비밀번호" /> <label
+								class="text-body-tertiary form-icon-label" for="newPassword">
+								<h5>새 비밀번호</h5>
+							</label>
+						</div>
+						<span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+					</div>
+					<div class="form-icon-container">
+						<div class="form-floating">
+							<input class="form-control form-icon-input"
+								id="confirmNewPassword" name="confirmNewPassword"
+								type="password" placeholder="새 비밀번호 확인" /> <label
+								class="text-body-tertiary form-icon-label"
+								for="confirmNewPassword">
+								<h5>새 비밀번호 확인</h5>
+							</label>
+						</div>
+						<span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+					</div>
+				</div>
 			</div>
 			<div class="mb-6">
 				<h4 class="mb-4">소셜 미디어</h4>
@@ -310,5 +285,20 @@
 		</form>
 	</div>
 </div>
+
+<script src="/vendors/popper/popper.min.js"></script>
+<script src="/vendors/bootstrap/bootstrap.min.js"></script>
+<script src="/vendors/anchorjs/anchor.min.js"></script>
+<script src="/vendors/is/is.min.js"></script>
+<script src="/vendors/fontawesome/all.min.js"></script>
+<script src="/vendors/lodash/lodash.min.js"></script>
+<script
+	src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="/vendors/list.js/list.min.js"></script>
+<script src="/vendors/feather-icons/feather.min.js"></script>
+<script src="/vendors/dayjs/dayjs.min.js"></script>
+<script src="/assets_p/js/phoenix.js"></script>
+<script src="/vendors/flatpickr/flatpickr.min.js"></script>
+
 </body>
 </html>

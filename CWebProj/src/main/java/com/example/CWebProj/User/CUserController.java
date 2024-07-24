@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
 import com.example.CWebProj.DyNavi.NavService;
@@ -187,13 +188,13 @@ public class CUserController {
 	
 	// 프로필 정보 업데이트
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute CUser cuser, @RequestParam("file") MultipartFile file,
-			@RequestParam(required = false) String newPassword, @RequestParam(required = false) String currentPassword,
-			Model model) throws IOException {
-			cuserService.profileupdate(cuser, file, newPassword, currentPassword);
-		return "redirect:/profile/update";
+	public String updateProfile(@ModelAttribute CUser cuser,
+			@RequestParam("newPassword") String newPassword) {
+			cuserService.profileupdate(cuser, newPassword);
+		return "redirect:/profile";
 	}
-
+	
+	
 	
 	//구글 로그인
 	@Value("${spring.security.oauth2.client.registration.google.client-id}")
