@@ -119,7 +119,7 @@ public class BoardController {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("currentCUser", cuserService.authen());
-		return"form/create/textform/create";
+		return"form/create/textcreateform";
 	}
 	@PostMapping(value = "/form2/create/{menuId}")
 	public String form2create(@PathVariable("menuId") Integer menuId,@ModelAttribute Board board) {
