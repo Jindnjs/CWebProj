@@ -29,11 +29,8 @@ public class CUser {
 	private Integer cid;
 
 	@Column(unique = true)
-
-	@Email(message = "이메일이 유효해야합니다.")
 	private String username; // 아이디 -> 이메일로 가입하게끔
 
-	@NotBlank(message = "비밀번호는 필수 항목입니다")
 	private String password; // 비밀번호
 	private boolean enabled; // 활성화 여부
 	private String role; // 권한
