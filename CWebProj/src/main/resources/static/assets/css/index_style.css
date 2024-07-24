@@ -159,6 +159,12 @@
     .section-content {
         flex-direction: column;
     }
+    .bg-img{
+    	display:0;
+    }
+    .hero-slider{
+    	width:100%;
+    }
 }
 .white-background {
     background-color: rgb(255, 255, 255);
