@@ -1,7 +1,6 @@
 <html layout:decorate="~{layouts/layout_main}">
 <div layout:fragment="content_main">
 <link href="/assets/css/index_style.css" rel="stylesheet">
-
 <script th:src="${mapsApiUrl}"></script>
 <script>
 function initMap() {
@@ -114,7 +113,7 @@ function initMap() {
                 
     ************************************************************
     ======================================================== -->
-     <section style="padding-top:0">
+     <section style="padding-top:0; padding:0;">
         <div class="blue-background">
             <div class="container">
                 <div class="section-content">
@@ -164,6 +163,36 @@ function initMap() {
             </div>
         </div>
     </section><!-- End Main Sections -->
+    
+    
+     <!-- =======================================================
+    ************************************************************
+                
+    교회 앨범
+                
+    ************************************************************
+    ======================================================== -->
+    <section class="album-section gray-background">
+        <div class="container">
+        	<a href="/form3/10" class="link-album">
+            	<h3 style="margin-left:13px"><strong>교회 앨범</strong></h3>
+            </a>
+            <div class="album-content">
+                <div class="album-item" th:each="image : ${image}">
+                <a href="/form3/10">
+                    <img th:src="|${downpath}/${image.mediaLink}|" alt="앨범 이미지">
+                    <div class="image-overlay">
+	                    <div class="image-title" th:text="${image.title}"></div>
+	                    <div class="image-date" th:text="${#temporals.format(image.createDate, 'yyyy-MM-dd')}"></div>
+                </div>
+                </a>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Album Section -->
+    
+    
+    
                     
                   <!-- =======================================================
     ************************************************************
@@ -175,7 +204,7 @@ function initMap() {
     <section id="location" class="location">
         <div class="container">
             <div class="row gy-4">
-                 <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
+                 <div class="col-lg-4 col-md-12">
                         <div class="service-item position-relative">
                             <a href="/form1/3" class="stretched-link">
                                 <h3><strong>찾아오시는 길</strong></h3>
@@ -186,8 +215,33 @@ function initMap() {
                             </a>
                         </div>
                     </div>
+                     <div class="col-lg-8">
+			            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+			              <div class="row gy-4">
+			                <div class="col-md-6">
+				                 <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+				            </div>
+				            <div class="col-md-6 ">
+				                 <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+				            </div>
+				            <div class="col-md-12">
+				                 <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+				            </div>
+				            <div class="col-md-12">
+				                 <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+				            </div>
+				            <div class="col-md-12 text-center">
+				            <div class="loading">Loading</div>
+				            <div class="error-message"></div>
+				            <div class="sent-message">Your message has been sent. Thank you!</div>
+								<button type="submit">Send Message</button>
+			                </div>
+			              </div>
+			            </form>
+          			</div><!-- End Contact Form -->
             </div>
         </div>
+        
     </section>
 
 

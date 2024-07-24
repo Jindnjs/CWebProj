@@ -25,6 +25,7 @@ public class IndexController {
 		model.addAttribute("news", this.boardService.indexBoard(8));
 		model.addAttribute("weekly", this.boardService.indexBoard(4));
 		model.addAttribute("free", this.boardService.indexBoard(9));
+		model.addAttribute("image", this.boardService.indexBoard(10));
 		return "index";
 	}
 	
