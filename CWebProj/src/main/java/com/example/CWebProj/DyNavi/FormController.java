@@ -171,6 +171,23 @@ public class FormController {
 		this.boardService.updateboard(board);
 		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
+	@GetMapping(value = "/form2/{menuId}/search")
+	public String search(Model model, @PathVariable("menuId") Integer menuId,
+			@RequestParam(value="page", defaultValue = "0") int page,
+			@RequestParam("searchType") String searchType,
+			@RequestParam("query") String query) {
+		Page<Board> result = boardService.getResult(page, menuId, searchType, query);
+		List<Board> notices = boardService.getNotices(menuId);
+		
+	    model.addAttribute("MenuCate", navService.getMenu(menuId));
+	    model.addAttribute("sidebar", navService.getSidebar(menuId));
+	    
+	    model.addAttribute("notices", notices);
+	    model.addAttribute("paging", result);
+	    
+	    return "readform/textform";
+	    
+		}
 	
 	
 	//form3

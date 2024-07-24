@@ -2,20 +2,27 @@ package com.example.CWebProj.Board;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.AwsBucket.S3Service;
 import com.example.CWebProj.User.CUserService;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -71,6 +78,26 @@ public class BoardService {
 		Pageable pageable = PageRequest.of(page, 9, Sort.by("createDate").descending());
         return boardRepository.findByMenuId(menuId, pageable);
     }
+	
+	public Page<Board> getResult(int page, Integer menuId, String searchType, String query) {
+		
+		Pageable pageable = PageRequest.of(page, 9, Sort.by("createDate").descending());
+		
+		if (searchType != null && query != null) {
+	        switch(searchType) {
+	            case "title":
+	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrderByCreateDateDesc(menuId, query, pageable);
+	            case "author":
+	            	return boardRepository.findByMenuIdAndNoticeFalseAndAuthorContainingOrderByCreateDateDesc(menuId, query, pageable);
+	            case "title_author":
+	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrderByCreateDateDesc(menuId, query, query, pageable);
+	            default:
+	            	return boardRepository.findByMenuId(menuId, pageable);
+	        }
+	    } else {
+	    	return boardRepository.findByMenuId(menuId, pageable);
+	    }
+	}
 	
 	public Board read(Integer menuId, Integer boardId) {
 		Optional<Board> o = boardRepository.findByMenuIdAndId(menuId, boardId);
