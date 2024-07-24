@@ -1,23 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    h3 {
+        color: #333;
+    }
+    a {
+        text-decoration: none;
+        color: #007BFF;
+        margin: 5px 0;
+        display: inline-block;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .container {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .status {
+        margin: 20px 0;
+        font-size: 18px;
+    }
+    .links a {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .links a:hover {
+        background-color: #f1f1f1;
+    }
+    .auth-status {
+        margin: 20px 0;
+    }
+    .buttons a {
+        text-decoration: none;
+        color: #fff;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 4px;
+        background-color: #007BFF;
+        display: inline-block;
+    }
+    .buttons a:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
-	
-	<h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
-	<p>
-		<a href="/autho/adminlist">admin</a>
-	<p>
-		<a href="/autho/managerlist">manager</a>	
-
-<div sec:authorize="isAuthenticated()">[ Logged in ]</div><br>
-admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div><br>
-manager <div sec:authorize="hasRole('ROLE_MANAGER')">[ yes ]</div><br>
-	<br>
-	<a href="/">메인으로 가기</a>
-	<a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
-	<a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
+    <div class="container">
+        <h3>현재 권한상태: <span th:text="${#authentication.name}"></span></h3>
+        <div class="links">
+            <a href="/autho/adminlist">Admin</a>
+            <a href="/autho/managerlist">Manager</a>
+        </div>
+        <div class="auth-status">
+            <div sec:authorize="isAuthenticated()">[ Logged in ]</div>
+            <br>
+            Admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div>
+            <br>
+            Manager <div sec:authorize="hasRole('ROLE_MANAGER')">[ yes ]</div>
+        </div>
+        <div class="status buttons">
+            <a href="/">메인으로 가기</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/signin}">로그인</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/signout}">로그아웃</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout_board}">
+<head>
+<script src="/vendors/simplebar/simplebar.min.js"></script>
+<script src="/assets_p/js/config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+	rel="stylesheet">
+<link href="/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+<link href="/assets_p/css/theme-rtl.min.css" type="text/css"
+	rel="stylesheet" id="style-rtl">
+<link href="/assets_p/css/theme.min.css" type="text/css"
+	rel="stylesheet" id="style-default">
+<link href="/assets_p/css/user-rtl.min.css" type="text/css"
+	rel="stylesheet" id="user-style-rtl">
+<link href="/assets_p/css/user.min.css" type="text/css" rel="stylesheet"
+	id="user-style-default">
+
+<script>
+	var phoenixIsRTL = window.config.config.phoenixIsRTL;
+	if (phoenixIsRTL) {
+		var linkDefault = document.getElementById('style-default');
+		var userLinkDefault = document.getElementById('user-style-default');
+		linkDefault.setAttribute('disabled', true);
+		userLinkDefault.setAttribute('disabled', true);
+		document.querySelector('html').setAttribute('dir', 'rtl');
+	} else {
+		var linkRTL = document.getElementById('style-rtl');
+		var userLinkRTL = document.getElementById('user-style-rtl');
+		linkRTL.setAttribute('disabled', true);
+		userLinkRTL.setAttribute('disabled', true);
+	}
+</script>
+</head>
+<div layout:fragment="content_main">
+	<h2>프로필</h2>
+	<div class="content">
+		<form action="/profile/update" method="post"
+			enctype="multipart/form-data">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+			<div class="d-flex align-items-center">
+				<div class="col-12 col-xl-10">
+					<div class="card mb-7">
+						<div
+							class="card-header hover-actions-trigger position-relative mb-6"
+							style="min-height: 130px;">
+							<div class="bg-holder rounded-top"
+								style="background-image: linear-gradient(0deg, #000000 -3%, rgba(0, 0, 0, 0) 83%), url(/images/8.png)">
+								<input class="d-none" id="upload-settings-cover-image"
+									type="file"> <label class="cover-image-file-input"
+									for="upload-settings-cover-image"></label>
+								<div
+									class="hover-actions end-0 bottom-0 pe-1 pb-2 text-white dark__text-gray-1100">
+									<svg class="svg-inline--fa fa-camera me-2" aria-hidden="true"
+										focusable="false" data-prefix="fas" data-icon="camera"
+										role="img" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 512 512" data-fa-i2svg=""></svg>
+								</div>
+							</div>
+							<input class="d-none" id="cimage" name="file" type="file">
+							<label
+								class="avatar avatar-4xl status-online feed-avatar-profile cursor-pointer"
+								for="cimage"> <img id="profileImage"
+								class="rounded-circle img-thumbnail shadow-sm border-0"
+								src="/images/8.png" width="200" alt="">
+							</label>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex flex-wrap mb-2 align-items-center">
+										<h3 class="me-2" th:text="${cuser.cname}"></h3>
+										<span class="fw-normal fs-8" th:text="${cuser.username}"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mb-6">
+				<div class="row g-3">
+					<h4 class="mb-4">개인정보</h4>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cname"
+									name="cname" style="font-size: 19px; height: 50px;" type="text"
+									placeholder="이름" th:value="${cuser.cname}" /> <label
+									class="text-body-tertiary form-icon-label" for="cname">
+									<h5>이름</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cbirth"
+									name="cbirth" style="font-size: 19px; height: 50px;"
+									type="text" placeholder="생년월일" th:value="${cuser.cbirth}" /> <label
+									class="text-body-tertiary form-icon-label" for="cbirth">
+									<h5>생년월일</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cphone"
+									name="cphone" style="font-size: 19px; height: 50px;"
+									type="text" placeholder="전화번호" th:value="${cuser.cphone}" /> <label
+									class="text-body-tertiary form-icon-label" for="cphone">
+									<h5>전화번호</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="caddr"
+									name="caddr" style="font-size: 19px; height: 50px;" type="text"
+									placeholder="주소" th:value="${cuser.caddr}" /> <label
+									class="text-body-tertiary form-icon-label" for="caddr">
+									<h5>주소</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cemail"
+									name="cemail" style="font-size: 19px; height: 50px;"
+									type="text" placeholder="이메일 주소" th:value="${cuser.cemail}" />
+								<label class="text-body-tertiary form-icon-label" for="cemail">
+									<h5>이메일 주소</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-cemail text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<textarea class="form-control form-icon-input" id="cinfo"
+									name="cinfo" style="height: 100px;" placeholder="자기소개"
+									th:value="${cuser.cinfo}"></textarea>
+								<label class="text-body-tertiary form-icon-label" for="cinfo">
+									<h5>자기소개</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-circle-info text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<select name="role" id="role"
+									class="form-control form-icon-input"
+									style="font-size: 15px; height: 50px;"
+									onchange="this.form.submit()">
+									<option th:value="${cuser.role}" th:text="${cuser.role}"
+										selected></option>
+									<option value="ROLE_ADMIN">ROLE_ADMIN</option>
+									<option value="ROLE_MANAGER">ROLE_MANAGER</option>
+									<option value="ROLE_USER">ROLE_USER</option>
+								</select> <label class="text-body-tertiary form-icon-label" for="role">
+									<h5>권한</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="enabled"
+									name="enabled" style="font-size: 19px; height: 50px;"
+									type="text" placeholder="활성화여부" th:value="${cuser.enabled}"
+									readonly /> <label class="text-body-tertiary form-icon-label"
+									for="enabled">
+									<h5>활성화여부</h5>
+								</label>
+							</div>
+							<span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row gx-3 mb-6 gy-6 gy-sm-3">
+				<div class="col-12 col-sm-6">
+					<h4 class="mb-4">직업정보</h4>
+					<div class="form-icon-container mb-3">
+						<div class="form-floating">
+							<input class="form-control form-icon-input" id="cjob" name="cjob"
+								type="text" placeholder="직업명" th:value="${cuser.cjob}" /> <label
+								class="text-body-tertiary form-icon-label" for="cjob">
+								<h5>직업명</h5>
+							</label>
+						</div>
+						<span class="fa-solid fa-building text-body fs-9 form-icon"></span>
+					</div>
+					<div class="form-icon-container">
+						<div class="form-floating">
+							<input class="form-control form-icon-input" id="caffiliation"
+								name="caffiliation" type="text" placeholder="현재소속"
+								th:value="${cuser.caffiliation}" /> <label
+								class="text-body-tertiary form-icon-label" for="caffiliation">
+								<h5>현재 소속</h5>
+							</label>
+						</div>
+						<span class="fa-solid fa-globe text-body fs-9 form-icon"></span>
+					</div>
+				</div>
+                <div class="col-12 col-sm-6">
+                    <h4 class="mb-4">비밀번호 변경</h4>
+                    <div class="form-icon-container mb-3">
+                        <div class="form-floating">
+                            <input class="form-control form-icon-input" id="currentPassword" name="currentPassword" type="password" placeholder="현재 비밀번호" th:value="${cuser.password}"/>
+                            <label class="text-body-tertiary form-icon-label" for="currentPassword">
+                                <h5>현재 비밀번호</h5>
+                            </label>
+                        </div>
+                        <span class="fa-solid fa-lock text-body fs-9 form-icon"></span>
+                    </div>
+                    <div class="form-icon-container mb-3">
+                        <div class="form-floating">
+                            <input class="form-control form-icon-input" id="newPassword" name="newPassword" type="password" placeholder="새 비밀번호" />
+                            <label class="text-body-tertiary form-icon-label" for="newPassword">
+                                <h5>새 비밀번호</h5>
+                            </label>
+                        </div>
+                        <span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+                    </div>
+                    <div class="form-icon-container">
+                        <div class="form-floating">
+                            <input class="form-control form-icon-input" id="confirmNewPassword" name="confirmNewPassword" type="password" placeholder="새 비밀번호 확인" />
+                            <label class="text-body-tertiary form-icon-label" for="confirmNewPassword">
+                                <h5>새 비밀번호 확인</h5>
+                            </label>
+                        </div>
+                        <span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+                    </div>
+                </div>
+			</div>
+			<div class="mb-6">
+				<h4 class="mb-4">소셜 미디어</h4>
+				<div class="row g-3">
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cinsta"
+									name="cinsta" type="text" placeholder="Instagram"
+									th:value="${cuser.cinsta}" /> <label
+									class="text-body-tertiary form-icon-label" for="cinsta">
+									<h5>Instagram</h5>
+								</label>
+							</div>
+							<span class="fa-brands fa-instagram text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cyoutube"
+									name="cyoutube" type="text" placeholder="Youtube"
+									th:value="${cuser.cyoutube}" /> <label
+									class="text-body-tertiary form-icon-label" for="cyoutube">
+									<h5>Youtube</h5>
+								</label>
+							</div>
+							<span class="fa-brands fa-youtube text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+					<div class="col-12 col-sm-6">
+						<div class="form-icon-container">
+							<div class="form-floating">
+								<input class="form-control form-icon-input" id="cnaver"
+									name="cnaver" type="text" placeholder="Naver"
+									th:value="${cuser.cnaver}" /> <label
+									class="text-body-tertiary form-icon-label" for="cnaver">
+									<h5>Naver</h5>
+								</label>
+							</div>
+							<span class="fa-brands fa-naver-in text-body fs-9 form-icon"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="text-end mb-6">
+
+
+				<div>
+					<button type="button" class="btn btn-primary"
+						data-bs-toggle="modal" data-bs-target="#exampleModal">
+						저장하기</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">저장하시겠습니까?</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-footer">
+									<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+									<button type="submit" class="btn btn-primary">저장하기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>
