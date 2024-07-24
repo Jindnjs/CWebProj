@@ -8,7 +8,9 @@
                 
   	************************************************************
   	======================================================== --> */
-  	
+  	*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
   	 .table {
         border-collapse: separate;
         border-spacing: 0;     

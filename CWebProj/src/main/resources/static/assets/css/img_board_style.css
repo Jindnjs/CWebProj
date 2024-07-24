@@ -1,6 +1,9 @@
 /*--------------------------------------------------------------
 # Blog Posts Section
 --------------------------------------------------------------*/
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
 .btn {
     background-color: blue;
     border: none;

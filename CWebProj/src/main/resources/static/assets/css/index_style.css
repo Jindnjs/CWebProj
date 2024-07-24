@@ -147,24 +147,36 @@
 	}
 		
 /* Hover 상태에서 애니메이션 적용 */
-.rotate-vert-center:hover {
-    -webkit-animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	        animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+.fade-in-fwd:hover {
+	-webkit-animation: fade-in-fwd 0.9s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: fade-in-fwd 0.9s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
-@keyframes rotate-vert-center {
+@-webkit-keyframes fade-in-fwd {
   0% {
-    -webkit-transform: rotateY(0);
-            transform: rotateY(0);
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
   }
   100% {
-    -webkit-transform: rotateY(360deg);
-            transform: rotateY(360deg);
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
   }
 }
-.animate {
-    animation: bounce-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+@keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
 }
+
 /* 반응형 조정 */
 @media (max-width: 768px) {
     .section-content {
