@@ -17,6 +17,13 @@
 	 .form-label{
 	 	display: none
 	 }
+	  .form-check-input {
+        order: 1; /* 체크박스를 오른쪽으로 이동 */
+    }
+    .form-check-label {
+        order: 2; /* 레이블을 왼쪽으로 이동 */
+        margin-right: 8px; /* 체크박스와 레이블 사이에 여백 추가 */
+    }
 	 #checkboxError {
             display: none;
             color: red;
@@ -47,8 +54,20 @@
 	<form method="post" onsubmit="return validateForm()">
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<div class="row">
-			<div class="col-md-6 mb-4">
-				<input type="text" name="title" id="title" class="form-control mb-2" placeholder="제목">
+			<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+			     <div class="form-check">
+			     		<label class="form-check-label" for="noticeTrue">공지</label>
+                        <input class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">
+                        
+                    </div>
+                    <div class="form-check">
+                    	<label class="form-check-label" for="noticeFalse">일반</label>
+                        <input class="form-check-input" type="checkbox" id="noticeFalse" name="notice" value="false" checked>
+     					
+                    </div>
+			</div>
+			<div class="col-md-12 mb-4">
+				<input type="text" name="title" id="title" class="form-control mb-3" placeholder="제목">
 				<!-- 작성자는 로그인시 사용자의 이름이 뜨게 
 				만약 비로그인 시에는 그냥 입력받게 -->
 				<div th:if="${#authorization.expression('isAuthenticated()')}">
@@ -60,16 +79,7 @@
 	                <input type="text" name="author" id="author" class="form-control mb-2" placeholder="작성자">
 	            </div>
 				</div>
-			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end" th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
-			     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">
-                        <label class="form-check-label" for="noticeTrue">공지</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="noticeFalse" name="notice" value="false">
-                        <label class="form-check-label" for="noticeFalse">일반</label>
-                    </div>
-			</div>
+			
 			<div class="mb-4">
 				<textarea name="content" id="summernote" rows="10" ></textarea>
 			</div>

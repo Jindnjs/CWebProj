@@ -13,4 +13,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByMenuIdAndNoticeTrueOrderByCreateDateDesc(Integer menuId);
     Page<Board> findByMenuId(Integer menuId, Pageable pageable);
     Optional<Board> findByMenuIdAndId(Integer menuId, Integer boardId);
+    
+    List<Board> findTop4ByMenuIdOrderByCreateDateDesc(Integer menuId);
+    Optional<Board> findByMenuId(Integer menuId);
 }

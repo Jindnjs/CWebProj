@@ -10,12 +10,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class CUser {
 
 	@Id
@@ -23,6 +29,7 @@ public class CUser {
 	private Integer cid;
 
 	@Column(unique = true)
+
 	@Email(message = "이메일이 유효해야합니다.")
 	private String username; // 아이디 -> 이메일로 가입하게끔
 

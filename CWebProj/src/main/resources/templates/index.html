@@ -1,5 +1,7 @@
 <html layout:decorate="~{layouts/layout_main}">
 <div layout:fragment="content_main">
+<link href="/assets/css/index_style.css" rel="stylesheet">
+
 <script th:src="${mapsApiUrl}"></script>
 <script>
 function initMap() {
@@ -15,7 +17,8 @@ function initMap() {
 }
     </script>
 
-    <main id="main">
+    <main id="main" style="margin-top:100px">
+    <div class="bg-img">
     	
     	<!-- =======================================================
         ************************************************************
@@ -28,8 +31,8 @@ function initMap() {
         <section id="hero-slider" class="hero-slider">
             <div class="container-md">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="swiper sliderFeaturedPosts">
+                    <div class="col-12 pe-0 ps-0" style="height:400px">
+                        <div class="swiper sliderFeaturedPosts" style="height:400px">
                             <div class="swiper-wrapper">
 
                                 <div class="swiper-slide" th:each="banner : ${banners}">
@@ -53,115 +56,122 @@ function initMap() {
                 </div>
             </div>
         </section><!-- End Hero Slider Section -->
-
-        <!-- 김나영 -->
-
-
-        <!-- Services Section -->
-        <section id="services" class="services section">
+</div>
+        
+      <!-- =======================================================
+    ************************************************************
+                
+    아이콘
+                
+    ************************************************************
+    ======================================================== -->
+        <div class="white-background">
+        	 <div class="icon-container">
+		        <div class="icon-item">
+			        <a href="/form2/1">
+			            <img src="https://jindevbucket.s3.ap-northeast-2.amazonaws.com/ab1e3c49-250b-461a-aa53-49d51539fea1_icon1.png" alt="교회소개" class="rotate-vert-center">
+			            <span>교회소개</span>
+		            </a>
+		        </div>
+		        <div class="icon-item">
+			        <a href="/form2/2">
+			            <img src="https://jindevbucket.s3.ap-northeast-2.amazonaws.com/272e67b0-458a-44de-bbdc-38c1519d3268_icon2.png" alt="예배안내" class="rotate-vert-center">
+			            <span>예배안내</span>
+		            </a>
+		        </div>
+		        <div class="icon-item">
+			         <a href="https://www.youtube.com/channel/UCMXR9kDxdjctI6jXSa5zx_Q" target="_blank">
+			            <img src="https://jindevbucket.s3.ap-northeast-2.amazonaws.com/60e49926-f5d4-4052-a71d-475fbd970e04_icon3.png" alt="유튜브" class="rotate-vert-center">
+			            <span>유튜브</span>
+		            </a>
+		        </div>
+		        <div class="icon-item">
+			        <a href="/form2/5">
+			            <img src="https://jindevbucket.s3.ap-northeast-2.amazonaws.com/a7d2c3b7-5ac0-4cbe-9bf1-fde47692bb81_icon4.png" alt="영어설교" class="rotate-vert-center">
+			            <span>영어설교</span>
+		            </a>
+		        </div>
+		        <div class="icon-item">
+			        <a href="/form2/6">
+			            <img src="https://jindevbucket.s3.ap-northeast-2.amazonaws.com/55e0b163-6c99-43c5-a794-edca65e5a939_icon5.png" alt="목사칼럼" class="rotate-vert-center">
+			            <span>목사칼럼</span>
+		            </a>
+		        </div>
+		    </div>
+        </div>
+		
+		
+		
+		
+    <!-- =======================================================
+    ************************************************************
+                
+    주요 섹션
+                
+    ************************************************************
+    ======================================================== -->
+     <section style="padding-top:0">
+        <div class="blue-background">
             <div class="container">
-                <div class="row gy-4">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item  position-relative">
-                            <div class="textbar">
-                            <!-- =======================================================
-                            ************************************************************
-                            
-                            교회소식란
-                            
-                            ************************************************************
-                            ======================================================== -->
-                            </div>
-                            <a href="/nav_exam" class="stretched-link"></a>
-                            <h3><strong>교회 소식</strong></h3>
+                <div class="section-content">
+                    <div class="section-item">
+                    	<a href="/form2/8">
+                        	<h3 class="section-title">교회 소식</h3>
+                        </a>
+                        <ul class="news-list" >
+                            <li th:each="news : ${news}" class="news-content">
+                            <a th:href="@{|/form2/${news.menuId}/detail/${news.id}|}" >
+                            	 <span class="news-title" th:text="${news.title}"></span>	 
                             </a>
-                            <!-- 교회 소식 리스트 -->
-                            <ul class="news-list">
-                                <li>리스트 1</li>
-                                <li>리스트 2</li>
-                                <li>리스트 3</li>
-                            </ul>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                            
-                    금주의 말씀
-                            
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3><strong>금주의 말씀</strong></h3>
+                            	<span class="news-date" th:text="${#temporals.format(news.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(news)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                    <div class="section-item">
+                   	    <a href="/form2/4">	
+                        	<h3 class="section-title">주보</h3>
+                        </a>
+                        <ul class="news-list">
+                           <li th:each="weekly : ${weekly}" class="news-content">
+                            <a th:href="@{|/form2/${weekly.menuId}/detail/${weekly.id}|}" >
+                            	 <span class="news-title" th:text="${weekly.title}"></span>	 
                             </a>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                    
-                    갤러리
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3><strong>아름다운 갤러리</strong></h3>
+                            	<span class="news-date" th:text="${#temporals.format(weekly.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(weekly)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                    <div class="section-item">
+                    	<a href="/form2/9">
+                        	<h3 class="section-title">자유게시판</h3>
+                        </a>
+                        <ul class="news-list">
+                            <li th:each="free : ${free}" class="news-content">
+                            <a th:href="@{|/form2/${free.menuId}/detail/${free.id}|}" >
+                            	 <span class="news-title" th:text="${free.title}"></span>	 
                             </a>
-                            <!-- class 추가 -->
-                            <ul class="news-list">
-                                <li>리스트 1</li>
-                                <li>리스트 2</li>
-                                <li>리스트 3</li>
-                            </ul>
-                        </div>
-                    </div><!-- End Service Item -->
+                            	<span class="news-date" th:text="${#temporals.format(free.createDate, 'yyyy-MM-dd')}"></span>
+                            </li>
+                        	<li th:if="${#lists.isEmpty(free)}">현재 게시물이 없습니다</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Main Sections -->
                     
-                    <!-- =======================================================
-                    ************************************************************
-                            
-                    예배 안내
-                            
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3>예배 안내</h3>
-                            </a>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div><!-- End Service Item -->
+                  <!-- =======================================================
+    ************************************************************
                     
-                    <!-- =======================================================
-                    ************************************************************
+    찾아오시는 길 섹션
                     
-                    교육란 - 클릭시 게시판 교육
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-item position-relative">
-                            <a href="#" class="stretched-link">
-                                <h3>교육</h3>
-                            </a>
-
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div><!-- End Service Item -->
-                    
-                    <!-- =======================================================
-                    ************************************************************
-                    
-                    클릭 시 게시판 - 지도 표시 예정
-                    
-                    ************************************************************
-                    ======================================================== -->
-                    <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
+    ************************************************************
+    ======================================================== -->
+    <section id="location" class="location">
+        <div class="container">
+            <div class="row gy-4">
+                 <div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <a href="/form1/3" class="stretched-link">
                                 <h3><strong>찾아오시는 길</strong></h3>
@@ -172,12 +182,39 @@ function initMap() {
                             </a>
                         </div>
                     </div>
-                </div>
             </div>
-        </section> <!-- End Post Grid Section -->
+        </div>
+    </section>
 
 
     </main><!-- End #main -->
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titles = document.querySelectorAll('.news-title');
+        titles.forEach(title => {
+            const maxLength = 15; // 제목의 최대 길이 설정
+            if (title.textContent.length > maxLength) {
+                title.textContent = title.textContent.substring(0, maxLength) + '...';
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const elements = document.querySelectorAll('.flip-in-ver-right');
+
+        elements.forEach(element => {
+            element.addEventListener('animationend', () => {
+                element.classList.remove('animate');
+            });
+
+            element.addEventListener('mouseover', () => {
+                element.classList.add('animate');
+            });
+        });
+    });
+</script>
 </div>
 </html>
