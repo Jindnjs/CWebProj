@@ -44,6 +44,7 @@ public class FormController {
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
+		System.out.println( navService.getMenu(menuId));
 		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
 			model.addAttribute("board", this.boardService.getform1(menuId));
 		}

@@ -1,0 +1,211 @@
+@charset "UTF-8";
+
+.hero-slider {
+    height: 450px;
+    width: 55vw;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+     z-index: 1;
+     padding:0;
+}
+.blue-background {
+    background-color:#1c448e;
+    padding: 30px 0;
+}
+.white-background {
+    background-color:rgb(255, 255, 255);
+    padding: 30px 0;
+    height:50px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    position: relative; /* 상대 위치 설정 */
+    padding-bottom: 10px; /* 밑줄과 제목 간의 간격 */
+    margin: 0; /* 기본 마진 제거 */
+    text-align: left;
+    font-size: 29px;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+/* 각 항목을 가로로 정렬 */
+.section-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-item {
+    background: #1c448e; /* 배경을 회색으로 설정 */
+    padding: 20px;
+    border: none; /* 테두리 제거 */
+    margin: 0;
+    flex: 1;
+    position: relative; /* 하단 구분선을 위한 위치 설정 */
+    box-sizing: border-box;
+}
+
+/* 제목과 리스트 사이의 구분선 스타일 */
+.section-item > h3 {
+    margin: 0 0 10px 0; /* 제목과 구분선 사이의 간격 조정 */
+    color: white; /* 제목 색상 설정 */
+}
+
+
+
+/* 리스트 스타일 */
+.news-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #CCCCCC;
+    font-size: 15px;
+}
+
+.news-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC; /* 회색 구분선 */
+    padding: 5px 0; /* 상하 패딩 */
+    margin-bottom: 5px; /* 항목 간의 간격 */
+    font-weight: bold;
+    position: relative;
+}
+.news-content::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px; /* 밑줄의 두께 */
+    background-color: #CCCCCC; /* 초기 밑줄 색상 */
+    transition: width 1s ease;
+}
+
+.news-content:hover::before {
+    width: 100%;
+    background-color: white; /* 마우스를 올렸을 때 밑줄 색상 */
+}
+
+#main-sections {
+  margin-top: -40px; 
+}
+  .news-title {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        transition: color 0.3s, text-decoration 0.3s;
+    }
+    .news-title:hover {
+    color: white; /* 원하는 색상으로 변경 */
+	}
+    .news-date {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px; /* 제목과 날짜 사이 간격 */
+        text-align: right;
+        color: #CCCCCC;
+    }
+    
+    
+    .hero-slider {
+    height: 400px; /* 원하시는 높이로 설정 */
+    width: 60vw;
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    margin: 0 auto; /* 중앙 정렬 */
+    position: relative;
+	}
+
+	.hero-slider .swiper-slide {
+	    height: 80%;
+	}
+
+	.bg-img{
+		background: url('https://jindevbucket.s3.ap-northeast-2.amazonaws.com/c82b4ecc-e0c7-4885-8396-2eb463f365a0_asdf.jpg');
+		background-size: 100% 100%;
+		margin-top:22px;
+	}
+	.container-md{
+		height:400px;
+	}
+		
+/* Hover 상태에서 애니메이션 적용 */
+.rotate-vert-center:hover {
+    -webkit-animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	        animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+@keyframes rotate-vert-center {
+  0% {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+.animate {
+    animation: bounce-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .section-content {
+        flex-direction: column;
+    }
+}
+.white-background {
+    background-color: rgb(255, 255, 255);
+    padding: 30px 0;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.icon-item img {
+    width: 50px; /* 아이콘의 너비 조정 */
+    height: 50px; /* 아이콘의 높이 조정 */
+}
+
+.icon-item span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #000;
+}
+.icon-item a {
+    display: flex;
+    flex-direction: column; /* a 태그 내부에서 아이콘과 텍스트를 수직으로 나열 */
+    align-items: center; /* 아이콘과 텍스트를 수평으로 중앙 정렬 */  
+}
