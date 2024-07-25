@@ -69,10 +69,13 @@
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
+
 body {
   color: var(--default-color);
   background-color: var(--background-color);
-  font-family: var(--default-font);
 }
 
 a {
@@ -86,6 +89,7 @@ a:hover {
   text-decoration: none;
 }
 
+
 h1,
 h2,
 h3,
@@ -93,7 +97,6 @@ h4,
 h5,
 h6 {
   color: var(--heading-color);
-  font-family: var(--heading-font);
 }
 
 /* Pulsating Play Button

@@ -72,6 +72,28 @@ public class BoardService {
         return boardRepository.findByMenuId(menuId, pageable);
     }
 	
+	//검색기능
+	public Page<Board> getResult(int page, Integer menuId, String searchType, String query) {
+
+		Pageable pageable = PageRequest.of(page, 13-this.getNotices(menuId).size());
+
+ 		if (searchType != null && query != null) {
+ 	        switch(searchType) {
+ 	            case "title":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrderByCreateDateDesc(menuId, query, pageable);
+ 	            case "author":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, pageable);
+ 	            case "title_author":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, query, pageable);
+ 	            default:
+ 	            	return boardRepository.findByMenuId(menuId, pageable);
+ 	        }
+ 	    } else {
+ 	    	return boardRepository.findByMenuId(menuId, pageable);
+ 	    }
+ 	}
+	//검색기능
+	
 	public Board read(Integer menuId, Integer boardId) {
 		Optional<Board> o = boardRepository.findByMenuIdAndId(menuId, boardId);
 		return o.get();

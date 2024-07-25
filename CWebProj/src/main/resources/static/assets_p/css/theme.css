@@ -75,8 +75,8 @@
   --phoenix-dark-border-subtle: #8a94ad;
   --phoenix-white-rgb: 255, 255, 255;
   --phoenix-black-rgb: 0, 0, 0;
-  --phoenix-font-sans-serif: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --phoenix-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --phoenix-font-sans-serif: "IBM Plex Sans KR", sans-serif;
+  --phoenix-font-monospace: "IBM Plex Mono KR", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --phoenix-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --phoenix-body-font-family: var(--phoenix-font-sans-serif);
   --phoenix-body-font-size: 1rem;
@@ -854,6 +854,10 @@
   :root {
     scroll-behavior: smooth;
   }
+}
+
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
 }
 
 body {
@@ -22686,7 +22690,7 @@ label,
 .pagination,
 .valid-feedback,
 .invalid-feedback {
-  font-family: var(--phoenix-font-sans-serif);
+  font-family: "IBM Plex Sans KR", sans-serif;
 }
 
 pre {
