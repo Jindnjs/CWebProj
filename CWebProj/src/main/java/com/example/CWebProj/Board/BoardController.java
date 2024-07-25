@@ -355,7 +355,8 @@ public class BoardController {
     @ResponseBody
     public String form4update(@RequestParam("boardId") Integer boardId, 
     		@RequestParam("title") String title,
-    		@RequestParam("mediaLink") String mediaLink) throws IOException {
+    		@RequestParam("mediaLink") String mediaLink,
+    		@RequestParam("content") String content) throws IOException {
 		
 		if(title.equals("")) {
 	    	return "제목을 지어주세요.";
@@ -372,6 +373,7 @@ public class BoardController {
         Board board = boardService.getBoard(boardId);
         board.setTitle(title);
         board.setMediaLink(mediaLink);
+        board.setContent(content);
         boardService.updateboard(board);
         return "success";
     }
