@@ -44,8 +44,6 @@
 
 	<div class="content">
 		<nav class="mb-2" aria-label="breadcrumb">
-		
-		<h3>접속자 : <a th:text="${#authentication.name}"></a></h3><br>
 		<h3>
 			<div sec:authorize="hasRole('ROLE_ADMIN')">
 				<br> admin으로 접속하셨습니다
@@ -53,10 +51,6 @@
 
 			<div sec:authorize="hasRole('ROLE_MANAGER')">
 				<br> manager로 접속하셨습니다
-			</div>
-
-			<div sec:authorize="hasRole('ROLE_USER')">
-				<br> user로 접속하셨습니다
 			</div>
 			</h3>
 
@@ -69,7 +63,7 @@
 			data-list='{"valueNames":["User","email","city","last_active","joined"],"page":10,"pagination":true}'>
 			<div class="row align-items-center justify-content-between g-3 mb-4">
 				<div class="col col-auto">
-						</form>
+						
 					</div>
 				</div>
 				<div class="col-auto">

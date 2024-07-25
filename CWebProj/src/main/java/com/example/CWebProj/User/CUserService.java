@@ -122,31 +122,33 @@ public class CUserService implements UserDetailsService {
 	}
 	
 	
-	//프로필 정보 업데이트
-	public void profileupdate(CUser cuser, MultipartFile file, String newPassword, String currentPassword) throws IOException {
-        if (file != null && !file.isEmpty()) {
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            File tempFile = new File(file.getOriginalFilename());
-            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-                fos.write(file.getBytes());
-            }
-            s3Service.uploadFile(tempFile.getAbsolutePath(), fileName);
-            tempFile.delete();
-            cuser.setCimage(fileName);
-        }
+	// 프로필 정보 업데이트
+	public void profileupdate(CUser cuser, String newPassword, MultipartFile back, MultipartFile profile)
+	        throws IOException {
 
-        // 비밀번호 변경 처리
-        if (newPassword != null && !newPassword.isEmpty()) {
-            CUser existingUser = cuserRepository.findById(cuser.getCid()).orElseThrow();
-            if (passwordEncoder.matches(currentPassword, existingUser.getPassword())) {
-                cuser.setPassword(passwordEncoder.encode(newPassword));
-            } else {
-                throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
-            }
-        }
+	    if (back != null && !back.isEmpty()) {
+	        String backname = UUID.randomUUID() + "_" + back.getOriginalFilename();
+	        File tempFile1 = File.createTempFile("back", null); // 임시 파일 생성
+	        back.transferTo(tempFile1); // MultipartFile을 임시 파일로 변환
+	        s3Service.uploadFile(tempFile1.getAbsolutePath(), backname);
+	        tempFile1.delete();
+	        cuser.setCbackimage(backname);
+	    }
 
-        cuserRepository.save(cuser);
-    }
+	    if (profile != null && !profile.isEmpty()) {
+	        String profilename = UUID.randomUUID() + "_" + profile.getOriginalFilename();
+	        File tempFile2 = File.createTempFile("profile", null); // 임시 파일 생성
+	        profile.transferTo(tempFile2); // MultipartFile을 임시 파일로 변환
+	        s3Service.uploadFile(tempFile2.getAbsolutePath(), profilename);
+	        tempFile2.delete();
+	        cuser.setCprofileimage(profilename);
+	    }
+
+	    if (!newPassword.isEmpty()) {
+	        cuser.setPassword(passwordEncoder.encode((newPassword)));
+	    }
+	    cuserRepository.save(cuser);
+	}
 	
 	
 	//비번 잊었을때
