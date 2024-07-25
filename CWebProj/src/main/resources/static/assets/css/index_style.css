@@ -148,6 +148,9 @@
 	.container-md{
 		height:400px;
 	}
+	.img-bg{
+		height:400px;
+	}
 /* 반응형 조정 */
 @media (max-width: 768px) {
     .section-content {
@@ -155,13 +158,23 @@
     }
     .bg-img{
     	display:0;
-    }
-    .hero-slider{
-    	width:100%;
-    }
+    } 
     .link-album{
     	text-align: center;
     }
+}
+@media (max-width: 1200px){
+	 .hero-slider{
+    	width:100%;
+    }
+}
+
+@media (max-width: 984px) {
+  .album-content {
+    width: 100%; /* 한 줄에 하나씩 배열 */
+    margin: 5px 0;
+    flex-wrap: wrap;
+  }
 }
 .white-background {
     background-color: rgb(255, 255, 255);
@@ -219,7 +232,6 @@
 .album-content {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
 }
 .album-item {
 	position: relative;

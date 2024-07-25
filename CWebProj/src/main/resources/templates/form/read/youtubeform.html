@@ -2,11 +2,22 @@
 <html layout:decorate="~{layouts/layout_board}">
 <head>
     <meta charset="UTF-8">
-    <title>Video Upload</title>
+    <title>마이애미 아름다운 장로 교회</title>
     <link href="/assets/css/youtubeform.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+<style>
+        .col-title { width: 20%; }
+        .col-description { width: 60%; }
+        .col-date { width: 10%; }
+        .col-btn{width:10%}
+        .table-responsive{
+        	width:100%;
+        	overflow-x: auto;
+        	-webkit-overflow-scrolling: touch;
+        }
+    </style>
 <body>
 <div layout:fragment="content_main">
     <script>
@@ -240,21 +251,21 @@
     <!-- end of delete modal -->
 
     <div class="table-responsive">
-        <table class="table align-middle">
+        <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">예배 영상</th>
-                    <th scope="col">설명</th>
-                    <th scope="col">날짜</th>
-                    <th scope="col"></th>
+                    <th class="col-title" scope="col">예배 영상</th>
+                    <th class="col-description" scope="col">설명</th>
+                    <th class="col-date" scope="col">날짜</th>
+                    <th class="col-btn" scope="col"></th>
                 </tr>
             </thead>
             <tbody th:each="board, loop : ${page.content}">
                 <tr data-bs-toggle="collapse" th:data-bs-target="'#collapseExample' + ${board.id}" aria-expanded="false" th:aria-controls="'collapseExample' + ${board.id}">
-                    <td th:text="${board.title}"></td>
-                    <td th:text="${board.content}"></td>
-                    <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td>
+                    <td class="col-title" th:text="${board.title}"></td>
+                    <td class="col-description" th:text="${board.content}"></td>
+                    <td class="col-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="col-btn">
                         <div class="d-flex justify-content-end">
                             <button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}" class="btn btn-primary" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]])">수정</button>
                             <button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}" class="btn btn-secondary ms-2" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
