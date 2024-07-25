@@ -38,6 +38,10 @@ public class CUser {
 	private String provider;
 	private String providerId;
 	
+	//회원가입할때 이메일 나눠서 가입하게끔
+	private String emailLocalPart;
+    private String emailDomain;
+	
 	
 	//프로필을 위한 정보
 	private String cimage; // 프로필 사진

@@ -43,11 +43,20 @@ public class CUserController {
 	}
 
 	@PostMapping("/signup")
-	public String signup(CUser cuser) {
+	public String signup(CUser cuser, Model model) {
+		// 이메일 전체 주소 구성
+        String email = cuser.getEmailLocalPart() + "@" + cuser.getEmailDomain();
+        cuser.setUsername(email);
+
+        model.addAttribute("message", "회원가입 성공");
 		cuserService.create(cuser);
 		return "redirect:/signin";
 		
 	}
+	
+	
+	
+	
 
 	@GetMapping("/signin")
 	public String signin() {
