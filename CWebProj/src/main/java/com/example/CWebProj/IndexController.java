@@ -75,7 +75,9 @@ public class IndexController {
 	
 	@PostMapping("/nav/edit")
 	public String editNav(@RequestParam("navInput") String input) {
+		String[] parts = input.split("/");
 		
+		navService.addMenu(parts[0],parts[1]);
 		
 		
 		return "redirect:/nav/edit";
