@@ -16,4 +16,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     
     List<Board> findTop4ByMenuIdOrderByCreateDateDesc(Integer menuId);
     Optional<Board> findByMenuId(Integer menuId);
+    int countByMenuIdAndNoticeTrue(Integer menuId);
+    
+    Page<Board> findByMenuIdAndNoticeFalseAndTitleContainingOrderByCreateDateDesc(Integer menuId, String titleQuery, Pageable pageable);
+    Page<Board> findByMenuIdAndNoticeFalseAndAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(Integer menuId, String authorQuery, String cnameQuery, Pageable pageable);
+    Page<Board> findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(Integer menuId, String titleQuery, String authorQuery, String cnameQuery, Pageable pageable);
 }

@@ -2,7 +2,6 @@ package com.example.CWebProj.Board;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,6 +72,28 @@ public class BoardService {
         return boardRepository.findByMenuId(menuId, pageable);
     }
 	
+	//검색기능
+	public Page<Board> getResult(int page, Integer menuId, String searchType, String query) {
+
+ 		Pageable pageable = PageRequest.of(page, 9, Sort.by("createDate").descending());
+
+ 		if (searchType != null && query != null) {
+ 	        switch(searchType) {
+ 	            case "title":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrderByCreateDateDesc(menuId, query, pageable);
+ 	            case "author":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, pageable);
+ 	            case "title_author":
+ 	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, query, pageable);
+ 	            default:
+ 	            	return boardRepository.findByMenuId(menuId, pageable);
+ 	        }
+ 	    } else {
+ 	    	return boardRepository.findByMenuId(menuId, pageable);
+ 	    }
+ 	}
+	//검색기능
+	
 	public Board read(Integer menuId, Integer boardId) {
 		Optional<Board> o = boardRepository.findByMenuIdAndId(menuId, boardId);
 		return o.get();
@@ -128,6 +149,9 @@ public class BoardService {
 	}
 	public Board getform1(Integer menuId) {
 		return this.boardRepository.findByMenuId(menuId).get();
+	}
+	public int countNotice(Integer menuId) {
+		return this.boardRepository.countByMenuIdAndNoticeTrue(menuId);
 	}
 
 	public void incrementViewCount(Integer boardId) {

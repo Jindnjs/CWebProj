@@ -1,4 +1,13 @@
 @charset "UTF-8";
+.ibm-plex-sans-kr-regular {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
 
 .hero-slider {
     height: 450px;
@@ -6,12 +15,12 @@
     overflow: hidden;
     margin: 0 auto;
     position: relative;
-     z-index: 1;
-     padding:0;
+    z-index: 1;
+    padding:0;
 }
 .blue-background {
     background-color:#1c448e;
-    padding: 30px 0;
+    padding: 20px 0;
 }
 .white-background {
     background-color:rgb(255, 255, 255);
@@ -51,12 +60,6 @@
     flex: 1;
     position: relative; /* 하단 구분선을 위한 위치 설정 */
     box-sizing: border-box;
-}
-
-/* 제목과 리스트 사이의 구분선 스타일 */
-.section-item > h3 {
-    margin: 0 0 10px 0; /* 제목과 구분선 사이의 간격 조정 */
-    color: white; /* 제목 색상 설정 */
 }
 
 
@@ -145,30 +148,19 @@
 	.container-md{
 		height:400px;
 	}
-		
-/* Hover 상태에서 애니메이션 적용 */
-.rotate-vert-center:hover {
-    -webkit-animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	        animation: rotate-vert-center 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-}
-
-@keyframes rotate-vert-center {
-  0% {
-    -webkit-transform: rotateY(0);
-            transform: rotateY(0);
-  }
-  100% {
-    -webkit-transform: rotateY(360deg);
-            transform: rotateY(360deg);
-  }
-}
-.animate {
-    animation: bounce-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
 /* 반응형 조정 */
 @media (max-width: 768px) {
     .section-content {
         flex-direction: column;
+    }
+    .bg-img{
+    	display:0;
+    }
+    .hero-slider{
+    	width:100%;
+    }
+    .link-album{
+    	text-align: center;
     }
 }
 .white-background {
@@ -197,6 +189,15 @@
 .icon-item img {
     width: 50px; /* 아이콘의 너비 조정 */
     height: 50px; /* 아이콘의 높이 조정 */
+    -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.icon-item:hover img{
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
 }
 
 .icon-item span {
@@ -208,4 +209,55 @@
     display: flex;
     flex-direction: column; /* a 태그 내부에서 아이콘과 텍스트를 수직으로 나열 */
     align-items: center; /* 아이콘과 텍스트를 수평으로 중앙 정렬 */  
+}
+
+
+.album-section {
+   
+    background-color: #f0f0f0;
+}
+.album-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.album-item {
+	position: relative;
+	height:230px;
+     width: 300px;
+    margin: 5px;
+}
+.album-item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.album-item .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 하단에 정렬 */
+    align-items: flex-start; /* 왼쪽에 정렬 */   
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+    pointer-events: none; /* overlay가 이미지 클릭을 방해하지 않도록 함 */
+}
+.album-item:hover .image-overlay {
+    opacity: 1;
+}
+.album-item .image-date {
+    color: white;
+    font-size: 18px;
+}
+
+.image-title {
+    font-size: 18px;   
+    color: white;
 }

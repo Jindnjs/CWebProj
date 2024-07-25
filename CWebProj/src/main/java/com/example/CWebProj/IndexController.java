@@ -1,11 +1,17 @@
 package com.example.CWebProj;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.CWebProj.Board.BoardService;
+import com.example.CWebProj.DyNavi.MenuCateg;
+import com.example.CWebProj.DyNavi.NavService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	
 	private final BoardService boardService;
+	
+	private final NavService navService;
 	
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
@@ -25,6 +33,7 @@ public class IndexController {
 		model.addAttribute("news", this.boardService.indexBoard(8));
 		model.addAttribute("weekly", this.boardService.indexBoard(4));
 		model.addAttribute("free", this.boardService.indexBoard(9));
+		model.addAttribute("image", this.boardService.indexBoard(10));
 		return "index";
 	}
 	
@@ -35,5 +44,18 @@ public class IndexController {
 	@GetMapping("/index.html")
 	public String index2() {
 		return "index";
+	}
+
+	
+	@GetMapping("/nav/edit")
+	public String readNav(Model model) {
+		
+		List<MenuCateg> menuCategories = navService.getAllMenuCategories();
+        Map<Integer, List<MenuCateg>> groupedMenuCategories = menuCategories.stream()
+                .collect(Collectors.groupingBy(MenuCateg::getMenuRate));
+        model.addAttribute("groupedMenuCategories", groupedMenuCategories);
+        model.addAttribute("MenuCate", navService.getMenu(1));
+		model.addAttribute("sidebar", navService.getSidebar(1));
+		return "admin/nav";
 	}
 }

@@ -21,12 +21,23 @@
 		<input type="hidden" name="id" th:value="${board.id}">
 		<input type="hidden" name="createDate" th:value="${board.createDate}">
 		<input type="hidden" name="viewcount" th:value="${board.viewcount}">
-		<input type="hidden" name="notice" th:value="${board.notice}">
 		<input type="hidden" name="menuId" th:value="${board.menuId}">
 		<input type="hidden" th:each="comment:${board.commentList}" th:value="${board.commentList}">
 		<div class="row">
-			<div class="col-md-6 mb-4">
-				<input type="text" name="title" id="title" class="form-control mb-2" th:value="${board.title}">
+		<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+			     <div class="form-check" th:if="${board.menuId !=1 && board.menuId != 2}">
+			     		<label class="form-check-label" for="noticeTrue">공지</label>
+                        <input th:checked="${board.notice==true}" class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">
+                        
+                    </div>
+                    <div class="form-check"  th:if="${board.menuId !=1 && board.menuId != 2}">
+                    	<label class="form-check-label" for="noticeFalse">일반</label>
+                        <input th:checked="${board.notice==false}" class="form-check-input" type="checkbox" id="noticeFalse" name="notice" value="false" >
+     					
+                    </div>
+			</div>
+			<div class="col-md-12 mb-3">
+				<input type="text" name="title" id="title" class="form-control mb-3" th:value="${board.title}">
 				<div th:if="${board.author==null}">
 					 <input type="text" class="form-control mb-2" th:value="${board.cuser.cname}" readonly="readonly">
                 	 <input type="hidden" name="cuser" th:value="${board.cuser.cid}">
@@ -39,11 +50,12 @@
 			</div>
 			<div class="col-md-6 mb-4 d-flex justify-content-end align-items-end">
 			</div>
-			<div class="mb-4">
+			<div class="mb-2">
 				<textarea name="content" id="summernote" rows="10" th:text="${board.content}"></textarea>
 			</div>
 			<div class="d-flex justify-content-end mb-4">
-				<a th:href="@{/form2/{id}(id=${MenuCate.id})}" class="btn btn-primary me-2">취소</a>
+				<a th:if="${board.menuId==1 || board.menuId==2}" th:href="@{|/form1/${board.menuId}|}" class="btn btn-primary me-2">취소</a>
+				<a th:if="${board.menuId!=1 && board.menuId!=2}" th:href="@{/form2/{id}(id=${MenuCate.id})}" class="btn btn-primary me-2">취소</a>
 				<input type="submit" value="수정" class="btn btn-primary">
 			</div>
 		</div>
@@ -116,6 +128,19 @@
 			return isValid;
 		}
 
+      $('#noticeTrue, #noticeFalse').on('change', function() {
+  	    var isCheckedTrue = $('#noticeTrue').is(':checked');
+  	    var isCheckedFalse = $('#noticeFalse').is(':checked');
+
+  	    if (isCheckedTrue && isCheckedFalse) {
+  	        // If both are checked, uncheck the other one
+  	        if (this.id === 'noticeTrue') {
+  	            $('#noticeFalse').prop('checked', false);
+  	        } else {
+  	            $('#noticeTrue').prop('checked', false);
+  	        }
+  	    }
+  	});
 		// 입력 시 유효성 검사 및 스타일 변경
 		$('#title, #author').on('input', function() {
 			if ($(this).val().trim()) {

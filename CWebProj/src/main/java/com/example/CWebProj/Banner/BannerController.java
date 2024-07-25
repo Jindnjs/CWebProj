@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,21 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.CWebProj.DyNavi.NavService;
+
 @Controller
 @RequestMapping("/banner")
 public class BannerController {
 
     @Autowired
     private BannerService bannerService;
-
-    @Value("${cloud.aws.s3.endpoint}")
-    private String downpath;
+    
+    @Autowired
+    private NavService navService;
 
     @GetMapping("")
     public String banner(Model model) {
         model.addAttribute("banners", bannerService.readlist());
-        model.addAttribute("downpath", "https://" + downpath);
-        return "banner";
+        model.addAttribute("sidebar", navService.getSidebar(1));
+        return "admin/banner";
     }
 
     @PostMapping("/update/{id}")
