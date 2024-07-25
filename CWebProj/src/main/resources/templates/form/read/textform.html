@@ -37,6 +37,14 @@ text-align: center;
 *{
 font-family: "IBM Plex Sans KR", sans-serif;
 }
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+.table {
+    min-width: 900px; /* 필요에 따라 최소 너비를 조정하세요 */
+}
 </style>
 <h2 class="mb-3" th:text="${MenuCate.categoryName}"></h2>
 					    <div class="container mt-3">
@@ -71,8 +79,9 @@ font-family: "IBM Plex Sans KR", sans-serif;
 				        게시판-공지글은 class로 스타일이 지정이 안돼 inline으로 스타일 지정
 				                    
 				        ************************************************************
-				        ======================================================== -->					
-					    <table class="table ">
+				        ======================================================== -->
+				        <div class="table-container">					
+					    <table class="table">
 					        <thead>
 					        <tr>
 					            <th class="number-column">번호</th>
@@ -115,7 +124,7 @@ font-family: "IBM Plex Sans KR", sans-serif;
 						        </tr>     
 					        </tbody>
 				    	</table>
-				    	
+				    	</div>
 					    	<!-- =======================================================
 				            ************************************************************
 				                    

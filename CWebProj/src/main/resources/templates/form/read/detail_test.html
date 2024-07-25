@@ -27,14 +27,15 @@
 		.comment-profile {
 		    width: 40px;
 		    height: 40px;
-		    border-radius: 50%;
-		    margin-right: 10px;
+		    border-radius: 50%;  
 		    object-fit: cover; /* 이미지가 컨테이너에 맞게 조정되도록 합니다 */
 		}
 		.comment-content {
 		    flex-grow: 1;
-		     word-wrap: break-word;
+		    word-wrap: break-word;		    
+        	max-width: calc(90% - 70px);	    
 		}
+		
         .content-area {
             min-height: 300px;     
             border-bottom: 1px solid #dee2e6; 
@@ -75,8 +76,7 @@
         .border-bottom.mb-3 h3 {
             text-align: left; 
         }
-        @media (max-width: 768px) {
-		    }
+        
     </style>
     
     
@@ -171,7 +171,7 @@
                 <span th:text="${comment.author}" style="font-weight: bold; font-size:14px"></span>
                 <span th:text="${#temporals.format(comment.date, 'yyyy-MM-dd HH:mm')}"></span>
                 </div>
-                <div style="width:750px">
+                <div style="word-wrap: break-word;">
                 <span th:text="${comment.content}"></span>
                 </div>
                 </div>

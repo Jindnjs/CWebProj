@@ -1,12 +1,11 @@
 @charset "UTF-8";
 
-table {
-	table-layout: fixed;
-	width: 100%;
-	}
+.table {
+            min-width: 800px; /* 테이블의 최소 너비를 설정하여 스크롤이 나타나게 함 */
+        }
 	th, td {
-	width: 33.33%;
-    text-align: left;
+	width: 25%;
+    text-align: center;
     padding: 8px;
     }
     th,td:hover{
