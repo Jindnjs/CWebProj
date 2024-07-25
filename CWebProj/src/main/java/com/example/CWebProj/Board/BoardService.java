@@ -88,9 +88,9 @@ public class BoardService {
 	            case "title":
 	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrderByCreateDateDesc(menuId, query, pageable);
 	            case "author":
-	            	return boardRepository.findByMenuIdAndNoticeFalseAndAuthorContainingOrderByCreateDateDesc(menuId, query, pageable);
+	            	return boardRepository.findByMenuIdAndNoticeFalseAndAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, pageable);
 	            case "title_author":
-	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrderByCreateDateDesc(menuId, query, query, pageable);
+	            	return boardRepository.findByMenuIdAndNoticeFalseAndTitleContainingOrAuthorContainingOrCuserCnameContainingOrderByCreateDateDesc(menuId, query, query, query, pageable);
 	            default:
 	            	return boardRepository.findByMenuId(menuId, pageable);
 	        }
