@@ -1,18 +1,146 @@
-<html layout:decorate="~{layouts/layout_board}">
-
-    
+<!doctype html >
+<html lang="ko">
 <head>
+	
+	<title>마이애미 아름다운 장로 교회</title>
+	
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
+    <!-- Favicons -->
+    <link href="/images/8.png" rel="icon">
+    <link href="/images/8.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS Files -->
+    <link href="/assets/css/variables.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+   
+	<link href="/assets/css/board_style.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/banner.css" rel="stylesheet">
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
+   	<!-- =======================================================
+	* Template Name: ZenBlog
+	* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+	* Updated: Mar 17 2024 with Bootstrap v5.3.3
+	* Author: BootstrapMade.com
+	* License: https:///bootstrapmade.com/license/
+	======================================================== -->
+	<style>
+	*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
+    .sidebar {
+      margin-left: 100px;
+      min-height: auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-left: 1px solid #dee2e6;
+      border-right: 1px solid #dee2e6;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+      width:230px;
+    }
+    .sidebar .sidebar-header {
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: #6c757d;
+      color: white;
+      text-align: center;
+    }
+    .sidebar .list-group-item {
+      border: 1px solid #dee2e6;
+      border-width: 0 1px 1px 1px;
+      padding: 13px 15px;
+    }
+    
+    /* 마우스 올렸을 때 색 변경 */
+    .sidebar .list-group-item:hover {
+      background-color: #e9ecef;
+    }
+    .active-category {
+    background-color: #dee2e6; 
+    font-weight: bold;
+	}
+	
+  </style>
+  
+	<!-- =======================================================
+    ************************************************************
+                    
+    화면 작아졌을 때 css 
+                
+    ************************************************************
+    ======================================================== -->
+	<style>
+	@media (max-width: 1000px) {
+        .container-fluid {
+            flex-direction: column;
+            
+        }
+        .sidebar {
+            margin-left: 0;
+            width: 100%;
+            height: auto;
+            border: none;
+        }
 
+        .main-content {
+            order: 1; 
+            padding: 10px;
+            width: 100%;
+        }
+
+        .breadcrumb {
+            margin-top: 20px;
+        }
+    }
+	</style>
 </head>
+<body>
 
-<div layout:fragment="content_main">
-<section>
+	
+	<!-- 헤더&네비게이션 메뉴 -->
+ 	<div th:replace="~{fragment/header::header}"></div>
+ 	
+
+	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+	<main style="margin-top:90px">
+		<section>
+			<div class="container-fluid " >
+				<div class="row" >
+					<!-- 사이드바 -->
+					 <div class="col-md-2 sidebar"> 
+					<nav>
+	<div  class="sidebar-header">관리자 메뉴</div>
+	
+	  	<a href="/banner" class="list-group-item list-group-item-action">배너 수정</a>
+	  	<a href="/nav/edit" class="list-group-item list-group-item-action">네비 수정</a>
+	  	<a href="/autho" class="list-group-item list-group-item-action">권한 체크</a>
+</nav>
+					</div>
+					
+					<div class="col-md-8 main-content">
+						<div class="container mt-5">
+							<section>
 <h2>배너 수정 페이지</h2>
 <table class="table">
     <thead class="table-dark">
@@ -46,8 +174,26 @@
 </section>
 
 <button onclick="createBanner()">추가</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- footer메뉴 -->
+   	<div th:replace="~{fragment/footer::footer}"></div>
+   	
+   	
+	<!-- Vendor JS Files -->
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/assets/vendor/aos/aos.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
 
-<script>
+    <!-- Template Main JS File -->
+    <script src="/assets/js/main.js"></script>
+    <script>
     function showForm(button) {
         var bannerId = button.getAttribute('data-id');
         var form = document.getElementById('form-' + bannerId);
@@ -101,6 +247,6 @@
           });
     }
 </script>
-
-</div>
+	
+</body>
 </html>
