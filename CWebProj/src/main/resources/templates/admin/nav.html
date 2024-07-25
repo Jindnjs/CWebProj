@@ -1,8 +1,39 @@
-<!DOCTYPE html>
-<html layout:decorate="~{layouts/layout_board}">
-
+<!doctype html >
+<html lang="ko">
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+	
+	<title>마이애미 아름다운 장로 교회</title>
+	
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="/images/8.png" rel="icon">
+    <link href="/images/8.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS Files -->
+    <link href="/assets/css/variables.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+   
+	<link href="/assets/css/board_style.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
     .dragging {
       opacity: 0.5;
@@ -13,12 +44,112 @@
       height: 40px;
     }
   </style>
+
+   	<!-- =======================================================
+	* Template Name: ZenBlog
+	* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+	* Updated: Mar 17 2024 with Bootstrap v5.3.3
+	* Author: BootstrapMade.com
+	* License: https:///bootstrapmade.com/license/
+	======================================================== -->
+	<style>
+	*{
+	 font-family: "IBM Plex Sans KR", sans-serif;
+}
+    .sidebar {
+      margin-left: 100px;
+      min-height: auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-left: 1px solid #dee2e6;
+      border-right: 1px solid #dee2e6;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+      width:230px;
+    }
+    .sidebar .sidebar-header {
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: #6c757d;
+      color: white;
+      text-align: center;
+    }
+    .sidebar .list-group-item {
+      border: 1px solid #dee2e6;
+      border-width: 0 1px 1px 1px;
+      padding: 13px 15px;
+    }
+    
+    /* 마우스 올렸을 때 색 변경 */
+    .sidebar .list-group-item:hover {
+      background-color: #e9ecef;
+    }
+    .active-category {
+    background-color: #dee2e6; 
+    font-weight: bold;
+	}
+	
+  </style>
+  
+	<!-- =======================================================
+    ************************************************************
+                    
+    화면 작아졌을 때 css 
+                
+    ************************************************************
+    ======================================================== -->
+	<style>
+	@media (max-width: 1000px) {
+        .container-fluid {
+            flex-direction: column;
+            
+        }
+        .sidebar {
+            margin-left: 0;
+            width: 100%;
+            height: auto;
+            border: none;
+        }
+
+        .main-content {
+            order: 1; 
+            padding: 10px;
+            width: 100%;
+        }
+
+        .breadcrumb {
+            margin-top: 20px;
+        }
+    }
+	</style>
 </head>
+<body>
 
+	
+	<!-- 헤더&네비게이션 메뉴 -->
+ 	<div th:replace="~{fragment/header::header}"></div>
+ 	
 
-    <div layout:fragment="content_main">
-
-<ul class="nav nav-tabs" id="menu" role="tablist">
+	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+	<main style="margin-top:90px">
+		<section>
+			<div class="container-fluid " >
+				<div class="row" >
+					<!-- 사이드바 -->
+					 <div class="col-md-2 sidebar"> 
+					<nav>
+	<div  class="sidebar-header">관리자 메뉴</div>
+	
+	  	<a href="/banner" class="list-group-item list-group-item-action">배너 수정</a>
+	  	<a href="/nav/edit" class="list-group-item list-group-item-action">네비 수정</a>
+	  	<a href="/autho" class="list-group-item list-group-item-action">권한 체크</a>
+</nav>
+					</div>
+					
+					<div class="col-md-8 main-content">
+						<div class="container mt-5">
+							<ul class="nav nav-tabs" id="menu" role="tablist">
 	<li class="nav-item" role="presentation" draggable="true"  th:each="groupMenu, iterStat : ${groupedMenuCategories}">
 		<button class="nav-link" th:classappend="${iterStat.index == 0} ? 'active'" 
             th:id="${groupMenu.value[0].menuName + '-tab'}"
@@ -54,130 +185,25 @@
 	    
 	</div>
 </div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- footer메뉴 -->
+   	<div th:replace="~{fragment/footer::footer}"></div>
+   	
+   	
+	<!-- Vendor JS Files -->
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/assets/vendor/aos/aos.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
 
-
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-	  const tabs = document.querySelectorAll('.nav-item[draggable="true"]');
-	  const tabLists = document.querySelectorAll('.list-group-item[draggable="true"]');
-	  let draggedItem = null;
-	  
-	  function handleDragStart(e) {
-	    draggedItem = this;
-	    setTimeout(() => {
-	      this.classList.add('dragging');
-	    }, 0);
-	  }
-
-	  function handleDragEnd() {
-	    setTimeout(() => {
-	      draggedItem = null;
-	      this.classList.remove('dragging');
-	      saveTabOrder();
-	      saveItemListOrder();
-	    }, 0);
-	  }
-
-	  function handleDragOver(e) {
-	    e.preventDefault();
-	  }
-
-	  function handleDragEnter(e) {
-	    e.preventDefault();
-	    if (this !== draggedItem) {
-	      this.classList.add('nav-item-placeholder');
-	    }
-	  }
-
-	  function handleDragLeave() {
-	    this.classList.remove('nav-item-placeholder');
-	  }
-
-	  function handleDrop() {
-	    this.classList.remove('nav-item-placeholder');
-	    if (this !== draggedItem) {
-	      const list = draggedItem.parentNode;
-	      const nodes = Array.from(list.children);
-	      const draggedIndex = nodes.indexOf(draggedItem);
-	      const targetIndex = nodes.indexOf(this);
-	      if (draggedIndex < targetIndex) {
-	        list.insertBefore(draggedItem, this.nextSibling);
-	      } else {
-	        list.insertBefore(draggedItem, this);
-	      }
-	      updateTabContentOrder();
-	    }
-	  }
-
-	  tabs.forEach(tab => {
-	    tab.addEventListener('dragstart', handleDragStart);
-	    tab.addEventListener('dragend', handleDragEnd);
-	    tab.addEventListener('dragover', handleDragOver);
-	    tab.addEventListener('dragenter', handleDragEnter);
-	    tab.addEventListener('dragleave', handleDragLeave);
-	    tab.addEventListener('drop', handleDrop);
-	  });
-
-	  tabLists.forEach(item => {
-	    item.addEventListener('dragstart', handleDragStart);
-	    item.addEventListener('dragend', handleDragEnd);
-	    item.addEventListener('dragover', handleDragOver);
-	    item.addEventListener('dragenter', handleDragEnter);
-	    item.addEventListener('dragleave', handleDragLeave);
-	    item.addEventListener('drop', handleDrop);
-	  });
-
-	  // Ensure Bootstrap tabs function correctly
-	  document.querySelectorAll('.nav-link').forEach(function(link) {
-	    link.addEventListener('click', function(event) {
-	      event.preventDefault();
-	      let tabId = this.getAttribute('data-bs-target');
-	      if (!tabId) return; // 탭 ID가 없으면 종료
-	      let tabPane = document.querySelector(tabId);
-	      if (!tabPane) return; // 탭 패널이 없으면 종료
-	      let tab = new bootstrap.Tab(tabPane);
-	      tab.show();
-	    });
-	  });
-
-	  function updateTabContentOrder() {
-	    const tabList = document.querySelector('.nav-tabs');
-	    if (!tabList) return; // 탭 리스트가 없으면 종료
-
-	    const tabOrder = Array.from(tabList.children).map(tab => {
-	      const button = tab.querySelector('.nav-link');
-	      return button ? button.getAttribute('data-bs-target') : null;
-	    }).filter(Boolean);
-
-	    tabOrder.forEach((tabPaneId, index) => {
-	      const tabPane = document.querySelector(tabPaneId);
-	      if (tabPane && tabPane.parentNode) {
-	        tabPane.parentNode.appendChild(tabPane);
-	      }
-	    });
-	  }
-
-	  function saveTabOrder() {
-	    const tabOrder = Array.from(document.querySelectorAll('.nav-tabs .nav-item')).map(tab => {
-	      const button = tab.querySelector('.nav-link');
-	      return button ? button.textContent : null;
-	    }).filter(Boolean);
-	    console.log('메뉴:', tabOrder);
-	    // 메뉴 순서 출
-	  }
-
-	  function saveItemListOrder() {
-	    const tabPanes = document.querySelectorAll('.tab-pane');
-	    tabPanes.forEach(tabPane => {
-	      const items = tabPane.querySelectorAll('.list-group-item[draggable="true"]');
-	      const itemOrder = Array.from(items).map(item => item.textContent.trim());
-	      console.log(`Order for ${tabPane.id}:`, itemOrder);
-	      // 카테고리 순서 출력
-	    });
-	  }
-	});
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
-</div>
+    <!-- Template Main JS File -->
+    <script src="/assets/js/main.js"></script>
+	
+</body>
 </html>
