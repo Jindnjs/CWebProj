@@ -144,41 +144,23 @@ public class CUserController {
 
       return "user/userdetail_manager";
    }
-      
-   //권한페이지에서 프로필 접속하기
-   @GetMapping("/profile/{username}")
-   public String profile_get(Model model, @PathVariable("username") String username) {
-       model.addAttribute("MenuCate", navService.getMenu(1));
-       model.addAttribute("sidebar", navService.getSidebar(1));
-       model.addAttribute("cuser", cuserService.getUSer(username));
-       
-       return "form/read/profile";
-   }
    
    
-   // 관리자 유저 정보 업데이트
-   @PostMapping("/read/profile")
-   public String profile_post(@ModelAttribute CUser cuser) {
-      cuserService.update(cuser);
-      return "redirect:/profile";
-   }
-   
-
-   // 관리자 유저 정보 업데이트
-   @PostMapping("/admin/update")
-   public String update(@ModelAttribute CUser cuser) {
-      cuserService.update(cuser);
-      return "redirect:/autho/adminlist";
-   }
-   
-   // 매니저 유저 정보 업데이트
-   @PostMapping("/manager/update")
-   public String update_manager(@ModelAttribute CUser cuser) {
-      cuserService.update(cuser);
-      return "redirect:/autho/managerlist";
-   }
+	/*
+	 * // 관리자 유저 정보 업데이트
+	 * 
+	 * @PostMapping("/admin/update") public String update(@ModelAttribute CUser
+	 * cuser) { cuserService.update(cuser); return "redirect:/autho/adminlist"; }
+	 * 
+	 * // 매니저 유저 정보 업데이트
+	 * 
+	 * @PostMapping("/manager/update") public String update_manager(@ModelAttribute
+	 * CUser cuser) { cuserService.update(cuser); return
+	 * "redirect:/autho/managerlist"; }
+	 */
 
    
+   //본인 프로필 접속
    @GetMapping("/profile")
    public String profile(Model model) {
       model.addAttribute("MenuCate", navService.getMenu(1));
@@ -199,5 +181,31 @@ public class CUserController {
       
       return "redirect:/profile";
    }
+   
+   
+   // 권한 페이지에서 프로필 접속하기
+   @GetMapping("/profile/{username}")
+   @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER') or #username == authentication.name")
+   public String profile_get(Model model, @PathVariable("username") String username) {
+       model.addAttribute("MenuCate", navService.getMenu(1));
+       model.addAttribute("sidebar", navService.getSidebar(1));
+       model.addAttribute("cuser", cuserService.getUSer(username));
+       
+       return "form/read/profile_manage";
+   }
+   
+   
+   	// 프로필 정보 업데이트
+	@PostMapping("/profile/update_manage/{username}")
+	public String updateProfilemanage(Model model, @ModelAttribute CUser cuser, @PathVariable("username") String username,
+			@RequestParam("newPassword") String newPassword,
+			@RequestParam("inputback") MultipartFile back,
+			@RequestParam("inputprofile") MultipartFile profile) throws IOException {
+
+	    model.addAttribute("cuser", cuserService.getUSer(username));
+		cuserService.profileupdate(cuser, newPassword, back, profile);
+
+		return "redirect:/profile/{username}";
+	}
    
 }
