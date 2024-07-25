@@ -41,8 +41,7 @@
    <div class="content">
       <form action="/profile/update" method="post"
          enctype="multipart/form-data">
-         <input type="hidden" name="${_csrf.parameterName}"
-            value="${_csrf.token}" />
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
          <div class="d-flex align-items-center">
             <div class="col-60 col-xl-12">
                <div class="card mb-5">
@@ -309,8 +308,7 @@
                               aria-label="Close"></button>
                         </div>
                         <div class="modal-footer">
-                           <button type="reset" class="btn btn-secondary"
-                              data-bs-dismiss="modal">취소하기</button>
+                           <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
                            <button type="submit" class="btn btn-primary">저장하기</button>
                         </div>
                      </div>
