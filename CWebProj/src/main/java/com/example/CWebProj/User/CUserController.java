@@ -69,18 +69,6 @@ public class CUserController {
       return "authentication/resetpw";
    }
 
-   
-//   @PostMapping("/findpw")
-//   public String findpw(Model model, @RequestParam("username") String username,
-//                        @Valid CUserForm cuserForm, BindingResult bindingResult, Principal principal) {
-//       CUser cuser = this.cuserService.findpw(username);
-//
-//       if (bindingResult.hasErrors()) {
-//           model.addAttribute("cuser", cuser);
-//           return "user/resetpw";
-//       }
-//       return "redirect:/signin"; 
-//   }
    //UUID 생성 및 이메일 전송
    @PostMapping("/findpw")
    public String sendResetPassword(
@@ -185,7 +173,7 @@ public class CUserController {
       model.addAttribute("MenuCate", navService.getMenu(1));
       model.addAttribute("sidebar", navService.getSidebar(1));
       model.addAttribute("cuser", cuserService.authen());
-      return "readform/profile";
+      return "form/read/profile";
    }
 
    
@@ -201,23 +189,4 @@ public class CUserController {
       return "redirect:/profile";
    }
    
-   
-   
-   //구글 로그인
-   @Value("${spring.security.oauth2.client.registration.google.client-id}")
-   private String googleClientId;
-
-   @GetMapping("/glogin")
-   public ResponseEntity<?> getGoogleAuthUrl(HttpServletRequest request) throws Exception {
-
-      String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
-            + "&redirect_uri=http://localhost:8080/login/oauth2/code/google&response_type=code&scope=email%20profile%20openid&access_type=offline";
-
-      HttpHeaders headers = new HttpHeaders();
-      headers.setLocation(URI.create(reqUrl));
-
-      
-      return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
-   }
-
 }
