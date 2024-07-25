@@ -75,7 +75,7 @@ public class BoardService {
 	//검색기능
 	public Page<Board> getResult(int page, Integer menuId, String searchType, String query) {
 
- 		Pageable pageable = PageRequest.of(page, 9, Sort.by("createDate").descending());
+		Pageable pageable = PageRequest.of(page, 13-this.getNotices(menuId).size());
 
  		if (searchType != null && query != null) {
  	        switch(searchType) {
