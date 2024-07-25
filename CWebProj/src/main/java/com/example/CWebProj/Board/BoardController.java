@@ -200,6 +200,28 @@ public class BoardController {
 		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
 	
+	//search
+	
+	@GetMapping(value = "/form2/{menuId}/search")
+ 	public String search(Model model, @PathVariable("menuId") Integer menuId,
+ 	        @RequestParam(value="page", defaultValue = "0") int page,
+ 	        @RequestParam("searchType") String searchType,
+ 	        @RequestParam("query") String query) {
+ 	    Page<Board> result = boardService.getResult(page, menuId, searchType, query);
+ 	    List<Board> notices = boardService.getNotices(menuId);
+
+ 	    model.addAttribute("MenuCate", navService.getMenu(menuId));
+ 	    model.addAttribute("sidebar", navService.getSidebar(menuId));
+
+ 	    model.addAttribute("notices", notices);
+ 	    model.addAttribute("paging", result);
+ 	    model.addAttribute("searchType", searchType);
+ 	    model.addAttribute("query", query);
+
+ 	    return "form/read/textform";
+ 	}
+
+
 	
 	//form3
 	@GetMapping(value = "/form3/{menuId}")
@@ -333,7 +355,8 @@ public class BoardController {
     @ResponseBody
     public String form4update(@RequestParam("boardId") Integer boardId, 
     		@RequestParam("title") String title,
-    		@RequestParam("mediaLink") String mediaLink) throws IOException {
+    		@RequestParam("mediaLink") String mediaLink,
+    		@RequestParam("content") String content) throws IOException {
 		
 		if(title.equals("")) {
 	    	return "제목을 지어주세요.";
@@ -350,6 +373,7 @@ public class BoardController {
         Board board = boardService.getBoard(boardId);
         board.setTitle(title);
         board.setMediaLink(mediaLink);
+        board.setContent(content);
         boardService.updateboard(board);
         return "success";
     }

@@ -3,6 +3,9 @@ package com.example.CWebProj.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,12 +43,14 @@ public class CUser {
 	
 	
 	//프로필을 위한 정보
-	private String cimage; // 프로필 사진
+	private String cbackimage; //배경사진
+	private String cprofileimage; // 프로필 사진
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate cbirth; // 생년월일
 	private String cphone; // 전화번호
 	private String caddr; // 주소
 	private String cinfo; //자기소개
-	private String cemail; //이메일 주소
 	
 	private String cjob; //직업명
 	private String caffiliation; //현재소속

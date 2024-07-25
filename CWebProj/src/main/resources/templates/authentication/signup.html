@@ -84,7 +84,7 @@
     <main class="main" id="top">
       <div class="container">
         <div class="row flex-center min-vh-100 py-5">
-          <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3"><a class="d-flex flex-center text-decoration-none mb-4" href="/index">
+          <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3"><a class="d-flex flex-center text-decoration-none mb-4" href="/">
               <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="images/7.png" alt="phoenix" width="450" title="메인화면으로 돌아가기"/>
               </div>
             </a>
@@ -93,8 +93,7 @@
               <div class="divider-content-center"></div>
             </div>
             <form action="/signup" method="post" onsubmit="return validateForm()">
-
-		 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+ 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
               <div class="mb-3 text-start">
                 <label class="form-label" for="name">이름</label>
                 <input class="form-control" name="cname" id="name" type="text" placeholder="Name" required/>

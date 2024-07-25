@@ -39,7 +39,7 @@
 <div layout:fragment="content_main">
    <h2>프로필</h2>
    <div class="content">
-      <form action="/profile/update" method="post"
+      <form th:action="@{|/profile/update_manage/${cuser.username}|}" method="post"
          enctype="multipart/form-data">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
          <div class="d-flex align-items-center">

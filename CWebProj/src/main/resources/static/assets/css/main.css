@@ -933,6 +933,7 @@ section {
   }
 }
 
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -998,51 +999,6 @@ section {
   width: 50px;
 }
 
-.footer .footer-links li {
-  margin-bottom: 10px;
-}
-
-.footer .footer-links li a {
-  color: rgba(var(--color-white-rgb), 0.7);
-}
-
-.footer .footer-links li a:hover,
-.footer .footer-links li a:focus {
-  color: rgba(var(--color-white-rgb), 1);
-}
-
-.footer .footer-legal {
-  background: var(--color-black);
-  padding: 40px 0;
-}
-
-.footer .footer-legal .social-links a {
-  text-align: center;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(var(--color-white-rgb), 0.09);
-  border-radius: 50%;
-  color: var(--color-white);
-  line-height: 40px;
-}
-
-.footer .footer-legal .social-links a:hover {
-  background-color: rgba(var(--color-white-rgb), 0.2);
-}
-
-.footer .copyright strong {
-  font-weight: 400;
-}
-
-.footer .credits {
-  padding-top: 6px;
-  font-size: 13px;
-}
-
-.footer .credits a {
-  color: var(--color-white);
-}
 
 /**
 * Template Name: Medilab
@@ -1289,8 +1245,11 @@ a:hover {
  	.header .topbar .social-links a {
     	font-size: 6px; 
     	margin: 0 1spx; 
-    	display: flex !important;
+
 	}
+	 .header .topbar .social-links {
+         margin-left: auto;
+     }
 }
 
 .header .topbar .contact-info i a {
