@@ -1509,6 +1509,7 @@ a:hover {
     overflow-y: auto;
     transition: 0.3s;
     z-index: 9998;
+    height:50%;
   }
 
   .navmenu a,

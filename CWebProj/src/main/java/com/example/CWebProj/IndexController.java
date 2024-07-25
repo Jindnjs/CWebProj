@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.CWebProj.Board.BoardService;
 import com.example.CWebProj.DyNavi.MenuCateg;
 import com.example.CWebProj.DyNavi.NavService;
+import com.example.CWebProj.Mail.SendMailService;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ public class IndexController {
 	private final BoardService boardService;
 	
 	private final NavService navService;
+	
+	private final SendMailService sendMailService;
 	
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
@@ -57,5 +63,13 @@ public class IndexController {
         model.addAttribute("MenuCate", navService.getMenu(1));
 		model.addAttribute("sidebar", navService.getSidebar(1));
 		return "admin/nav";
+	}
+	
+	//메인 contact
+	@PostMapping("/contact")
+	public String contact(@RequestParam("name") String name,@RequestParam("email") String email,
+						  @RequestParam("subject") String subject,@RequestParam("message") String message) throws MessagingException {
+		this.sendMailService.contactEmail(name, email, subject, message);
+		return "redirect:/";
 	}
 }

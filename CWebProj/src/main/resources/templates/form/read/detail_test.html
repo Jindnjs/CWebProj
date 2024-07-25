@@ -16,7 +16,7 @@
             font-size: 13px; 
             display: flex;
     		align-items: center;
-    		justify-content: space-between; /* 수정: 댓글 내용과 버튼 영역을 양 끝으로 정렬 */
+    		align-items:flex-start;
         }
         .comment-item:last-child {
             border-bottom: 1px solid #dee2e6;
@@ -29,6 +29,7 @@
 		    height: 40px;
 		    border-radius: 50%;  
 		    object-fit: cover; /* 이미지가 컨테이너에 맞게 조정되도록 합니다 */
+		    margin-right:10px;
 		}
 		.comment-content {
 		    flex-grow: 1;
@@ -155,8 +156,7 @@
                 </div>
             </form>
         </div>
-    
-        
+   
         <!-- 댓글 목록 -->
         <div class="border-bottom mt-4">
             <h7 class="mt-4 mb-3" th:text="|${#lists.size(board.commentList)}개의 댓글이 있습니다.|"></h7>
@@ -164,7 +164,9 @@
         <ul class="comment-list">
             <li th:each="comment : ${commentList}" class="comment-item">
             
-             <img class="comment-profile" src="https://icnm.co.kr/common/img/default_profile.png" alt="Profile Picture">
+             
+             <img th:if="${comment.cuser != null and comment.cuser.cprofileimage != null}" class="comment-profile" th:src="|${downpath}/${comment.cuser.cprofileimage}|" alt="Profile Picture">
+             <img th:if="${comment.cuser == null || comment.cuser.cprofileimage == null}" class="comment-profile" src="https://icnm.co.kr/common/img/default_profile.png" alt="Profile Picture">
              
             <div class="comment-content">
             <div class="comment-author-date">

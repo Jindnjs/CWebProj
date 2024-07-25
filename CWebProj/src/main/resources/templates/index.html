@@ -128,7 +128,7 @@ function initMap() {
                             </a>
                             	<span class="news-date" th:text="${#temporals.format(news.createDate, 'yyyy-MM-dd')}"></span>
                             </li>
-                        	<li th:if="${#lists.isEmpty(news)}">현재 게시물이 없습니다</li>
+                        	<li th:if="${#lists.isEmpty(news)}" style="color:white;">현재 게시물이 없습니다</li>
                         </ul>
                     </div>
                     <div class="section-item">
@@ -142,7 +142,7 @@ function initMap() {
                             </a>
                             	<span class="news-date" th:text="${#temporals.format(weekly.createDate, 'yyyy-MM-dd')}"></span>
                             </li>
-                        	<li th:if="${#lists.isEmpty(weekly)}">현재 게시물이 없습니다</li>
+                        	<li th:if="${#lists.isEmpty(weekly)}" style="color:white;">현재 게시물이 없습니다</li>
                         </ul>
                     </div>
                     <div class="section-item">
@@ -156,7 +156,7 @@ function initMap() {
                             </a>
                             	<span class="news-date" th:text="${#temporals.format(free.createDate, 'yyyy-MM-dd')}"></span>
                             </li>
-                        	<li th:if="${#lists.isEmpty(free)}">현재 게시물이 없습니다</li>
+                        	<li th:if="${#lists.isEmpty(free)}" style="color:white;">현재 게시물이 없습니다</li>
                         </ul>
                     </div>
                 </div>
@@ -178,7 +178,7 @@ function initMap() {
             	<h3 style="margin-left:13px"><strong>교회 앨범</strong></h3>
             </a>
             <div class="album-content">
-                <div class="album-item" th:each="image : ${image}">
+                <div class="album-item" data-aos="fade-up" th:each="image : ${image}">
                 <a href="/form3/10">
                     <img th:src="|${downpath}/${image.mediaLink}|" alt="앨범 이미지">
                     <div class="image-overlay">
@@ -211,31 +211,29 @@ function initMap() {
                             </a>
                             <a href="/form1/3" class="stretched-link">
                             	<h4>10201 Bahia Dr, Miami, FL 33189</h4>
-							    <div id="map" style="height: 250px; width: 100%;">	</div>
+							    <div id="map" style="height: 270px; width: 100%;">	</div>
                             </a>
                         </div>
                     </div>
                      <div class="col-lg-6">
-			            <form action="forms/contact.php" method="post" class="php-email-form">
+			            <form action="/contact" method="post" >
+			            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			              <div class="row gy-4">
 			              <h3 style="color:#1977CC"><strong>contact</strong></h3>
 			                <div class="col-md-6">
-				                 <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+				                 <input type="text" name="name" class="form-control" placeholder="Your Name" required>
 				            </div>
 				            <div class="col-md-6 ">
-				                 <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+				                 <input type="email" class="form-control" name="email" placeholder="Your Email" required>
 				            </div>
 				            <div class="col-md-12">
-				                 <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+				                 <input type="text" class="form-control" name="subject" placeholder="Subject" required>
 				            </div>
 				            <div class="col-md-12">
-				                 <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+				                 <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
 				            </div>
-				            <div class="col-md-12 text-center">
-				            <div class="loading">Loading</div>
-				            <div class="error-message"></div>
-				            <div class="sent-message">Your message has been sent. Thank you!</div>
-								<button type="submit">Send Message</button>
+				            <div class="col-md-12 text-center">				         
+								<button class="btn btn-primary" type="submit">Send Message</button>
 			                </div>
 			              </div>
 			            </form>

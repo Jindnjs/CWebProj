@@ -95,16 +95,16 @@ font-family: "IBM Plex Sans KR", sans-serif;
 
 						         <tr th:each="board : ${notices}">						    
 
-						            <td class="table-row" Style="background-color:#DCDCDC">공지</td>
-						            <td Style="background-color:#DCDCDC; cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
+						            <td class="table-row" Style="background-color:#ABABAB">공지</td>
+						            <td Style="background-color:#ABABAB; cursor: pointer;" th:onclick="'redirectToDetail(' + ${board.id} + ', ' + ${MenuCate.id} + ')'">
 						            	<a class="title-link" th:href="@{'' + ${MenuCate.id} + '/detail/' + ${board.id}}" th:text="${board.title}"></a>  
 						            	<span th:if="${board.commentList.size() > 0}">(<span th:text="${board.commentList.size()}"></span>)</span>
 						            	</td>
-						            <td class="table-row" Style="background-color:#DCDCDC" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-						            <td class="table-row" Style="background-color:#DCDCDC">
+						            <td class="table-row" Style="background-color:#ABABAB" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+						            <td class="table-row" Style="background-color:#ABABAB">
 						            	<span class="author" th:if="${board.cuser == null}" th:text="${board.author}"></span>
             							<span class="author" th:unless="${board.cuser == null}" th:text="${board.cuser.cname}"></span></td>
-						            <td class="table-row" Style="background-color:#DCDCDC" th:text="${board.viewcount}"></td>
+						            <td class="table-row" Style="background-color:#ABABAB" th:text="${board.viewcount}"></td>
 						        </tr>
 
 						        <tr th:each="board,loop : ${paging}"  class="normal-row">						    

@@ -56,4 +56,19 @@ public class SendMailService {
 		authenKeyValService.create(uuid, email, validTime);
 		
 	}
+	
+	//메인 contact 
+	@Transactional
+	public void contactEmail(String name,String email,String subject, String message) throws MessagingException {
+		MimeMessage contact = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(contact, true, "utf-8");
+		
+		String content="송신 이메일 주소 : "+email+"<br>"+"내용 : "+message;
+		helper.setFrom("areumdownchurch1@gmail.com");
+		helper.setTo(email);//목사님 이메일로 
+		helper.setSubject(name+"님께서 매일을 보냈습니다   "+"제목 : "+subject); //메일 제목
+		helper.setText(content, true);//메일 내용 
+		
+		mailSender.send(contact);
+	}
 }
