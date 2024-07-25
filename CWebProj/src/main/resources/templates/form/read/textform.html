@@ -124,7 +124,7 @@ font-family: "IBM Plex Sans KR", sans-serif;
 				            ************************************************************
 				            ======================================================== -->
 						<div class="d-flex justify-content-end mt-3">
-						    <form method="get" class="d-flex" style="gap: 0.1rem;" th:onsubmit="event.preventDefault(); setSearch([[${MenuCate.boardLink}]], [[${MenuCate.id}]], event);">
+						    <form method="get" class="d-flex" style="gap: 0.1rem;" th:onsubmit="setSearch(event);" th:data-menu-id="${MenuCate.id}">
 							    <select name="searchType" id="searchType" class="form-select form-select-sm" aria-label="Search Type" style="width: 120px;">
 							        <option value="title" th:selected="${searchType == 'title'}">제목</option>
 							        <option value="author" th:selected="${searchType == 'author'}">작성자</option>
@@ -187,13 +187,36 @@ font-family: "IBM Plex Sans KR", sans-serif;
             });
         });
         
-        function setSearch(boardLink, menuId, event) {
+        function setSearch(event) {
+            event.preventDefault(); 
             var searchType = document.getElementById('searchType').value;
             var query = document.getElementById('query').value;
             var form = event.target;
-            form.action = boardLink + "/"+ menuId + "/search?searchType=" + searchType + "&query=" + query;
+            var menuId = form.getAttribute('data-menu-id');
+            var boardLink = form.closest('form').action;
+            
+            var searchUrl = `${boardLink}/search?searchType=${searchType}&query=${query}`;
+            console.log(searchUrl);
+            form.action = searchUrl;
             form.submit();
         }
+        
+        function setPageLinks() {
+            const searchType = document.getElementById('searchType').value;
+            const query = document.getElementById('query').value;
+            const pageLinks = document.querySelectorAll('.pagination a.page-link');
+
+            pageLinks.forEach(link => {
+                const url = new URL(link.href);
+                url.searchParams.set('searchType', searchType);
+                url.searchParams.set('query', query);
+                link.href = url.toString();
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setPageLinks();
+        });
       </script>
 
 </div>
