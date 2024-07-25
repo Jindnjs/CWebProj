@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
+<html layout:decorate="~{layouts/layout_board}">
 
-<title>Insert title here</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/css/banner.css" rel="stylesheet">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    
+<head>
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/banner.css" rel="stylesheet">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 
 </head>
-<body>
 
+<div layout:fragment="content_main">
 <section>
 <h2>배너 수정 페이지</h2>
 <table class="table">
@@ -102,5 +102,5 @@
     }
 </script>
 
-</body>
+</div>
 </html>
