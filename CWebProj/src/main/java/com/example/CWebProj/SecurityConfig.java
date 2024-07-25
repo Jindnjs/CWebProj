@@ -29,11 +29,10 @@ public class SecurityConfig {
 	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	        http //.csrf(AbstractHttpConfigurer::disable)
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-	            		
-	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-	            	.requestMatchers(new AntPathRequestMatcher("/profile")).hasAuthority("ROLE_MANAGER")
+	            
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
-	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN"))
+	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN")
+	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
 	            
 	            .oauth2Login(oauth2Login -> oauth2Login
 	                      .loginPage("/oauth2/authorization/google")
