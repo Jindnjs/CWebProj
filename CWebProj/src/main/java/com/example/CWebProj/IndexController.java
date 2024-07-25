@@ -72,4 +72,12 @@ public class IndexController {
 		this.sendMailService.contactEmail(name, email, subject, message);
 		return "redirect:/";
 	}
+	
+	@PostMapping("/nav/edit")
+	public String editNav(@RequestParam("navInput") String input) {
+		
+		
+		
+		return "redirect:/nav/edit";
+	}
 }
