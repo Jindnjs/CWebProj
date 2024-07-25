@@ -26,6 +26,11 @@
   scroll-behavior: smooth;
 }
 
+#wrap{
+	min-height:100%;
+	position: relative;
+}
+
 body {
   color: rgba(var(--color-primary-rgb), 1);
 }
@@ -936,6 +941,10 @@ section {
   background: rgba(var(--color-black-rgb), 0.9);
   font-size: 16px;
   color: rgba(var(--color-white-rgb), 0.7);
+  top:10px;
+  bottom:0px;
+  position:absolute;
+  height:10rem;
 }
 
 .footer .footer-content {
