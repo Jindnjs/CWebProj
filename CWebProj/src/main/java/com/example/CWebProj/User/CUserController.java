@@ -195,7 +195,7 @@ public class CUserController {
        model.addAttribute("sidebar", navService.getSidebar(1));
        model.addAttribute("cuser", cuserService.getUSer(username));
        
-       return "form/read/profile_manage";
+       return "form/read/profile";
    }
    
    
