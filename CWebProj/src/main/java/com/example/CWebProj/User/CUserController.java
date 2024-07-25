@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
 import com.example.CWebProj.DyNavi.NavService;
@@ -37,6 +36,9 @@ public class CUserController {
 	private final AuthenKeyValService authenKeyValService;
 	
 	private final NavService navService;
+	
+	@Value("${cloud.aws.s3.endpoint}")
+    private String downpath;
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -189,8 +191,12 @@ public class CUserController {
 	// 프로필 정보 업데이트
 	@PostMapping("/profile/update")
 	public String updateProfile(@ModelAttribute CUser cuser,
-			@RequestParam("newPassword") String newPassword) {
-			cuserService.profileupdate(cuser, newPassword);
+			@RequestParam("newPassword") String newPassword,
+			@RequestParam("inputback") MultipartFile back,
+			@RequestParam("inputprofile") MultipartFile profile) throws IOException {
+
+		cuserService.profileupdate(cuser, newPassword, back, profile);
+		
 		return "redirect:/profile";
 	}
 	

@@ -123,16 +123,33 @@ public class CUserService implements UserDetailsService {
 	
 	
 	// 프로필 정보 업데이트
-	public void profileupdate(CUser cuser, String newPassword) {
+	public void profileupdate(CUser cuser, String newPassword, MultipartFile back, MultipartFile profile)
+	        throws IOException {
 
-		 if (!newPassword.isEmpty()) {
-		 
-		 cuser.setPassword(passwordEncoder.encode((newPassword))); }
-		 
-		 cuserRepository.save(cuser);
-		
+	    if (back != null && !back.isEmpty()) {
+	        String backname = UUID.randomUUID() + "_" + back.getOriginalFilename();
+	        File tempFile1 = File.createTempFile("back", null); // 임시 파일 생성
+	        back.transferTo(tempFile1); // MultipartFile을 임시 파일로 변환
+	        s3Service.uploadFile(tempFile1.getAbsolutePath(), backname);
+	        tempFile1.delete();
+	        cuser.setCbackimage(backname);
+	    }
+
+	    if (profile != null && !profile.isEmpty()) {
+	        String profilename = UUID.randomUUID() + "_" + profile.getOriginalFilename();
+	        File tempFile2 = File.createTempFile("profile", null); // 임시 파일 생성
+	        profile.transferTo(tempFile2); // MultipartFile을 임시 파일로 변환
+	        s3Service.uploadFile(tempFile2.getAbsolutePath(), profilename);
+	        tempFile2.delete();
+	        cuser.setCprofileimage(profilename);
+	    }
+
+	    if (!newPassword.isEmpty()) {
+	        cuser.setPassword(passwordEncoder.encode((newPassword)));
+	    }
+	    cuserRepository.save(cuser);
 	}
-
+	
 	
 	//비번 잊었을때
 	public CUser findpw(String username) {
