@@ -43,7 +43,7 @@ public class CUser {
 	
 	// 회원가입할때 이메일 나눠서 가입하게끔
 	private String emailLocalPart;
-	private String emailDomain;
+	private String emailDomainText;
 	
 	//프로필을 위한 정보
 	private String cbackimage; //배경사진

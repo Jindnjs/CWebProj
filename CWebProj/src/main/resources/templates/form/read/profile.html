@@ -389,6 +389,18 @@
                      <span class="fa-solid fa-user text-body fs-9 form-icon"></span>
                   </div>
                </div>
+               <div th:if="${#authorization.expression('hasRole(''USER'')')}" class="col-12 col-sm-6">
+                  <div class="form-icon-container">
+                     <div class="form-floating">
+                     <input class="form-control form-icon-input" id="role"
+                           name="role" style="font-size: 20px; height: 65px;" type="hidden"
+                           placeholder="권한" th:value="${cuser.role}" /> <label
+                           class="text-body-tertiary form-icon-label"
+                           style="font-size: 15px;" for="role"> 권한 </label>
+                     </div>
+                     <span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+                  </div>
+               </div>
                <div class="col-12 col-sm-6">
                   <div class="form-icon-container">
                      <div class="form-floating">

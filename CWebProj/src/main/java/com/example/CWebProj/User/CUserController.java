@@ -41,7 +41,7 @@ public class CUserController {
 
    @PostMapping("/signup")
 	public String signup(CUser cuser, Model model) {
-       String email = cuser.getEmailLocalPart() + "@" + cuser.getEmailDomain();
+       String email = cuser.getEmailLocalPart() + "@" + cuser.getEmailDomainText();
        cuser.setUsername(email);
 
        model.addAttribute("message", "회원가입 성공");
