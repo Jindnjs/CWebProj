@@ -1,12 +1,7 @@
 package com.example.CWebProj.User;
 
 import java.io.IOException;
-import java.net.URI;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +33,6 @@ public class CUserController {
    
    private final NavService navService;
    
-   @Value("${cloud.aws.s3.endpoint}")
-    private String downpath;
    
    @GetMapping("/signup")
    public String signup() {
@@ -152,6 +145,24 @@ public class CUserController {
       return "user/userdetail_manager";
    }
       
+   //권한페이지에서 프로필 접속하기
+   @GetMapping("/profile/{username}")
+   public String profile_get(Model model, @PathVariable("username") String username) {
+       model.addAttribute("MenuCate", navService.getMenu(1));
+       model.addAttribute("sidebar", navService.getSidebar(1));
+       model.addAttribute("cuser", cuserService.getUSer(username));
+       
+       return "form/read/profile";
+   }
+   
+   
+   // 관리자 유저 정보 업데이트
+   @PostMapping("/read/profile")
+   public String profile_post(@ModelAttribute CUser cuser) {
+      cuserService.update(cuser);
+      return "redirect:/profile";
+   }
+   
 
    // 관리자 유저 정보 업데이트
    @PostMapping("/admin/update")

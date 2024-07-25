@@ -49,6 +49,12 @@ public class CUserService implements UserDetailsService {
 	}
 
 	
+	public CUser getUSer(String username) throws UsernameNotFoundException {
+		Optional<CUser> oc = cuserRepository.findByUsername(username);
+        return oc.get();
+        }
+	
+	
 	// 회원가입처리
 	public void create(CUser cuser) {
 
