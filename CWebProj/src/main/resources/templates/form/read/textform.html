@@ -70,7 +70,7 @@ font-family: "IBM Plex Sans KR", sans-serif;
 						<div th:if="${#strings.equals(param.error, 'tooManyNotices')}" style="color: red;">
 						    공지글이 너무 많아 일반글로 저장했습니다.
 						</div>
-						<div style="margin-bottom:10px" class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">				        
+						<div style="margin-bottom:10px" class=" d-flex justify-content-end" th:if="${MenuCate.id==9} or ${#authorization.expression('hasAnyRole(' + adminOrManagerRoles + ')')}">				        
 								<a class="btn btn-primary" th:href="${MenuCate.boardLink + '/create/' + MenuCate.id}">작성</a>
 							</div>
 						<!-- =======================================================

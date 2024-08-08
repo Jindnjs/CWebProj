@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.CWebProj.AutoList.AutoListService;
 import com.example.CWebProj.Comment.Comment;
 import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.User.CUser;
@@ -34,6 +35,7 @@ public class BoardController {
 	private final NavService navService;
 	private final BoardService boardService;
 	private final CUserService cuserService;
+	private final AutoListService autoListService;
 	
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
@@ -44,6 +46,13 @@ public class BoardController {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		System.out.println( navService.getMenu(menuId));
+		
+		String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
+        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
+            adminOrManagerRoles = "'ROLE_USER'";
+        }
+        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+		
 		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
 			model.addAttribute("board", this.boardService.getform1(menuId));
 		}
@@ -96,9 +105,14 @@ public class BoardController {
 	    model.addAttribute("MenuCate", navService.getMenu(menuId));
 	    model.addAttribute("sidebar", navService.getSidebar(menuId));
 	    model.addAttribute("notices", notices); 
-	    
 	    model.addAttribute("paging", paging);
 
+	    String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
+        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
+            adminOrManagerRoles = "'ROLE_USER'";
+        }
+        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+	    
 		return "form/read/textform";
 		}
 	@GetMapping(value = "/form2/create/{menuId}")
@@ -231,6 +245,12 @@ public class BoardController {
 		
 		Page<Board> paging = boardService.getBoards(page, menuId);
         model.addAttribute("paging", paging);
+        
+        String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
+        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
+            adminOrManagerRoles = "'ROLE_USER'";
+        }
+        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
 		
 		return "form/read/imgform";
 	}
@@ -302,8 +322,13 @@ public class BoardController {
 	public String form4(Model model, @PathVariable("menuId") Integer menuId, @RequestParam(value="page", defaultValue = "0") int page) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		
 		model.addAttribute("page", boardService.getBoards(page, menuId));
+		
+		String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
+        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
+            adminOrManagerRoles = "'ROLE_USER'";
+        }
+        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
 		
 		return "form/read/youtubeform";
 	}

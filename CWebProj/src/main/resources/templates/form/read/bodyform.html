@@ -84,7 +84,7 @@ function initMap() {
 
         <!-- 삭제, 수정 버튼 -->
         <div class="button-group">
-            <div th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+        	<div th:if="${#authorization.expression('hasAnyRole(' + adminOrManagerRoles + ')')}">
                 <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${board.id}}" class="btn btn-warning">수정</a>
             </div>
         </div>
