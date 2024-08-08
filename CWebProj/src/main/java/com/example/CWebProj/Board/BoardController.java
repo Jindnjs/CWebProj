@@ -47,11 +47,11 @@ public class BoardController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		System.out.println( navService.getMenu(menuId));
 		
-		String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
-        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
-            adminOrManagerRoles = "'ROLE_USER'";
-        }
-        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+		 String ManagingRoles = autoListService.getManagingRoles(menuId);
+	        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
+	            ManagingRoles = "'ROLE_USER'"; 
+	        }
+	        model.addAttribute("ManagingRoles", ManagingRoles);
 		
 		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
 			model.addAttribute("board", this.boardService.getform1(menuId));
@@ -107,11 +107,11 @@ public class BoardController {
 	    model.addAttribute("notices", notices); 
 	    model.addAttribute("paging", paging);
 
-	    String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
-        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
-            adminOrManagerRoles = "'ROLE_USER'";
+	    String ManagingRoles = autoListService.getManagingRoles(menuId);
+        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
+            ManagingRoles = "'ROLE_USER'"; 
         }
-        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+        model.addAttribute("ManagingRoles", ManagingRoles);
 	    
 		return "form/read/textform";
 		}
@@ -246,11 +246,11 @@ public class BoardController {
 		Page<Board> paging = boardService.getBoards(page, menuId);
         model.addAttribute("paging", paging);
         
-        String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
-        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
-            adminOrManagerRoles = "'ROLE_USER'";
+        String ManagingRoles = autoListService.getManagingRoles(menuId);
+        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
+            ManagingRoles = "'ROLE_USER'"; 
         }
-        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+        model.addAttribute("ManagingRoles", ManagingRoles);
 		
 		return "form/read/imgform";
 	}
@@ -324,11 +324,11 @@ public class BoardController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("page", boardService.getBoards(page, menuId));
 		
-		String adminOrManagerRoles = autoListService.getAdminOrManagerRoles(menuId);
-        if (adminOrManagerRoles == null || adminOrManagerRoles.isEmpty()) {
-            adminOrManagerRoles = "'ROLE_USER'";
-        }
-        model.addAttribute("adminOrManagerRoles", adminOrManagerRoles);
+		 String ManagingRoles = autoListService.getManagingRoles(menuId);
+	        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
+	            ManagingRoles = "'ROLE_USER'"; 
+	        }
+	        model.addAttribute("ManagingRoles", ManagingRoles);
 		
 		return "form/read/youtubeform";
 	}

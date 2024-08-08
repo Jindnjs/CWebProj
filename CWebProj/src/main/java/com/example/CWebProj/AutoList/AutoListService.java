@@ -22,7 +22,7 @@ public class AutoListService {
                     .collect(Collectors.joining("','", "'", "'"));
     }
 
-    public String getAdminOrManagerRoles(Integer boardId) {
+    public String getManagingRoles(Integer boardId) {
         List<AutoList> roles = getRolesByBoardId(boardId);
         return roles.stream()
                     .filter(role -> "ADMIN".equals(role.getRole()) || "MANAGER".equals(role.getRole()))
