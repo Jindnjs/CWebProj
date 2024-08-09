@@ -24,7 +24,7 @@
 		<input type="hidden" name="menuId" th:value="${board.menuId}">
 		<input type="hidden" th:each="comment:${board.commentList}" th:value="${board.commentList}">
 		<div class="row">
-		<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+		<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(' + noticecheckbox + ')')}">
 			     <div class="form-check" th:if="${board.menuId !=1 && board.menuId != 2}">
 			     		<label class="form-check-label" for="noticeTrue">공지</label>
                         <input th:checked="${board.notice==true}" class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">

@@ -54,7 +54,7 @@
 	<form method="post" onsubmit="return validateForm()">
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<div class="row">
-			<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+			<div class="col-md-6 mb-4 d-flex " th:if="${#authorization.expression('hasAnyRole(' + noticecheckbox + ')')}">
 			     <div class="form-check">
 			     		<label class="form-check-label" for="noticeTrue">공지</label>
                         <input class="form-check-input" type="checkbox" id="noticeTrue" name="notice" value="true">

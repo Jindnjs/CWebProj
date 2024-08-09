@@ -29,4 +29,11 @@ public class AutoListService {
                     .map(AutoList::getRole)
                     .collect(Collectors.joining("','", "'", "'"));
     }
+    
+    public String getRolesByFunction(String func) {
+        List<AutoList> roles = autoListRepository.findByFunc(func);
+        return roles.stream()
+                    .map(AutoList::getRole)
+                    .collect(Collectors.joining("','", "'", "'"));
+    }
 }
