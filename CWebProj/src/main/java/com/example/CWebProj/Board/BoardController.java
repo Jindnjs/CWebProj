@@ -40,6 +40,7 @@ public class BoardController {
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
 	
+	
 	//form1
 	@GetMapping(value = "/form1/{menuId}")
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
@@ -47,7 +48,7 @@ public class BoardController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		System.out.println( navService.getMenu(menuId));
 		
-		 String ManagingRoles = autoListService.getManagingRoles(menuId);
+		String ManagingRoles = autoListService.getManagingRoles(menuId);
 	        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
 	            ManagingRoles = "'ROLE_USER'"; 
 	        }
@@ -63,6 +64,7 @@ public class BoardController {
 		
 		return "form/read/bodyform";
 	}
+	
 	
 	@GetMapping(value = "/form1/{menuId}/update/{boardId}")
 	public String updateform1(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
@@ -82,8 +84,14 @@ public class BoardController {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", board);
+		
+		String noticecheckbox = autoListService.getRolesByFunction("noticecheckbox");
+        model.addAttribute("noticecheckbox", noticecheckbox);
+        
 		return "form/create/update_test";
 	}
+	
+	
 	@PostMapping(value = "/form1/{menuId}/update/{boardId}")
 	public String updateform1(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		this.boardService.updateboard(board);
@@ -112,9 +120,12 @@ public class BoardController {
             ManagingRoles = "'ROLE_USER'"; 
         }
         model.addAttribute("ManagingRoles", ManagingRoles);
+        
 	    
 		return "form/read/textform";
 		}
+	
+	
 	@GetMapping(value = "/form2/create/{menuId}")
 	public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
 		if(menuId==1||menuId==2||menuId==3) {
@@ -133,8 +144,14 @@ public class BoardController {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("currentCUser", cuserService.authen());
+		
+		String noticecheckbox = autoListService.getRolesByFunction("noticecheckbox");
+        model.addAttribute("noticecheckbox", noticecheckbox);
+        
 		return"form/create/textcreateform";
 	}
+	
+	
 	@PostMapping(value = "/form2/create/{menuId}")
 	public String form2create(@PathVariable("menuId") Integer menuId,@ModelAttribute Board board) {
 		int noticeCount = boardService.countNotice(menuId);
@@ -147,6 +164,8 @@ public class BoardController {
 		
 		return "redirect:/form2/"+menuId;
 	}
+	
+	
 	@GetMapping(value = "/form2/{menuId}/detail/{boardId}")
 	public String form2detail(Model model, @PathVariable("menuId") Integer menuId,@PathVariable("boardId") Integer boardId){
 		if(menuId==1||menuId==2||menuId==3) {
@@ -160,8 +179,17 @@ public class BoardController {
 		Collections.reverse(commentList); // 리스트 반전
         model.addAttribute("commentList", commentList);
 		boardService.incrementViewCount(boardId);
+		
+		String ManagingRoles = autoListService.getManagingRoles(menuId);
+        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
+            ManagingRoles = "'ROLE_USER'"; 
+        }
+        model.addAttribute("ManagingRoles", ManagingRoles);
+        
 		return "form/read/detail_test";
 	}
+	
+	
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
 	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		if(menuId==1||menuId==2||menuId==3) {
@@ -182,6 +210,8 @@ public class BoardController {
 		this.boardService.deleteboard(boardId);
 		return "redirect:/form2/"+menuId;
 	}
+	
+	
 	@GetMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		
@@ -202,6 +232,8 @@ public class BoardController {
 		model.addAttribute("board", board);
 		return "form/create/update_test";
 	}
+	
+	
 	@PostMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(@ModelAttribute Board board,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		int noticeCount = boardService.countNotice(menuId);
@@ -214,7 +246,9 @@ public class BoardController {
 		return "redirect:/form2/"+menuId+"/detail/"+boardId;
 	}
 	
+	
 	//search
+	
 	
 	@GetMapping(value = "/form2/{menuId}/search")
  	public String search(Model model, @PathVariable("menuId") Integer menuId,
@@ -238,6 +272,8 @@ public class BoardController {
 
 	
 	//form3
+	
+	
 	@GetMapping(value = "/form3/{menuId}")
 	public String form3(Model model, @PathVariable("menuId") Integer menuId, @RequestParam(value="page", defaultValue = "0") int page) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
@@ -254,6 +290,8 @@ public class BoardController {
 		
 		return "form/read/imgform";
 	}
+	
+	
 	@GetMapping(value = "/form3/{menuId}/detail/{boardId}")
     @ResponseBody
     public Board getBoard(Model model, @PathVariable("menuId") Integer menuId,
@@ -262,6 +300,8 @@ public class BoardController {
 		
         return boardService.read(menuId, boardId);
     }
+	
+	
 	@PostMapping(value = "/form3/{menuId}/create")
 	@ResponseBody
 	public String form3create(Model model, @PathVariable("menuId") Integer menuId,
@@ -280,6 +320,8 @@ public class BoardController {
 	    boardService.create(board, multipartFile);
 	    return "success";
 	}
+	
+	
 	@GetMapping(value = "/form3/{menuId}/update/{boardId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> form3update(@PathVariable("menuId") Integer menuId,
@@ -291,6 +333,8 @@ public class BoardController {
 	    
 	    return ResponseEntity.ok(response);
 	}
+	
+	
 	@PostMapping(value = "/form3/{menuId}/update/{boardId}")
     @ResponseBody
     public String form3update(@RequestParam("boardId") Integer boardId, 
@@ -301,6 +345,8 @@ public class BoardController {
         boardService.update(boardId, board, multipartFile);
         return "success";
     }
+	
+	
 	@GetMapping(value = "/form3/{menuId}/delete/{boardId}")
 	@ResponseBody
 	public ResponseEntity<String> form3delete(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
@@ -318,6 +364,7 @@ public class BoardController {
 	
 	//form4
 	
+	
 	@GetMapping(value = "/form4/{menuId}")
 	public String form4(Model model, @PathVariable("menuId") Integer menuId, @RequestParam(value="page", defaultValue = "0") int page) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
@@ -332,6 +379,8 @@ public class BoardController {
 		
 		return "form/read/youtubeform";
 	}
+	
+	
 	@PostMapping(value = "/form4/{menuId}/create")
 	@ResponseBody
 	public String form4create(Model model, @PathVariable("menuId") Integer menuId,
@@ -359,6 +408,8 @@ public class BoardController {
 	    boardService.boardcreate(menuId, board);
 	    return "success";
 	}
+	
+	
 	@GetMapping(value = "/form4/{menuId}/update/{boardId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> form4update(@PathVariable("menuId") Integer menuId,
@@ -376,6 +427,8 @@ public class BoardController {
 	    
 	    return ResponseEntity.ok(response);
 	}
+	
+	
 	@PostMapping(value = "/form4/{menuId}/update/{boardId}")
     @ResponseBody
     public String form4update(@RequestParam("boardId") Integer boardId, 
@@ -402,6 +455,8 @@ public class BoardController {
         boardService.updateboard(board);
         return "success";
     }
+	
+	
 	@GetMapping(value = "/form4/{menuId}/delete/{boardId}")
 	@ResponseBody
 	public ResponseEntity<String> form4delete(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
