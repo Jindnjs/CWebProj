@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
+import com.example.CWebProj.AutoList.AutoListService;
 import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.Mail.SendMailService;
 
 import jakarta.mail.MessagingException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -33,6 +33,7 @@ public class CUserController {
    
    private final NavService navService;
    
+   private final AutoListService autoListService;
    
    @GetMapping("/signup")
    public String signup() {
@@ -170,6 +171,14 @@ public class CUserController {
       model.addAttribute("MenuCate", navService.getMenu(1));
       model.addAttribute("sidebar", navService.getSidebar(1));
       model.addAttribute("cuser", cuserService.authen());
+      
+		String bannerRoles = autoListService.getRolesByFunction("banneredit");
+		model.addAttribute("bannerRoles", bannerRoles);
+		String navRoles = autoListService.getRolesByFunction("navedit");
+		model.addAttribute("navRoles", navRoles);
+		String authoRoles = autoListService.getRolesByFunction("authoedit");
+		model.addAttribute("authoRoles", authoRoles);
+      
       return "form/read/profile";
    }
 

@@ -105,12 +105,12 @@
     </div>
       <div class="button-group">
             <div class="text-right mt-3" th:if="${currentCUser != null} and ${board.cuser != null}">
-                <div th:if="${currentCUser.cid == board.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+                <div th:if="${currentCUser.cid == board.cuser.cid} and !${#authorization.expression('hasAnyRole(' + ManagingRoles + ')')}">
                     <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-primary">삭제</a>
                     <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-primary">수정</a>
                 </div>
             </div>
-            <div th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}">
+            <div th:if="${#authorization.expression('hasAnyRole(' + ManagingRoles + ')')}">
                 <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/delete/' + ${boardId}}" class="btn btn-primary">삭제</a>
                 <a th:href="@{''+${MenuCate.boardLink}+ '/' + ${menuId} + '/update/' + ${boardId}}" class="btn btn-primary">수정</a>
             </div>
