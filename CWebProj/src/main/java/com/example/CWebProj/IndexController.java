@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.CWebProj.AutoList.AutoListService;
 import com.example.CWebProj.Board.BoardService;
 import com.example.CWebProj.DyNavi.MenuCateg;
 import com.example.CWebProj.DyNavi.NavService;
@@ -30,8 +29,6 @@ public class IndexController {
 	
 	private final SendMailService sendMailService;
 	
-	private final AutoListService autoListService;
-	
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
 	
@@ -43,13 +40,6 @@ public class IndexController {
 		model.addAttribute("weekly", this.boardService.indexBoard(4));
 		model.addAttribute("free", this.boardService.indexBoard(9));
 		model.addAttribute("image", this.boardService.indexBoard(10));
-		
-		String bannerRoles = autoListService.getRolesByFunction("banneredit");
-        model.addAttribute("bannerRoles", bannerRoles);
-        String navRoles = autoListService.getRolesByFunction("navedit");
-        model.addAttribute("navRoles", navRoles);
-        String authoRoles = autoListService.getRolesByFunction("authoedit");
-        model.addAttribute("authoRoles", authoRoles);
         
 		return "index";
 	}
