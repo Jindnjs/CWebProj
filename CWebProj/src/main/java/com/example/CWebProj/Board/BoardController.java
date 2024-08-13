@@ -46,13 +46,9 @@ public class BoardController {
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		System.out.println( navService.getMenu(menuId));
 		
-		String ManagingRoles = autoListService.getManagingRoles(menuId);
-	        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
-	            ManagingRoles = "'ROLE_USER'"; 
-	        }
-	        model.addAttribute("ManagingRoles", ManagingRoles);
+		//권한
+	    model.addAttribute("ManagingRoles", autoListService.getRolesAsStringByBoardId(menuId));
 		
 		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
 			model.addAttribute("board", this.boardService.getform1(menuId));
@@ -69,21 +65,13 @@ public class BoardController {
 	@GetMapping(value = "/form1/{menuId}/update/{boardId}")
 	public String updateform1(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		
-	    CUser currentUser = cuserService.authen(); 
-	    Board board = boardService.getboard(boardId);
-	    
-	    boolean isAdminOrManager = currentUser != null && (
-	        currentUser.getRole().contains("ROLE_ADMIN") || 
-	        currentUser.getRole().contains("ROLE_MANAGER")
-	    );
-	    
-
-	    if (!isAdminOrManager) {
+	    //페이지 접근 권한체크
+	    if (!autoListService.checkRole(boardId))
 	        return "redirect:/";
-	    }
+	    
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
-		model.addAttribute("board", board);
+		model.addAttribute("board", boardService.getboard(boardId));
 		
 		String noticecheckbox = autoListService.getRolesByFunction("noticecheckbox");
         model.addAttribute("noticecheckbox", noticecheckbox);

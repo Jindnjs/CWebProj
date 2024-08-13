@@ -27,13 +27,15 @@ public class SecurityConfig {
 
 	  @Bean
 	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	        http //.csrf(AbstractHttpConfigurer::disable)
+	        http
 	            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 	            
 	            	.requestMatchers(new AntPathRequestMatcher("/autho/manager")).hasAuthority("ROLE_MANAGER")
 	                .requestMatchers(new AntPathRequestMatcher("/autho/admin")).hasAuthority("ROLE_ADMIN")
 	            	.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-	            
+	            .formLogin((formLogin) -> formLogin
+	                    .loginPage("/signin")
+	                    .defaultSuccessUrl("/"))	
 	            .oauth2Login(oauth2Login -> oauth2Login
 	                      .loginPage("/oauth2/authorization/google")
 	                      .defaultSuccessUrl("/")
@@ -41,15 +43,13 @@ public class SecurityConfig {
 	                          .userService(principalOauth2UserService)
 	                      )
 	                  )
-	              .formLogin((formLogin) -> formLogin
-                    .loginPage("/signin")
-                    .defaultSuccessUrl("/"))	
 								
 	              .logout((logout) -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                     )
+	              
 	              ;
 	        
 	        

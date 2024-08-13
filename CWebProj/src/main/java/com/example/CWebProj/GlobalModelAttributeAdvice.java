@@ -30,8 +30,11 @@ public class GlobalModelAttributeAdvice {
     
     @ModelAttribute
     public void addGlobalAttributes(Model model) {
-    	model.addAttribute("banners", bannerService.readlist());
+    	
+    	//버킷링크
         model.addAttribute("downpath", "https://" + downpath);
+        
+        //네비게이션 메뉴
         List<MenuCateg> menuCategories = navService.getAllMenuCategories();
         Map<Integer, List<MenuCateg>> groupedMenuCategories = menuCategories.stream()
                 .collect(Collectors.groupingBy(MenuCateg::getMenuRate));
