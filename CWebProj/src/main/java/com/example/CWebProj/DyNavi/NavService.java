@@ -16,15 +16,36 @@ public class NavService {
     public List<MenuCateg> getAllMenuCategories() {
         return navRepository.findAllByOrderByMenuRateAscCategoryRateAsc();
     }
+    
     public MenuCateg getMenu(Integer id) {
     	
     	Optional<MenuCateg> om = navRepository.findById(id);
     	return om.get();
     }
+    
     public List<MenuCateg> getSidebar(Integer id){
     	String menuName = this.getMenu(id).getMenuName();
     	return navRepository.findByMenuNameOrderByCategoryRate(menuName);
 
+    }
+    
+    //해당 form의 menuid가 일치하는지 검증
+    public boolean chechExist(String formType, Integer menuId) {
+    	
+    	Optional<MenuCateg> om = navRepository.findById(menuId);
+    	
+    	if(om.isPresent()) {
+    		MenuCateg m = om.get();
+            
+    		if(m.getBoardLink().equals(formType))
+    			return true;
+    		else 
+    			return false;
+
+        }
+    	else
+    		return false;
+    	
     }
     
     

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,20 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.CWebProj.AutoList.AutoListService;
 import com.example.CWebProj.DyNavi.NavService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/banner")
 public class BannerController {
 
-    @Autowired
-    private BannerService bannerService;
+    private final BannerService bannerService;
     
-    @Autowired
-    private NavService navService;
+    private final NavService navService;
+    
+    private final AutoListService autoListService;
 
     @GetMapping("")
     public String banner(Model model) {
+    	
+    	//페이지 접근 권한체크
+	    if (!autoListService.checkRoleByFunc("banneredit"))
+	        return "redirect:/";
+    	
         model.addAttribute("banners", bannerService.readlist());
         model.addAttribute("sidebar", navService.getSidebar(1));
         return "admin/banner";

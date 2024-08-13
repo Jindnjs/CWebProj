@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.CWebProj.AutoList.AutoListService;
-import com.example.CWebProj.Banner.BannerService;
 import com.example.CWebProj.DyNavi.MenuCateg;
 import com.example.CWebProj.DyNavi.NavService;
 
@@ -24,7 +23,6 @@ public class GlobalModelAttributeAdvice {
 	@Value("${cloud.aws.s3.endpoint}")
 	private String downpath;
 	
-	private final BannerService bannerService;
     private final NavService navService;
     private final AutoListService autoListService;
     

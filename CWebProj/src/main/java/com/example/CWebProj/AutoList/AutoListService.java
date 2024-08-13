@@ -18,12 +18,8 @@ public class AutoListService {
     @Autowired
     private CUserService cuserService;
 
-    public List<AutoList> getRolesByBoardId(Integer boardId) {
-        return autoListRepository.findByBoardId(boardId);
-    }
-
-    public String getRolesAsStringByBoardId(Integer boardId) {
-        List<AutoList> roles = getRolesByBoardId(boardId);
+    public String getRolesAsStringByBoardId(Integer menuId) {
+        List<AutoList> roles = autoListRepository.findByBoardId(menuId);
         return roles.stream()
                     .map(AutoList::getRole)
                     .collect(Collectors.joining("','", "'", "'"));
@@ -36,7 +32,14 @@ public class AutoListService {
                     .collect(Collectors.joining("','", "'", "'"));
     }
     
-    public boolean checkRole(Integer boardId) {
+    public String getRolesByIdAndFunc(Integer menuId, String func) {
+        List<AutoList> roles = autoListRepository.findByBoardIdAndFunc(menuId, func);
+        return roles.stream()
+                    .map(AutoList::getRole)
+                    .collect(Collectors.joining("','", "'", "'"));
+    }
+    
+    public boolean checkRoleByFunc(String func) {
     	
     	CUser currentUser = cuserService.authen();
     	String userRole;
@@ -44,7 +47,25 @@ public class AutoListService {
     		userRole = "ROLE_ANONYMOUS";
     	else
     		userRole = currentUser.getRole();
-    	String roles = getRolesAsStringByBoardId(boardId);
+    	String roles = getRolesByFunction(func);
+    	String[] roleArray = roles.replace("'", "").split(",");
+    	for (String role : roleArray) {
+            if (userRole.equals("ROLE_" + role.trim())) {
+                return true;
+            }
+        }
+    	return false;
+    }
+    
+public boolean checkRoleByIdAndFunc(Integer menuId, String func) {
+    	
+    	CUser currentUser = cuserService.authen();
+    	String userRole;
+    	if(currentUser == null)
+    		userRole = "ROLE_ANONYMOUS";
+    	else
+    		userRole = currentUser.getRole();
+    	String roles = getRolesByIdAndFunc(menuId, func);
     	String[] roleArray = roles.replace("'", "").split(",");
     	for (String role : roleArray) {
             if (userRole.equals("ROLE_" + role.trim())) {

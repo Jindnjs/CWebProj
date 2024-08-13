@@ -172,13 +172,6 @@ public class CUserController {
       model.addAttribute("sidebar", navService.getSidebar(1));
       model.addAttribute("cuser", cuserService.authen());
       
-		String bannerRoles = autoListService.getRolesByFunction("banneredit");
-		model.addAttribute("bannerRoles", bannerRoles);
-		String navRoles = autoListService.getRolesByFunction("navedit");
-		model.addAttribute("navRoles", navRoles);
-		String authoRoles = autoListService.getRolesByFunction("authoedit");
-		model.addAttribute("authoRoles", authoRoles);
-      
       return "form/read/profile";
    }
 

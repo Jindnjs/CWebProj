@@ -40,15 +40,20 @@ public class BoardController {
 	@Value("${google.maps.api.key}")
     private String googleMapsApiKey;
 	
-	
-	//form1
+	//=================== form1 Start ===================
+
 	@GetMapping(value = "/form1/{menuId}")
 	public String form1(Model model, @PathVariable("menuId") Integer menuId) {
+		
+		//게시판의 예외처리
+		if(!navService.chechExist("/form1", menuId))
+			return "redirect:/";
+				
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		
-		//권한
-	    model.addAttribute("ManagingRoles", autoListService.getRolesAsStringByBoardId(menuId));
+		//권한 (수정버튼)
+	    model.addAttribute("ManagingRoles", autoListService.getRolesByIdAndFunc(menuId, "updatebutton"));
 		
 		if(navService.getMenu(menuId).getCategoryName().equals("교회 소개")||navService.getMenu(menuId).getCategoryName().equals("예배 안내")) {
 			model.addAttribute("board", this.boardService.getform1(menuId));
@@ -64,9 +69,12 @@ public class BoardController {
 	
 	@GetMapping(value = "/form1/{menuId}/update/{boardId}")
 	public String updateform1(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
-		
+	
+		//게시판의 예외처리
+		if(!navService.chechExist("/form1", menuId))
+			return "redirect:/";
 	    //페이지 접근 권한체크
-	    if (!autoListService.checkRole(boardId))
+	    if (!autoListService.checkRoleByIdAndFunc(menuId, "updatebutton"))
 	        return "redirect:/";
 	    
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
@@ -86,15 +94,18 @@ public class BoardController {
 		return "redirect:/form1/"+menuId;
 	}
 	
+	//==================== form1 End ====================
 	
-	//form2
 	
+	//=================== form2 Start ===================
 	
 	@GetMapping(value = "/form2/{menuId}")
 	public String form2(Model model, @PathVariable("menuId") Integer menuId,@RequestParam(value="page", defaultValue = "0") int page) {	
-		if(menuId==1||menuId==2||menuId==3) {
+		
+		//게시판의 예외처리
+		if(!navService.chechExist("/form2", menuId))
 			return "redirect:/";
-		}
+				
 		List<Board> notices = boardService.getNotices(menuId);
 		Page<Board> paging = boardService.getPageList(menuId, page);
 		
@@ -102,39 +113,30 @@ public class BoardController {
 	    model.addAttribute("sidebar", navService.getSidebar(menuId));
 	    model.addAttribute("notices", notices); 
 	    model.addAttribute("paging", paging);
-
-	    String ManagingRoles = autoListService.getManagingRoles(menuId);
-        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
-            ManagingRoles = "'ROLE_USER'"; 
-        }
-        model.addAttribute("ManagingRoles", ManagingRoles);
-        
 	    
+	    //textform에 작성버튼 권한 불러오기
+        model.addAttribute("ManagingRoles", autoListService.getRolesByIdAndFunc(menuId, "addButton"));
+        
 		return "form/read/textform";
 		}
 	
 	
 	@GetMapping(value = "/form2/create/{menuId}")
 	public String form2create(Model model, @PathVariable("menuId") Integer menuId) {
-		if(menuId==1||menuId==2||menuId==3) {
+		
+		//게시판의 예외처리
+		if(!navService.chechExist("/form2", menuId))
 			return "redirect:/";
-		}
-	     CUser currentUser = cuserService.authen();
-	        
-         boolean isAdminOrManager = currentUser != null && (
-            currentUser.getRole().contains("ROLE_ADMIN") || 
-            currentUser.getRole().contains("ROLE_MANAGER")
-        );
-               
-        if (!(navService.getMenu(menuId).getCategoryName().equals("자유게시판")) && !isAdminOrManager) {
-            return "redirect:/";
-        }
+		
+		//권한 검사
+	    if (!autoListService.checkRoleByIdAndFunc(menuId, "addbutton"))
+	        return "redirect:/";
+	    
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("currentCUser", cuserService.authen());
 		
-		String noticecheckbox = autoListService.getRolesByFunction("noticecheckbox");
-        model.addAttribute("noticecheckbox", noticecheckbox);
+        model.addAttribute("noticecheckbox", autoListService.getRolesByFunction("noticecheckbox"));
         
 		return"form/create/textcreateform";
 	}
@@ -156,45 +158,43 @@ public class BoardController {
 	
 	@GetMapping(value = "/form2/{menuId}/detail/{boardId}")
 	public String form2detail(Model model, @PathVariable("menuId") Integer menuId,@PathVariable("boardId") Integer boardId){
-		if(menuId==1||menuId==2||menuId==3) {
+		
+		//게시판의 예외처리
+		if(!navService.chechExist("/form2", menuId))
 			return "redirect:/";
-		}
+				
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", this.boardService.getboard(boardId));
 		model.addAttribute("currentCUser", cuserService.authen());
+		
 		List<Comment> commentList=this.boardService.getboard(boardId).getCommentList();
 		Collections.reverse(commentList); // 리스트 반전
         model.addAttribute("commentList", commentList);
 		boardService.incrementViewCount(boardId);
 		
-		String ManagingRoles = autoListService.getManagingRoles(menuId);
-        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
-            ManagingRoles = "'ROLE_USER'"; 
-        }
-        model.addAttribute("ManagingRoles", ManagingRoles);
-        
+		//수정 & 삭제버튼 권한 전달
+        model.addAttribute("ManagingRoles", autoListService.getRolesByIdAndFunc(menuId, "editAccess"));
+        model.addAttribute("commentEditRole", autoListService.getRolesByFunction("commentedit"));
+
 		return "form/read/detail_test";
 	}
 	
 	
 	@GetMapping(value = "/form2/{menuId}/delete/{boardId}")
 	public String deleteboard(@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
-		if(menuId==1||menuId==2||menuId==3) {
+		//게시판의 예외처리
+		if(!navService.chechExist("/form2", menuId))
 			return "redirect:/";
+		
+		//작성자가 아닌데 삭제권한도 없으면 /index
+		CUser currentUser = cuserService.authen();
+		Board board = boardService.getboard(boardId);
+		if(!(board.getCuser() != null && board.getCuser().equals(currentUser))) {
+			if (!autoListService.checkRoleByIdAndFunc(menuId, "editAccess"))
+		        return "redirect:/";
 		}
-		CUser currentUser = cuserService.authen(); 
-	    Board board = boardService.getboard(boardId);
-	    
-	    boolean isAdminOrManager = currentUser != null && (
-	        currentUser.getRole().contains("ROLE_ADMIN") || 
-	        currentUser.getRole().contains("ROLE_MANAGER")
-	    );
-	    boolean isAuthor = board.getCuser() != null && board.getCuser().equals(currentUser); // 게시글 작성자와 현재 사용자 비교
 
-	    if (!isAdminOrManager && !isAuthor) {
-	        return "redirect:/";
-	    }
 		this.boardService.deleteboard(boardId);
 		return "redirect:/form2/"+menuId;
 	}
@@ -203,21 +203,23 @@ public class BoardController {
 	@GetMapping(value = "/form2/{menuId}/update/{boardId}")
 	public String updateboard(Model model,@PathVariable("menuId") Integer menuId, @PathVariable("boardId") Integer boardId) {
 		
-	    CUser currentUser = cuserService.authen(); 
-	    Board board = boardService.getboard(boardId);
-	    
-	    boolean isAdminOrManager = currentUser != null && (
-	        currentUser.getRole().contains("ROLE_ADMIN") || 
-	        currentUser.getRole().contains("ROLE_MANAGER")
-	    );
-	    boolean isAuthor = board.getCuser() != null && board.getCuser().equals(currentUser); // 게시글 작성자와 현재 사용자 비교
-
-	    if (!isAdminOrManager && !isAuthor) {
-	        return "redirect:/";
-	    }
+		//게시판의 예외처리
+		if(!navService.chechExist("/form2", menuId))
+			return "redirect:/";
+		
+		//작성자가 아닌데 수정권한도 없으면 /index
+		CUser currentUser = cuserService.authen();
+		Board board = boardService.getboard(boardId);
+		if(!(board.getCuser() != null && board.getCuser().equals(currentUser))) {
+			if (!autoListService.checkRoleByIdAndFunc(menuId, "editAccess"))
+		        return "redirect:/";
+		}
+		
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("board", board);
+        model.addAttribute("noticecheckbox", autoListService.getRolesByFunction("noticecheckbox"));
+
 		return "form/create/update_test";
 	}
 	
@@ -257,9 +259,11 @@ public class BoardController {
  	    return "form/read/textform";
  	}
 
-
 	
-	//form3
+	//==================== form2 End ====================
+	
+	
+	//=================== form3 Start ===================
 	
 	
 	@GetMapping(value = "/form3/{menuId}")

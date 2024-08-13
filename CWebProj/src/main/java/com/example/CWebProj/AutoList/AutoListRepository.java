@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AutoListRepository extends JpaRepository<AutoList, Integer> {
     List<AutoList> findByBoardId(Integer boardId);
     List<AutoList> findByFunc(String func);
+    List<AutoList> findByBoardIdAndFunc(Integer boardId, String func);
 }

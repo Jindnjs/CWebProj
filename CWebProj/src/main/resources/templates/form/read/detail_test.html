@@ -179,7 +179,7 @@
                 </div>
                 <div>
                     <button th:if="${currentCUser != null} and ${comment.cuser != null} and 
-					${currentCUser.cid == comment.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}"
+					${currentCUser.cid == comment.cuser.cid} and !${#authorization.expression('hasAnyRole(' + commentEditRole + ')')}"
 					type="button" data-bs-toggle="modal" data-bs-target="#commentModal" 
 					th:attr="data-bs-author=${comment.author}, data-bs-content=${comment.content}, 
 					        data-bs-cuser=${comment.cuser != null ? comment.cuser.cid : ''},
@@ -187,7 +187,7 @@
 					        data-bs-id=${comment.id}" class=" btn btn-secondary btn-sm">
 					수정
 					</button>
-					<button th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}"
+					<button th:if="${#authorization.expression('hasAnyRole(' + commentEditRole + ')')}"
 					type="button" data-bs-toggle="modal" data-bs-target="#commentModal"
 					th:attr="data-bs-author=${comment.author}, data-bs-content=${comment.content}, 
 					        data-bs-cuser=${comment.cuser != null ? comment.cuser.cid : ''},
@@ -196,15 +196,16 @@
 					수정
 					</button>
 					<a th:if="${currentCUser != null} and ${comment.cuser != null} and 
-					${currentCUser.cid == comment.cuser.cid} and !${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}"
+					${currentCUser.cid == comment.cuser.cid} and !${#authorization.expression('hasAnyRole(' + commentEditRole + ')')}"
 					th:href="@{'/comment/' + ${menuId} + '/delete/' + ${boardId}+'/'+${comment.id}}" class=" btn btn-secondary btn-sm">
 					삭제
 					</a>
-					<a th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''MANAGER'')')}"
+					<a th:if="${#authorization.expression('hasAnyRole(' + commentEditRole + ')')}"
 					th:href="@{'/comment/' + ${menuId} + '/delete/' + ${boardId}+'/'+${comment.id}}" class="btn btn-secondary btn-sm">
 					삭제
 					</a>
                 </div>
+        
             </li>
         </ul>
 		</div>
