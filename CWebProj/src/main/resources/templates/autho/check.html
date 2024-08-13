@@ -69,15 +69,15 @@
     <div class="container">
         <h3>접속한 아이디: <span th:text="${#authentication.name}"></span></h3>
         <div class="links">
-            <a href="/autho/adminlist">Admin</a>
-            <a href="/autho/managerlist">Manager</a>
+            <a href="/autho/adminlist" th:if="${#authorization.expression('hasAnyRole(''ADMIN'')')}">Admin</a>
+            <a href="/autho/managerlist" th:if="${#authorization.expression('hasAnyRole(''MANAGER'',''ADMIN'')')}">Manager</a>
         </div>
         <div class="auth-status">
             <div sec:authorize="isAuthenticated()">[ Logged in ]</div>
             <br>
-            Admin <div sec:authorize="hasRole('ROLE_ADMIN')">[ yes ]</div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">ADMIN [ yes ]</div>
             <br>
-            Manager <div sec:authorize="hasRole('ROLE_MANAGER')">[ yes ]</div>
+            <div sec:authorize="hasRole('ROLE_MANAGER')">MANAGER [ yes ]</div>
         </div>
         <div class="status buttons">
             <a href="/">메인으로 가기</a>
