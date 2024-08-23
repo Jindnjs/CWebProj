@@ -57,11 +57,11 @@ public class IndexController {
 	
 	@GetMapping("/index")
 	public String index1() {
-		return "index";
+		return "redirect:/";
 	}
 	@GetMapping("/index.html")
 	public String index2() {
-		return "index";
+		return "redirect:/";
 	}
 	
 	//메인 contact
