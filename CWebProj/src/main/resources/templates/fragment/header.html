@@ -15,6 +15,7 @@
         <div class="topbar d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
                 <div class="contact-info d-flex align-items-center">
+                	<div id="google_translate_element"></div>
                 </div>
                 <div class="social-links d-flex align-items-center">
 
@@ -71,5 +72,15 @@
         </div>
     </header>
 	
+	<script>
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({
+			pageLanguage: 'ko',
+			includedLanguages: 'ko,en',
+			layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+		}, 'google_translate_element');
+	}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 	</div>
 </html>
