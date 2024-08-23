@@ -139,7 +139,7 @@
     </div>
 
     <div class="btn-container">
-        <button th:if="${#authorization.expression('hasAnyRole(' + ManagingRoles + ')')}" class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">영상 올리기</button>
+        <button th:if="${#authorization.expression('hasAnyRole(' + addRoles + ')')}" class="btn btn-blue" type="button" data-bs-toggle="modal" data-bs-target="#scrollingLong2">영상 올리기</button>
     </div>
 
     <!-- create modal -->
@@ -267,8 +267,8 @@
                     <td class="col-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                     <td class="col-btn">
                         <div class="d-flex justify-content-end">
-                            <button th:if="${#authorization.expression('hasAnyRole(' + ManagingRoles + ')')}" class="btn btn-primary" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]])">수정</button>
-                            <button th:if="${#authorization.expression('hasAnyRole(' + ManagingRoles + ')')}" class="btn btn-secondary ms-2" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
+                            <button th:if="${#authorization.expression('hasAnyRole(' + editRoles + ')')}" class="btn btn-primary" type="button" th:onclick="openUpdateModal([[${MenuCate.id}]], [[${board.id}]])">수정</button>
+                            <button th:if="${#authorization.expression('hasAnyRole(' + deleteRoles + ')')}" class="btn btn-secondary ms-2" type="button" th:onclick="openDeleteModal([[${board.id}]], [[${MenuCate.id}]])">삭제</button>
                         </div>
                     </td>
                 </tr>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CWebProj.Autho.AuthenKeyValService;
-import com.example.CWebProj.AutoList.AutoListService;
 import com.example.CWebProj.DyNavi.NavService;
 import com.example.CWebProj.Mail.SendMailService;
 
@@ -32,8 +31,6 @@ public class CUserController {
    private final AuthenKeyValService authenKeyValService;
    
    private final NavService navService;
-   
-   private final AutoListService autoListService;
    
    @GetMapping("/signup")
    public String signup() {

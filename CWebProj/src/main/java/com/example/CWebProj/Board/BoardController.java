@@ -271,15 +271,20 @@ public class BoardController {
 		model.addAttribute("MenuCate", navService.getMenu(menuId));
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		
+		
+		model.addAttribute("currentCUser", cuserService.authen());
+		
 		Page<Board> paging = boardService.getBoards(page, menuId);
         model.addAttribute("paging", paging);
         
-        String ManagingRoles = autoListService.getManagingRoles(menuId);
-        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
-            ManagingRoles = "'ROLE_USER'"; 
-        }
-        model.addAttribute("ManagingRoles", ManagingRoles);
+        //작성버튼 권한 불러오기
+        model.addAttribute("addRoles", autoListService.getRolesByIdAndFunc(menuId, "addButton"));
+        
+        //수정버튼 권한
+        model.addAttribute("editRoles", autoListService.getRolesByIdAndFunc(menuId, "updatebutton"));
 		
+        //삭제버튼 권한\
+        model.addAttribute("deleteRoles", autoListService.getRolesByIdAndFunc(menuId, "deletebutton"));
 		return "form/read/imgform";
 	}
 	
@@ -353,8 +358,10 @@ public class BoardController {
 
 	
 	
+	//==================== form3 End ====================
 	
-	//form4
+	
+	//=================== form4 Start ===================
 	
 	
 	@GetMapping(value = "/form4/{menuId}")
@@ -363,11 +370,14 @@ public class BoardController {
 		model.addAttribute("sidebar", navService.getSidebar(menuId));
 		model.addAttribute("page", boardService.getBoards(page, menuId));
 		
-		 String ManagingRoles = autoListService.getManagingRoles(menuId);
-	        if (ManagingRoles == null || ManagingRoles.isEmpty()) {
-	            ManagingRoles = "'ROLE_USER'"; 
-	        }
-	        model.addAttribute("ManagingRoles", ManagingRoles);
+		//작성버튼 권한 불러오기
+        model.addAttribute("addRoles", autoListService.getRolesByIdAndFunc(menuId, "addButton"));
+        
+        //수정버튼 권한
+        model.addAttribute("editRoles", autoListService.getRolesByIdAndFunc(menuId, "updatebutton"));
+		
+        //삭제버튼 권한\
+        model.addAttribute("deleteRoles", autoListService.getRolesByIdAndFunc(menuId, "deletebutton"));
 		
 		return "form/read/youtubeform";
 	}
