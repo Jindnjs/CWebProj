@@ -223,3 +223,4 @@ CWebProj/src/main/resources/static/vendors/tinymce/tinymce.js
 CWebProj/src/main/resources/static/vendors/tinymce/tinymce.min.js
 CWebProj/src/main/resources/static/vendors/typed.js/typed.umd.js
 CWebProj/src/main/resources/application.properties
+*.properties
