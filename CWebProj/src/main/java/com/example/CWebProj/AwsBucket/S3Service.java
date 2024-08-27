@@ -15,7 +15,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 @Service
 public class S3Service {
 
-	@Value("jindevbucket")
+	@Value("${cloud.aws.s3.bucketName}")
 	private String bucketName;
 	
 	@Autowired
@@ -27,8 +27,7 @@ public class S3Service {
 		try (FileOutputStream fos = new FileOutputStream(file)){
 			fos.write(multipartFile.getBytes());
 		}
-//		String fileName = System.currentTimeMillis() + "_" + 
-//						  multipartFile.getOriginalFilename();
+
 		amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file));
 		file.delete();
 	}
