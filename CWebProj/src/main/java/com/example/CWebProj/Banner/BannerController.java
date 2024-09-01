@@ -58,7 +58,7 @@ public class BannerController {
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> addBanner() {
         Banner banner = new Banner();
-        banner.setImage("b456786e-3b1d-4f1d-a11d-e47148e33809_1.jpg"); // 디폴트 이미지 지정
+        banner.setImage("defaultBanner.jpg"); // 디폴트 이미지 지정
         banner.setNum((int) bannerService.count() + 1);
         bannerService.save(banner);
 

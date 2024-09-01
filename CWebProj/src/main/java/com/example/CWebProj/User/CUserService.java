@@ -60,6 +60,8 @@ public class CUserService implements UserDetailsService {
 		cuser.setEnabled(true);
 		cuser.setRole("ROLE_USER");
 		cuser.setCdate(LocalDateTime.now());
+		cuser.setUsername(cuser.getEmailLocalPart() + "@" + cuser.getEmailDomainText());
+	    cuser.setCprofileimage("11.png");
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		cuser.setPassword(passwordEncoder.encode(cuser.getPassword()));
 		cuserRepository.save(cuser);

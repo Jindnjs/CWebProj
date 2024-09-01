@@ -39,9 +39,7 @@ public class CUserController {
 
    @PostMapping("/signup")
 	public String signup(CUser cuser, Model model) {
-       String email = cuser.getEmailLocalPart() + "@" + cuser.getEmailDomainText();
-       cuser.setUsername(email);
-
+       
        model.addAttribute("message", "회원가입 성공");
 		cuserService.create(cuser);
 		return "redirect:/signin";
@@ -68,7 +66,6 @@ public class CUserController {
    @PostMapping("/findpw")
    public String sendResetPassword(
       @RequestParam("email") String email) throws MessagingException {      
-      System.out.println("서버로 넘어온 이메일 = " + email);
       
       //이메일 주소의 유효성 검증
       //만약 없으면 회원가입창으로 보냄
@@ -82,7 +79,6 @@ public class CUserController {
    public String resetPassword(@PathVariable("uuid") String uuid) {
       String email = authenKeyValService.getValue(uuid);
       if (email == null) {
-         System.out.println("redis에 이메일이 없습니다.");
          return "redirect:/signin";
       }
       return "authentication/resetpw";
@@ -146,21 +142,6 @@ public class CUserController {
 
       return "user/userdetail_manager";
    }
-   
-   
-	/*
-	 * // 관리자 유저 정보 업데이트
-	 * 
-	 * @PostMapping("/admin/update") public String update(@ModelAttribute CUser
-	 * cuser) { cuserService.update(cuser); return "redirect:/autho/adminlist"; }
-	 * 
-	 * // 매니저 유저 정보 업데이트
-	 * 
-	 * @PostMapping("/manager/update") public String update_manager(@ModelAttribute
-	 * CUser cuser) { cuserService.update(cuser); return
-	 * "redirect:/autho/managerlist"; }
-	 */
-
    
    //본인 프로필 접속
    @GetMapping("/profile")
