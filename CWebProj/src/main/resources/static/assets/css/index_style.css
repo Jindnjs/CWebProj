@@ -10,11 +10,6 @@
 }
 
 .hero-slider {
-    height: 450px;
-    width: 55vw;
-    overflow: hidden;
-    margin: 0 auto;
-    position: relative;
     z-index: 1;
     padding:0;
 }
